@@ -1,0 +1,15 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP HX711
+D 24-Bit Analog-to-Digital Converter (ADC) for Weigh Scales
+K ADC
+F https://components101.com/sites/default/files/component_datasheet/HX711%20Datasheet.pdf
+$ENDCMP
+#
+$CMP TLV6004PW
+D Low-Power, Quad-Operational Amplifiers, Texas S-PX2QFN-14
+K quad opamp
+F http://www.ti.com/lit/ds/symlink/tlv9004.pdf
+$ENDCMP
+#
+#End Doc Library

@@ -737,7 +737,7 @@ U 1 1 5F1B4026
 P 9700 1025
 F 0 "JP4" V 9679 1153 59  0000 L CNN
 F 1 "alkaline" V 9784 1153 59  0000 L CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 9700 1025 50  0001 C CNN
+F 2 "Connector_Molex:Molex_KK-254_AE-6410-02A_1x02_P2.54mm_Vertical" H 9700 1025 50  0001 C CNN
 F 3 "" H 9700 1025 50  0001 C CNN
 	1    9700 1025
 	0    1    1    0   
@@ -767,7 +767,7 @@ U 1 1 5F1F9950
 P 9675 2600
 F 0 "JP3" V 9654 2728 59  0000 L CNN
 F 1 "acidic" V 9759 2728 59  0000 L CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 9675 2600 50  0001 C CNN
+F 2 "Connector_Molex:Molex_KK-254_AE-6410-02A_1x02_P2.54mm_Vertical" H 9675 2600 50  0001 C CNN
 F 3 "" H 9675 2600 50  0001 C CNN
 	1    9675 2600
 	0    1    1    0   
@@ -954,7 +954,7 @@ U 1 1 5EE688CC
 P 6175 8325
 F 0 "RV1" H 6105 8371 50  0000 R CNN
 F 1 "10k" H 6105 8280 50  0000 R CNN
-F 2 "Potentiometer_THT:Potentiometer_Bourns_3339P_Vertical_HandSoldering" H 6175 8325 50  0001 C CNN
+F 2 "Potentiometer_THT:Potentiometer_Bourns_3339S_Horizontal" H 6175 8325 50  0001 C CNN
 F 3 "" H 6175 8325 50  0001 C CNN
 	1    6175 8325
 	-1   0    0    -1  
@@ -2149,7 +2149,7 @@ U 1 1 5F3734C3
 P 9675 4150
 F 0 "JP6" V 9654 4278 59  0000 L CNN
 F 1 "IO3" V 9759 4278 59  0000 L CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 9675 4150 50  0001 C CNN
+F 2 "Connector_Molex:Molex_KK-254_AE-6410-02A_1x02_P2.54mm_Vertical" H 9675 4150 50  0001 C CNN
 F 3 "" H 9675 4150 50  0001 C CNN
 	1    9675 4150
 	0    1    1    0   
@@ -2243,7 +2243,7 @@ U 1 1 5F38D620
 P 9700 5675
 F 0 "JP7" V 9679 5803 59  0000 L CNN
 F 1 "IO4" V 9784 5803 59  0000 L CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 9700 5675 50  0001 C CNN
+F 2 "Connector_Molex:Molex_KK-254_AE-6410-02A_1x02_P2.54mm_Vertical" H 9700 5675 50  0001 C CNN
 F 3 "" H 9700 5675 50  0001 C CNN
 	1    9700 5675
 	0    1    1    0   
@@ -2629,10 +2629,10 @@ D11
 Wire Wire Line
 	6250 9575 6125 9575
 $Comp
-L Bertha_main-eagle-import:GND #?
+L Bertha_main-eagle-import:GND #07
 U 1 1 5FBDA4AD
 P 6200 9925
-F 0 "#?" H 6250 9975 50  0001 C CNN
+F 0 "#07" H 6250 9975 50  0001 C CNN
 F 1 "GND" H 6303 9963 42  0000 L CNN
 F 2 "" H 6200 9925 50  0001 C CNN
 F 3 "" H 6200 9925 50  0001 C CNN
