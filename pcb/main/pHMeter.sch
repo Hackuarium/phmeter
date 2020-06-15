@@ -164,9 +164,9 @@ Wire Wire Line
 Wire Wire Line
 	7375 4400 7375 4500
 Text GLabel 3500 4000 2    50   Input ~ 0
-A5
+A0
 Text GLabel 3500 4100 2    50   Input ~ 0
-D7
+A1
 Text GLabel 2025 3975 0    50   Input ~ 0
 B+
 Text GLabel 2025 4075 0    50   Input ~ 0
@@ -1797,17 +1797,6 @@ Wire Wire Line
 Wire Wire Line
 	2625 1775 2625 1825
 $Comp
-L Bertha_main-eagle-import:JP1E JP5
-U 1 1 5EFAFB88
-P 3275 1775
-F 0 "JP5" V 3254 1903 59  0000 L CNN
-F 1 "Bat" V 3359 1903 59  0000 L CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 3275 1775 50  0001 C CNN
-F 3 "" H 3275 1775 50  0001 C CNN
-	1    3275 1775
-	0    1    1    0   
-$EndComp
-$Comp
 L Bertha_main-eagle-import:GND #U0108
 U 1 1 5EFC5A9A
 P 2625 2300
@@ -1879,7 +1868,7 @@ Connection ~ 3850 1900
 Wire Wire Line
 	3850 1900 3850 2000
 Text GLabel 4325 1900 2    50   Input ~ 0
-A3
+A4
 Wire Wire Line
 	4325 1900 4175 1900
 Connection ~ 4175 1900
@@ -2329,45 +2318,45 @@ Wire Notes Line
 $Comp
 L Mechanical:MountingHole H1
 U 1 1 5F726A2E
-P 800 8750
-F 0 "H1" H 900 8796 50  0000 L CNN
-F 1 "MountingHole" H 900 8705 50  0000 L CNN
-F 2 "MountingHole:MountingHole_3.2mm_M3" H 800 8750 50  0001 C CNN
-F 3 "~" H 800 8750 50  0001 C CNN
-	1    800  8750
+P 700 8750
+F 0 "H1" H 800 8796 50  0000 L CNN
+F 1 "MountingHole" H 800 8705 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3" H 700 8750 50  0001 C CNN
+F 3 "~" H 700 8750 50  0001 C CNN
+	1    700  8750
 	1    0    0    -1  
 $EndComp
 $Comp
 L Mechanical:MountingHole H3
 U 1 1 5F72BE62
-P 1700 8725
-F 0 "H3" H 1800 8771 50  0000 L CNN
-F 1 "MountingHole" H 1800 8680 50  0000 L CNN
-F 2 "MountingHole:MountingHole_3.2mm_M3" H 1700 8725 50  0001 C CNN
-F 3 "~" H 1700 8725 50  0001 C CNN
-	1    1700 8725
+P 1500 8750
+F 0 "H3" H 1600 8796 50  0000 L CNN
+F 1 "MountingHole" H 1600 8705 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3" H 1500 8750 50  0001 C CNN
+F 3 "~" H 1500 8750 50  0001 C CNN
+	1    1500 8750
 	1    0    0    -1  
 $EndComp
 $Comp
 L Mechanical:MountingHole H2
 U 1 1 5F72C0AF
-P 825 9175
-F 0 "H2" H 925 9221 50  0000 L CNN
-F 1 "MountingHole" H 925 9130 50  0000 L CNN
-F 2 "MountingHole:MountingHole_3.2mm_M3" H 825 9175 50  0001 C CNN
-F 3 "~" H 825 9175 50  0001 C CNN
-	1    825  9175
+P 700 9075
+F 0 "H2" H 800 9121 50  0000 L CNN
+F 1 "MountingHole" H 800 9030 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3" H 700 9075 50  0001 C CNN
+F 3 "~" H 700 9075 50  0001 C CNN
+	1    700  9075
 	1    0    0    -1  
 $EndComp
 $Comp
 L Mechanical:MountingHole H4
 U 1 1 5F72C2E2
-P 1700 9175
-F 0 "H4" H 1800 9221 50  0000 L CNN
-F 1 "MountingHole" H 1800 9130 50  0000 L CNN
-F 2 "MountingHole:MountingHole_3.2mm_M3" H 1700 9175 50  0001 C CNN
-F 3 "~" H 1700 9175 50  0001 C CNN
-	1    1700 9175
+P 1500 9075
+F 0 "H4" H 1600 9121 50  0000 L CNN
+F 1 "MountingHole" H 1600 9030 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3" H 1500 9075 50  0001 C CNN
+F 3 "~" H 1500 9075 50  0001 C CNN
+	1    1500 9075
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -2625,7 +2614,7 @@ TX
 Wire Wire Line
 	5425 9575 5525 9575
 Text GLabel 6250 9575 2    50   Input ~ 0
-D11
+D7
 Wire Wire Line
 	6250 9575 6125 9575
 $Comp
@@ -2649,4 +2638,15 @@ Wire Notes Line
 	10225 5025 16050 5025
 Wire Notes Line
 	475  7075 16050 7075
+$Comp
+L Bertha_main-eagle-import:JP1E JP5
+U 1 1 5EFAFB88
+P 3275 1775
+F 0 "JP5" V 3254 1903 59  0000 L CNN
+F 1 "Bat" V 3359 1903 59  0000 L CNN
+F 2 "Connector_Molex:Molex_KK-254_AE-6410-02A_1x02_P2.54mm_Vertical" H 3275 1775 50  0001 C CNN
+F 3 "" H 3275 1775 50  0001 C CNN
+	1    3275 1775
+	0    1    1    0   
+$EndComp
 $EndSCHEMATC
