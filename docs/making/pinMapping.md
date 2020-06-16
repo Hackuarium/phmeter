@@ -3,14 +3,14 @@ Pin mapping
 
 Port | Pin | Arduino Mask     |                         | pHMeter V6.0
 -----|-----|------------------|-------------------------|-------------------
-D    | 2   | D0 / RX          | RXD1/AIN1/INT2          | Rotary button
-D    | 3   | D1 / TX          | TXD1/INT3               | Memory CS
+D    | 2   | D0 / RX          | RXD1/AIN1/INT2          | Rotary pushbutton
+D    | 3   | D1 / TX          | TXD1/INT3               | Memory CS & Rotary pushbutton
 D    | 1   | D2 / SDA         | SDA/INT1                | I2C SDA
 D    | 0   | D3 / SCL         | OC0B/SCL/INT0           | I2C SCL
 D    | 4   | D4 / A6          | ICP1/ADC8               | LCD
 C    | 6   | D5 (PWM)         | OC3A/#0C4A              | LCD
 D    | 7   | D6 (PWM)         | T0/OC4D/ADC10           | LCD
-E    | 6   | D7               | PE6 (INT.6/AIN0)        | Ext. OneWire 1
+E    | 6   | D7               | PE6 (INT.6/AIN0)        | Ext. OneWire 1 & Rotary pushbutton
 B    | 4   | D8 / A8          | ADC11/PCINT4            | LCD
 B    | 5   | D9 / A9          | PCINT5/OC1A/#OC4B/ADC12 | LCD
 B    | 6   | D10 / A10        | PCINT6/OC1B/OC4B/ADC13  | LCD
