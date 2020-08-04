@@ -5,9 +5,9 @@
     {
       "Vendor":      "KiCad",
       "Application": "Pcbnew",
-      "Version":     "(5.1.5-0-10_14)"
+      "Version":     "5.1.6-c6e7f7d~87~ubuntu18.04.1"
     },
-    "CreationDate":  "2020-07-31T13:06:06+02:00"
+    "CreationDate":  "2020-08-04T17:41:11-05:00"
   },
   "GeneralSpecs":
   {
@@ -82,6 +82,16 @@
     {
       "Path":  "pHMeter-Edge_Cuts.gbr",
       "FileFunction":  "Profile",
+      "FilePolarity":  "Positive"
+    },
+    {
+      "Path":  "pHMeter-F_Fab.gbr",
+      "FileFunction":  "AssemblyDrawing,Top",
+      "FilePolarity":  "Positive"
+    },
+    {
+      "Path":  "pHMeter-B_Fab.gbr",
+      "FileFunction":  "AssemblyDrawing,Bot",
       "FilePolarity":  "Positive"
     }
   ],
