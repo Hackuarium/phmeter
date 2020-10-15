@@ -729,8 +729,6 @@ Wire Wire Line
 Wire Wire Line
 	9175 1900 9275 1900
 Connection ~ 9275 1900
-Wire Wire Line
-	9275 1900 9275 1625
 $Comp
 L Bertha_main-eagle-import:JP1E JP4
 U 1 1 5F1B4026
@@ -1605,28 +1603,6 @@ Text GLabel 1450 4475 2    50   Input ~ 0
 A+
 Wire Wire Line
 	1450 4475 1350 4475
-$Comp
-L ZXMS6004:ZXMS6004 Q1
-U 1 1 5F42008D
-P 9275 1425
-F 0 "Q1" H 9381 1471 50  0000 L CNN
-F 1 "ZXMS6004" H 9381 1380 50  0000 L CNN
-F 2 "Package_TO_SOT_SMD:SOT-23" H 9375 1350 50  0001 L CIN
-F 3 "https://www.diodes.com/assets/Datasheets/ZXMS6004FF.pdf" H 9375 1500 50  0001 L CNN
-	1    9275 1425
-	1    0    0    -1  
-$EndComp
-$Comp
-L ZXMS6004:ZXMS6004 Q2
-U 1 1 5F425F8E
-P 9275 2975
-F 0 "Q2" H 9381 3021 50  0000 L CNN
-F 1 "ZXMS6004" H 9381 2930 50  0000 L CNN
-F 2 "Package_TO_SOT_SMD:SOT-23" H 9375 2900 50  0001 L CIN
-F 3 "https://www.diodes.com/assets/Datasheets/ZXMS6004FF.pdf" H 9375 3050 50  0001 L CNN
-	1    9275 2975
-	1    0    0    -1  
-$EndComp
 Text Notes 675  3150 0    100  ~ 0
 PH and Conductometer Adquisition
 Text Notes 6175 975  0    100  ~ 0
@@ -2202,17 +2178,6 @@ F 3 "~" H 9025 5025 50  0001 C CNN
 	1    9025 5025
 	-1   0    0    -1  
 $EndComp
-$Comp
-L ZXMS6004:ZXMS6004 Q4
-U 1 1 5F3734E9
-P 9275 4525
-F 0 "Q4" H 9381 4571 50  0000 L CNN
-F 1 "ZXMS6004" H 9381 4480 50  0000 L CNN
-F 2 "Package_TO_SOT_SMD:SOT-23" H 9375 4450 50  0001 L CIN
-F 3 "https://www.diodes.com/assets/Datasheets/ZXMS6004FF.pdf" H 9375 4600 50  0001 L CNN
-	1    9275 4525
-	1    0    0    -1  
-$EndComp
 Text GLabel 8625 6050 0    50   Input ~ 0
 A3
 $Comp
@@ -2295,17 +2260,6 @@ F 2 "LED_SMD:LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder" H 9050 6550 50  0001
 F 3 "~" H 9050 6550 50  0001 C CNN
 	1    9050 6550
 	-1   0    0    -1  
-$EndComp
-$Comp
-L ZXMS6004:ZXMS6004 Q5
-U 1 1 5F38D646
-P 9300 6050
-F 0 "Q5" H 9406 6096 50  0000 L CNN
-F 1 "ZXMS6004" H 9406 6005 50  0000 L CNN
-F 2 "Package_TO_SOT_SMD:SOT-23" H 9400 5975 50  0001 L CIN
-F 3 "https://www.diodes.com/assets/Datasheets/ZXMS6004FF.pdf" H 9400 6125 50  0001 L CNN
-	1    9300 6050
-	1    0    0    -1  
 $EndComp
 Text Notes 1725 800  0    100  ~ 0
 Battery Charger
@@ -2648,5 +2602,51 @@ F 2 "Connector_Molex:Molex_KK-254_AE-6410-02A_1x02_P2.54mm_Vertical" H 3275 1775
 F 3 "" H 3275 1775 50  0001 C CNN
 	1    3275 1775
 	0    1    1    0   
+$EndComp
+Wire Wire Line
+	9275 1900 9275 1625
+$Comp
+L ZXMS6004:ZXMS6004 Q1
+U 1 1 5F32847C
+P 9275 1425
+F 0 "Q1" H 9381 1471 50  0000 L CNN
+F 1 "ZXMS6004" H 9381 1380 50  0000 L CNN
+F 2 "Package_TO_SOT_SMD:SOT-23" H 9375 1350 50  0001 L CIN
+F 3 "https://www.diodes.com/assets/Datasheets/ZXMS6004FF.pdf" H 9375 1500 50  0001 L CNN
+	1    9275 1425
+	1    0    0    -1  
+$EndComp
+$Comp
+L ZXMS6004:ZXMS6004 Q2
+U 1 1 5F3295E1
+P 9275 2975
+F 0 "Q2" H 9381 3021 50  0000 L CNN
+F 1 "ZXMS6004" H 9381 2930 50  0000 L CNN
+F 2 "Package_TO_SOT_SMD:SOT-23" H 9375 2900 50  0001 L CIN
+F 3 "https://www.diodes.com/assets/Datasheets/ZXMS6004FF.pdf" H 9375 3050 50  0001 L CNN
+	1    9275 2975
+	1    0    0    -1  
+$EndComp
+$Comp
+L ZXMS6004:ZXMS6004 Q4
+U 1 1 5F32C98E
+P 9275 4525
+F 0 "Q4" H 9381 4571 50  0000 L CNN
+F 1 "ZXMS6004" H 9381 4480 50  0000 L CNN
+F 2 "Package_TO_SOT_SMD:SOT-23" H 9375 4450 50  0001 L CIN
+F 3 "https://www.diodes.com/assets/Datasheets/ZXMS6004FF.pdf" H 9375 4600 50  0001 L CNN
+	1    9275 4525
+	1    0    0    -1  
+$EndComp
+$Comp
+L ZXMS6004:ZXMS6004 Q5
+U 1 1 5F330780
+P 9300 6050
+F 0 "Q5" H 9406 6096 50  0000 L CNN
+F 1 "ZXMS6004" H 9406 6005 50  0000 L CNN
+F 2 "Package_TO_SOT_SMD:SOT-23" H 9400 5975 50  0001 L CIN
+F 3 "https://www.diodes.com/assets/Datasheets/ZXMS6004FF.pdf" H 9400 6125 50  0001 L CNN
+	1    9300 6050
+	1    0    0    -1  
 $EndComp
 $EndSCHEMATC
