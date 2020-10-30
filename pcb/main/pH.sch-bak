@@ -35,7 +35,12 @@ AR Path="/5F15ED5B/5F1CF3DC" Ref="C3"  Part="1"
 F 0 "C3" H 4665 4546 50  0000 L CNN
 F 1 "100n" H 4665 4455 50  0000 L CNN
 F 2 "Capacitor_SMD:C_0805_2012Metric_Pad1.15x1.40mm_HandSolder" H 4588 4350 50  0001 C CNN
-F 3 "~" H 4550 4500 50  0001 C CNN
+F 3 "https://www.mouser.com/datasheet/2/445/885012207072-1727745.pdf" H 4550 4500 50  0001 C CNN
+F 4 "Multilayer Ceramic Capacitors MLCC - SMD/SMT WCAP-CSGP 0.1uF 0805 10% 25V MLCC " H 4550 4500 50  0001 C CNN "Description"
+F 5 "Wurth Elektronik " H 4550 4500 50  0001 C CNN "MFN"
+F 6 "885012207072" H 4550 4500 50  0001 C CNN "MFP"
+F 7 "https://www.mouser.com/ProductDetail/Wurth-Elektronik/885012207072?qs=0KOYDY2FL28rQMV4504TxA%3D%3D" H 4550 4500 50  0001 C CNN "S1PL"
+F 8 "710-885012207072 " H 4550 4500 50  0001 C CNN "S1PN"
 	1    4550 4500
 	1    0    0    -1  
 $EndComp
@@ -200,7 +205,12 @@ AR Path="/5F15ED5B/5F1CF42C" Ref="C9"  Part="1"
 F 0 "C9" H 7915 4446 50  0000 L CNN
 F 1 "22u" H 7915 4355 50  0000 L CNN
 F 2 "Capacitor_SMD:C_0805_2012Metric_Pad1.15x1.40mm_HandSolder" H 7838 4250 50  0001 C CNN
-F 3 "~" H 7800 4400 50  0001 C CNN
+F 3 "https://www.mouser.com/datasheet/2/585/MLCC-1837944.pdf" H 7800 4400 50  0001 C CNN
+F 4 "Multilayer Ceramic Capacitors MLCC - SMD/SMT 6.3V 22uF X5R 10% 0805" H 7800 4400 50  0001 C CNN "Description"
+F 5 "Samsung Electro-Mechanics " H 7800 4400 50  0001 C CNN "MFN"
+F 6 "CL21A226KQCLRNC" H 7800 4400 50  0001 C CNN "MFP"
+F 7 "https://www.mouser.com/ProductDetail/Samsung-Electro-Mechanics/CL21A226KQCLRNC?qs=xZ%2FP%252Ba9zWqYG0ePGTF%2FymQ%3D%3D" H 7800 4400 50  0001 C CNN "S1PL"
+F 8 " 187-CL21A226KQCLRNC " H 7800 4400 50  0001 C CNN "S1PN"
 	1    7800 4400
 	1    0    0    -1  
 $EndComp
@@ -263,7 +273,12 @@ AR Path="/5F15ED5B/5F1CF44E" Ref="C1"  Part="1"
 F 0 "C1" H 3965 4146 50  0000 L CNN
 F 1 "100n" H 3965 4055 50  0000 L CNN
 F 2 "Capacitor_SMD:C_0805_2012Metric_Pad1.15x1.40mm_HandSolder" H 3888 3950 50  0001 C CNN
-F 3 "~" H 3850 4100 50  0001 C CNN
+F 3 "https://www.mouser.com/datasheet/2/445/885012207072-1727745.pdf" H 3850 4100 50  0001 C CNN
+F 4 "Multilayer Ceramic Capacitors MLCC - SMD/SMT WCAP-CSGP 0.1uF 0805 10% 25V MLCC " H 3850 4100 50  0001 C CNN "Description"
+F 5 "Wurth Elektronik " H 3850 4100 50  0001 C CNN "MFN"
+F 6 "885012207072" H 3850 4100 50  0001 C CNN "MFP"
+F 7 "https://www.mouser.com/ProductDetail/Wurth-Elektronik/885012207072?qs=0KOYDY2FL28rQMV4504TxA%3D%3D" H 3850 4100 50  0001 C CNN "S1PL"
+F 8 "710-885012207072 " H 3850 4100 50  0001 C CNN "S1PN"
 	1    3850 4100
 	1    0    0    -1  
 $EndComp

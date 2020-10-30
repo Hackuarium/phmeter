@@ -94,7 +94,12 @@ P 4425 1525
 F 0 "C31" H 4540 1571 50  0000 L CNN
 F 1 "10u" H 4540 1480 50  0000 L CNN
 F 2 "Capacitor_SMD:C_0805_2012Metric_Pad1.15x1.40mm_HandSolder" H 4463 1375 50  0001 C CNN
-F 3 "~" H 4425 1525 50  0001 C CNN
+F 3 "https://www.mouser.com/datasheet/2/585/MLCC-1837944.pdf" H 4425 1525 50  0001 C CNN
+F 4 "Multilayer Ceramic Capacitors MLCC - SMD/SMT 16V 10uF X5R 0805 10%" H 4425 1525 50  0001 C CNN "Description"
+F 5 "Samsung Electro-Mechanics " H 4425 1525 50  0001 C CNN "MFN"
+F 6 "CL21A106KOQNNNG " H 4425 1525 50  0001 C CNN "MFP"
+F 7 "https://www.mouser.com/ProductDetail/Samsung-Electro-Mechanics/CL21A106KOQNNNG?qs=hqM3L16%252BxlcMWI7QbqH0LA%3D%3D" H 4425 1525 50  0001 C CNN "S1PL"
+F 8 " 187-CL21A106KOQNNNG " H 4425 1525 50  0001 C CNN "S1PN"
 	1    4425 1525
 	1    0    0    -1  
 $EndComp

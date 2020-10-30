@@ -22,7 +22,12 @@ AR Path="/5F3634CD/5F37FF79" Ref="C4"  Part="1"
 F 0 "C4" V 3398 3325 50  0000 C CNN
 F 1 "100n" V 3489 3325 50  0000 C CNN
 F 2 "Capacitor_SMD:C_0805_2012Metric_Pad1.15x1.40mm_HandSolder" H 3688 3175 50  0001 C CNN
-F 3 "~" H 3650 3325 50  0001 C CNN
+F 3 "https://www.mouser.com/datasheet/2/445/885012207072-1727745.pdf" H 3650 3325 50  0001 C CNN
+F 4 "Multilayer Ceramic Capacitors MLCC - SMD/SMT WCAP-CSGP 0.1uF 0805 10% 25V MLCC " H 3650 3325 50  0001 C CNN "Description"
+F 5 "Wurth Elektronik " H 3650 3325 50  0001 C CNN "MFN"
+F 6 "885012207072" H 3650 3325 50  0001 C CNN "MFP"
+F 7 "https://www.mouser.com/ProductDetail/Wurth-Elektronik/885012207072?qs=0KOYDY2FL28rQMV4504TxA%3D%3D" H 3650 3325 50  0001 C CNN "S1PL"
+F 8 "710-885012207072 " H 3650 3325 50  0001 C CNN "S1PN"
 	1    3650 3325
 	0    1    1    0   
 $EndComp
@@ -35,7 +40,12 @@ AR Path="/5F3634CD/5F37FF7F" Ref="C2"  Part="1"
 F 0 "C2" H 2810 3754 50  0000 R CNN
 F 1 "100n" H 2810 3845 50  0000 R CNN
 F 2 "Capacitor_SMD:C_0805_2012Metric_Pad1.15x1.40mm_HandSolder" H 2963 3650 50  0001 C CNN
-F 3 "~" H 2925 3800 50  0001 C CNN
+F 3 "https://www.mouser.com/datasheet/2/445/885012207072-1727745.pdf" H 2925 3800 50  0001 C CNN
+F 4 "Multilayer Ceramic Capacitors MLCC - SMD/SMT WCAP-CSGP 0.1uF 0805 10% 25V MLCC " H 2925 3800 50  0001 C CNN "Description"
+F 5 "Wurth Elektronik " H 2925 3800 50  0001 C CNN "MFN"
+F 6 "885012207072" H 2925 3800 50  0001 C CNN "MFP"
+F 7 "https://www.mouser.com/ProductDetail/Wurth-Elektronik/885012207072?qs=0KOYDY2FL28rQMV4504TxA%3D%3D" H 2925 3800 50  0001 C CNN "S1PL"
+F 8 "710-885012207072 " H 2925 3800 50  0001 C CNN "S1PN"
 	1    2925 3800
 	-1   0    0    1   
 $EndComp
@@ -48,7 +58,12 @@ AR Path="/5F3634CD/5F37FF85" Ref="C5"  Part="1"
 F 0 "C5" V 4277 4825 50  0000 C CNN
 F 1 "100n" V 4186 4825 50  0000 C CNN
 F 2 "Capacitor_SMD:C_0805_2012Metric_Pad1.15x1.40mm_HandSolder" H 4063 4675 50  0001 C CNN
-F 3 "~" H 4025 4825 50  0001 C CNN
+F 3 "https://www.mouser.com/datasheet/2/445/885012207072-1727745.pdf" H 4025 4825 50  0001 C CNN
+F 4 "Multilayer Ceramic Capacitors MLCC - SMD/SMT WCAP-CSGP 0.1uF 0805 10% 25V MLCC " H 4025 4825 50  0001 C CNN "Description"
+F 5 "Wurth Elektronik " H 4025 4825 50  0001 C CNN "MFN"
+F 6 "885012207072" H 4025 4825 50  0001 C CNN "MFP"
+F 7 "https://www.mouser.com/ProductDetail/Wurth-Elektronik/885012207072?qs=0KOYDY2FL28rQMV4504TxA%3D%3D" H 4025 4825 50  0001 C CNN "S1PL"
+F 8 "710-885012207072 " H 4025 4825 50  0001 C CNN "S1PN"
 	1    4025 4825
 	0    -1   -1   0   
 $EndComp
@@ -61,7 +76,12 @@ AR Path="/5F3634CD/5F37FF8B" Ref="C8"  Part="1"
 F 0 "C8" V 6277 4025 50  0000 C CNN
 F 1 "100n" V 6186 4025 50  0000 C CNN
 F 2 "Capacitor_SMD:C_0805_2012Metric_Pad1.15x1.40mm_HandSolder" H 6063 3875 50  0001 C CNN
-F 3 "~" H 6025 4025 50  0001 C CNN
+F 3 "https://www.mouser.com/datasheet/2/445/885012207072-1727745.pdf" H 6025 4025 50  0001 C CNN
+F 4 "Multilayer Ceramic Capacitors MLCC - SMD/SMT WCAP-CSGP 0.1uF 0805 10% 25V MLCC " H 6025 4025 50  0001 C CNN "Description"
+F 5 "Wurth Elektronik " H 6025 4025 50  0001 C CNN "MFN"
+F 6 "885012207072" H 6025 4025 50  0001 C CNN "MFP"
+F 7 "https://www.mouser.com/ProductDetail/Wurth-Elektronik/885012207072?qs=0KOYDY2FL28rQMV4504TxA%3D%3D" H 6025 4025 50  0001 C CNN "S1PL"
+F 8 "710-885012207072 " H 6025 4025 50  0001 C CNN "S1PN"
 	1    6025 4025
 	0    -1   -1   0   
 $EndComp
@@ -74,7 +94,12 @@ AR Path="/5F3634CD/5F37FF91" Ref="C12"  Part="1"
 F 0 "C12" H 8210 4554 50  0000 R CNN
 F 1 "100n" H 8210 4645 50  0000 R CNN
 F 2 "Capacitor_SMD:C_0805_2012Metric_Pad1.15x1.40mm_HandSolder" H 8363 4450 50  0001 C CNN
-F 3 "~" H 8325 4600 50  0001 C CNN
+F 3 "https://www.mouser.com/datasheet/2/445/885012207072-1727745.pdf" H 8325 4600 50  0001 C CNN
+F 4 "Multilayer Ceramic Capacitors MLCC - SMD/SMT WCAP-CSGP 0.1uF 0805 10% 25V MLCC " H 8325 4600 50  0001 C CNN "Description"
+F 5 "Wurth Elektronik " H 8325 4600 50  0001 C CNN "MFN"
+F 6 "885012207072" H 8325 4600 50  0001 C CNN "MFP"
+F 7 "https://www.mouser.com/ProductDetail/Wurth-Elektronik/885012207072?qs=0KOYDY2FL28rQMV4504TxA%3D%3D" H 8325 4600 50  0001 C CNN "S1PL"
+F 8 "710-885012207072 " H 8325 4600 50  0001 C CNN "S1PN"
 	1    8325 4600
 	-1   0    0    1   
 $EndComp
@@ -187,32 +212,6 @@ Wire Wire Line
 Connection ~ 4225 4375
 Wire Wire Line
 	4175 4825 4225 4825
-$Comp
-L Device:D D?
-U 1 1 5F37FFCF
-P 3625 4650
-AR Path="/5F37FFCF" Ref="D?"  Part="1" 
-AR Path="/5F3634CD/5F37FFCF" Ref="D1"  Part="1" 
-F 0 "D1" H 3625 4867 50  0000 C CNN
-F 1 "D" H 3625 4776 50  0000 C CNN
-F 2 "Diode_SMD:D_SOD-123" H 3625 4650 50  0001 C CNN
-F 3 "~" H 3625 4650 50  0001 C CNN
-	1    3625 4650
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:D D?
-U 1 1 5F37FFD5
-P 3625 4975
-AR Path="/5F37FFD5" Ref="D?"  Part="1" 
-AR Path="/5F3634CD/5F37FFD5" Ref="D2"  Part="1" 
-F 0 "D2" H 3625 4758 50  0000 C CNN
-F 1 "D" H 3625 4849 50  0000 C CNN
-F 2 "Diode_SMD:D_SOD-123" H 3625 4975 50  0001 C CNN
-F 3 "~" H 3625 4975 50  0001 C CNN
-	1    3625 4975
-	-1   0    0    1   
-$EndComp
 Wire Wire Line
 	3875 4825 3825 4825
 Wire Wire Line
@@ -392,7 +391,12 @@ AR Path="/5F3634CD/5F38002F" Ref="C10"  Part="1"
 F 0 "C10" H 7765 3621 50  0000 L CNN
 F 1 "100n" H 7765 3530 50  0000 L CNN
 F 2 "Capacitor_SMD:C_0805_2012Metric_Pad1.15x1.40mm_HandSolder" H 7688 3425 50  0001 C CNN
-F 3 "~" H 7650 3575 50  0001 C CNN
+F 3 "https://www.mouser.com/datasheet/2/445/885012207072-1727745.pdf" H 7650 3575 50  0001 C CNN
+F 4 "Multilayer Ceramic Capacitors MLCC - SMD/SMT WCAP-CSGP 0.1uF 0805 10% 25V MLCC " H 7650 3575 50  0001 C CNN "Description"
+F 5 "Wurth Elektronik " H 7650 3575 50  0001 C CNN "MFN"
+F 6 "885012207072" H 7650 3575 50  0001 C CNN "MFP"
+F 7 "https://www.mouser.com/ProductDetail/Wurth-Elektronik/885012207072?qs=0KOYDY2FL28rQMV4504TxA%3D%3D" H 7650 3575 50  0001 C CNN "S1PL"
+F 8 "710-885012207072 " H 7650 3575 50  0001 C CNN "S1PN"
 	1    7650 3575
 	1    0    0    -1  
 $EndComp
@@ -517,7 +521,12 @@ AR Path="/5F3634CD/5F38006D" Ref="D6"  Part="1"
 F 0 "D6" H 7100 4775 50  0000 L CNN
 F 1 "MB2S" H 7500 4775 50  0000 L CNN
 F 2 "Package_TO_SOT_SMD:TO-269AA" H 7500 4725 50  0001 L CNN
-F 3 "http://www.vishay.com/docs/88661/mb2s.pdf" H 7350 4600 50  0001 C CNN
+F 3 "https://www.mouser.com/datasheet/2/427/mb2s-1767900.pdf" H 7350 4600 50  0001 C CNN
+F 4 "Bridge Rectifiers 200 Volt 0.5 Amp 35 Amp IFSM " H 7350 4600 50  0001 C CNN "Description"
+F 5 "Vishay General Semiconductor " H 7350 4600 50  0001 C CNN "MFN"
+F 6 "MB2S-E3/80" H 7350 4600 50  0001 C CNN "MFP"
+F 7 "https://www.mouser.com/ProductDetail/Vishay-Semiconductors/MB2S-E3-80?qs=NyKJzQ80QAyhwMFYOlEGvA%3D%3D" H 7350 4600 50  0001 C CNN "S1PL"
+F 8 "625-MB2S-E3/80 " H 7350 4600 50  0001 C CNN "S1PN"
 	1    7350 4600
 	1    0    0    -1  
 $EndComp
@@ -685,4 +694,40 @@ Wire Wire Line
 	8025 3125 8025 3225
 Wire Wire Line
 	9450 3925 9550 3925
+$Comp
+L Device:D_Schottky D?
+U 1 1 5FB6E4FF
+P 3625 4975
+AR Path="/5FB6E4FF" Ref="D?"  Part="1" 
+AR Path="/5F3634CD/5FB6E4FF" Ref="D2"  Part="1" 
+F 0 "D2" H 3625 4875 50  0000 C CNN
+F 1 "MBR0520LT1G " H 3550 5075 50  0000 C CNN
+F 2 "Diode_SMD:D_SOD-123" H 3625 4975 50  0001 C CNN
+F 3 "https://www.mouser.com/datasheet/2/308/MBR0520LT1_D-1810808.pdf" H 3625 4975 50  0001 C CNN
+F 4 "Schottky Diodes & Rectifiers 0.5A 20V " H 3625 4975 50  0001 C CNN "Description"
+F 5 "ON Semiconductor " H 3625 4975 50  0001 C CNN "MFN"
+F 6 "MBR0520LT1G " H 3625 4975 50  0001 C CNN "MFP"
+F 7 "https://www.mouser.com/ProductDetail/ON-Semiconductor/MBR0520LT1G?qs=3JMERSakebqBWTiPUQp0nw%3D%3D" H 3625 4975 50  0001 C CNN "S1PL"
+F 8 " 863-MBR0520LT1G " H 3625 4975 50  0001 C CNN "S1PN"
+	1    3625 4975
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:D_Schottky D?
+U 1 1 5FB6844E
+P 3625 4650
+AR Path="/5FB6844E" Ref="D?"  Part="1" 
+AR Path="/5F3634CD/5FB6844E" Ref="D1"  Part="1" 
+F 0 "D1" H 3625 4550 50  0000 C CNN
+F 1 "MBR0520LT1G " H 3700 4750 50  0000 C CNN
+F 2 "Diode_SMD:D_SOD-123" H 3625 4650 50  0001 C CNN
+F 3 "https://www.mouser.com/datasheet/2/308/MBR0520LT1_D-1810808.pdf" H 3625 4650 50  0001 C CNN
+F 4 "Schottky Diodes & Rectifiers 0.5A 20V " H 3625 4650 50  0001 C CNN "Description"
+F 5 "ON Semiconductor " H 3625 4650 50  0001 C CNN "MFN"
+F 6 "MBR0520LT1G " H 3625 4650 50  0001 C CNN "MFP"
+F 7 "https://www.mouser.com/ProductDetail/ON-Semiconductor/MBR0520LT1G?qs=3JMERSakebqBWTiPUQp0nw%3D%3D" H 3625 4650 50  0001 C CNN "S1PL"
+F 8 " 863-MBR0520LT1G " H 3625 4650 50  0001 C CNN "S1PN"
+	1    3625 4650
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
