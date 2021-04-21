@@ -1,0 +1,37 @@
+\hypertarget{main_8cpp}{}\doxysection{main.\+cpp File Reference}
+\label{main_8cpp}\index{main.cpp@{main.cpp}}
+
+
+This file start the Nil\+R\+T\+OS threads for all components associates to pH and Conductivity meter board of Hackuarium.  
+
+
+{\ttfamily \#include $<$Arduino.\+h$>$}\newline
+{\ttfamily \#include $<$Nil\+R\+T\+O\+S.\+h$>$}\newline
+Include dependency graph for main.\+cpp\+:
+% FIG 0
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{main_8cpp_a4fc01d736fe50cf5b977f755b675f11d}\label{main_8cpp_a4fc01d736fe50cf5b977f755b675f11d}} 
+void {\bfseries setup} ()
+\item 
+\mbox{\Hypertarget{main_8cpp_afe461d27b9c48d5921c00d521181f12f}\label{main_8cpp_afe461d27b9c48d5921c00d521181f12f}} 
+void {\bfseries loop} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This file start the Nil\+R\+T\+OS threads for all components associates to pH and Conductivity meter board of Hackuarium. 
+
+\begin{DoxyAuthor}{Author}
+Andres Camilo Vargas Román (\href{mailto:andresc.vargasr@gmail.com}{\texttt{ andresc.\+vargasr@gmail.\+com}}) 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2021-\/04-\/08
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2021 
+\end{DoxyCopyright}
