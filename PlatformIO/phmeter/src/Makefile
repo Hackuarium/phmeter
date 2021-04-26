@@ -1,4 +1,9 @@
 # ---
+# To buid Doxygen and PDF documentation all in one
+#
+all: docman pdf
+
+# ---
 # To buid Doxygen HTML and latex documentation of code
 #
 
@@ -12,9 +17,7 @@ pdf:
 	make -C ../docs/latex/
 
 # ---
-# To buid Doxygen and PDF documentation all in one
+# To remove all the documentation of code
 #
-all: docman pdf
-
 clean:
 	rm -r ../docs/latex && rm -r ../docs/html
