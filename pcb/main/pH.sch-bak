@@ -119,7 +119,12 @@ AR Path="/5F15ED5B/5F1CF402" Ref="J3"  Part="1"
 F 0 "J3" V 6033 4000 50  0000 C CNN
 F 1 "Conn_Coaxial_Power" V 6124 4000 50  0000 C CNN
 F 2 "Connector_Coaxial:BNC_TEConnectivity_1478204_Vertical" H 6250 4000 50  0001 C CNN
-F 3 "~" H 6250 4000 50  0001 C CNN
+F 3 "https://www.mouser.com/datasheet/2/18/112404-714699.pdf" H 6250 4000 50  0001 C CNN
+F 4 "RF Connectors / Coaxial Connectors BNC ST PCB JACK 50 OHM TF-4 POST " H 6250 4050 50  0001 C CNN "Description"
+F 5 "Amphenol RF " H 6250 4050 50  0001 C CNN "MFN"
+F 6 "112404 " H 6250 4050 50  0001 C CNN "MFP"
+F 7 "https://www.mouser.com/ProductDetail/Amphenol-RF/112404?qs=sGAEpiMZZMvlX3nhDDO4ALoCC5VwNXaExnhG12ncsBA=" H 6250 4050 50  0001 C CNN "S1PL"
+F 8 "523-112404" H 6250 4050 50  0001 C CNN "S1PN"
 	1    6250 4050
 	0    1    1    0   
 $EndComp

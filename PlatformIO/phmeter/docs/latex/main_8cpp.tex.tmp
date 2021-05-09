@@ -2,7 +2,7 @@
 \label{main_8cpp}\index{main.cpp@{main.cpp}}
 
 
-This file is the firmware to run ph\+Meter of Hackuarium. This file start the Nil\+R\+T\+OS threads for all components associates to pH and Conductivity meter board of Hackuarium.  
+This file is the firmware to run ph\+Meter of Hackuarium.  
 
 
 {\ttfamily \#include $<$Arduino.\+h$>$}\newline
@@ -21,11 +21,13 @@ void {\bfseries loop} ()
 
 
 \doxysubsection{Detailed Description}
-This file is the firmware to run ph\+Meter of Hackuarium. This file start the Nil\+R\+T\+OS threads for all components associates to pH and Conductivity meter board of Hackuarium. 
+This file is the firmware to run ph\+Meter of Hackuarium. 
 
 \begin{DoxyAuthor}{Author}
-Andres Camilo Vargas Román (\href{mailto:andresc.vargasr@gmail.com}{\texttt{ andresc.\+vargasr@gmail.\+com}}) It uses the libraries and code of the bioreactor and simple-\/spectro project to deploy new conigurations on Platform\+IO. 
+Andres Camilo Vargas Román (\href{mailto:andresc.vargasr@gmail.com}{\texttt{ andresc.\+vargasr@gmail.\+com}}) This file start the Nil\+R\+T\+OS threads for all components associates to pH and Conductivity meter board of Hackuarium.
 \end{DoxyAuthor}
+It uses the libraries and code of the bioreactor and simple-\/spectro project to deploy new conigurations on Platform\+IO.
+
 \begin{DoxyVersion}{Version}
 0.\+1 
 \end{DoxyVersion}

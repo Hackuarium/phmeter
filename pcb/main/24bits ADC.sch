@@ -158,7 +158,6 @@ Wire Wire Line
 	5150 3700 5500 3700
 Wire Wire Line
 	5500 3400 5500 3700
-Connection ~ 5600 3700
 Wire Wire Line
 	7475 3200 7325 3200
 NoConn ~ 7325 3400
@@ -216,26 +215,6 @@ PD_SCK
 Text HLabel 7475 3600 2    50   Input ~ 0
 DOUT
 NoConn ~ 6025 3000
-Wire Wire Line
-	5600 3800 5650 3800
-$Comp
-L Device:C C30
-U 1 1 5E3C27FC
-P 5800 3800
-F 0 "C30" V 5950 3700 50  0000 L CNN
-F 1 "100n" V 5675 3675 50  0000 L CNN
-F 2 "Capacitor_SMD:C_0805_2012Metric_Pad1.15x1.40mm_HandSolder" H 5838 3650 50  0001 C CNN
-F 3 "https://www.mouser.com/datasheet/2/445/885012207072-1727745.pdf" H 5800 3800 50  0001 C CNN
-F 4 "Multilayer Ceramic Capacitors MLCC - SMD/SMT WCAP-CSGP 0.1uF 0805 10% 25V MLCC " H 5800 3800 50  0001 C CNN "Description"
-F 5 "Wurth Elektronik " H 5800 3800 50  0001 C CNN "MFN"
-F 6 "885012207072" H 5800 3800 50  0001 C CNN "MFP"
-F 7 "https://www.mouser.com/ProductDetail/Wurth-Elektronik/885012207072?qs=0KOYDY2FL28rQMV4504TxA%3D%3D" H 5800 3800 50  0001 C CNN "S1PL"
-F 8 "710-885012207072 " H 5800 3800 50  0001 C CNN "S1PN"
-	1    5800 3800
-	0    -1   -1   0   
-$EndComp
-Wire Wire Line
-	5600 3700 5600 3800
 Connection ~ 5500 3700
 Wire Wire Line
 	5500 3700 5600 3700
@@ -265,8 +244,6 @@ Wire Wire Line
 Wire Wire Line
 	5950 2800 5950 2650
 Wire Wire Line
-	5950 3800 6025 3800
-Wire Wire Line
 	5150 3200 6025 3200
 Wire Wire Line
 	7425 2650 7425 2800
@@ -280,4 +257,5 @@ Wire Wire Line
 	7325 4000 7475 4000
 Wire Wire Line
 	7325 4200 7475 4200
+NoConn ~ 6025 3800
 $EndSCHEMATC
