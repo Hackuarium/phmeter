@@ -47,4 +47,43 @@ If the on-chip analog supply regulator is not used, the VSUP pin should be conne
 
 **(VSUP is connect to DVDD, VFB to ground, VGB and BASE is NC).**
 
+Clock Source Options
+---
+By connecting pin XI to Ground,, the on-chip oscillator is actived. The nominal output data rate when using the internal oscillator is 10 (RATE=0) or 80 SPS (RATE=1).
 
+Output Data Rate and Format
+---
+The output 24 bits of data is in 2's complement format. When input differential signal goes out of 24 bit range, the output data will be saturated at 800000h (MIN) or 7FFFFFh (MAX), until the input signal comes back to the input range.
+
+Serial Interface
+---
+Pin PD_SCK and DOUT are used or data retreival, input selection, gain selection and power down controls.
+
+When output data is not ready for retrieval, digital output pin DOUT is high. Serial clock input PD_SCK should be low. When DOUT goes to low, it indicates data is ready for retrieval. By applying 25~27 positive clock pulses at the PD_SCK pin, data is shifted out from the DOUT output pin. Each PD_SCK pulse shiffts out one bit, starting with the MSB bit first, until all 24 bits are shifted out. The 25th pulse at PD_SCK input will DOUT pin back tto high.
+
+Input and gain selection is controlled by the
+number of the input PD_SCK pulses (Table 3).
+PD_SCK clock pulses should not be less than 25
+or more than 27 within one conversion period, to
+avoid causing serial communication error.
+
+| PD_SCK Pulses | Input channel | Gain |
+| ------------- | ------------- | ---- |
+| 25            | A             | 128  |
+| 26            | B             | 32   |
+| 27            | A             | 64   |
+
+| Symbol        |                  Note                   | MIN | TYP | MAX | Unit     |
+| ------------- | :-------------------------------------: | --- | --- | --- | -------- |
+| T<sub>1</sub> | DOUT falling edge to PD_SCK rising edge | 0.1 |     |     | &micro;s |
+| T<sub>2</sub> |  PD_SCK rising edge to DOUT data ready  |     |     | 0.1 | &micro;s |
+| T<sub>3</sub> |            PD_SCK high time             | 0.2 | 1   | 50  | &micro;s |
+| T<sub>4</sub> |             PD_SCK low time             | 0.2 | 1   |     | &micro;s |
+
+When chip is powered up, on-chip power on rest circuitry will reset the chip.
+
+Pin PD_SCK input is used to power down the HX711. When PD_SCK Input is low, chip is in normal working mode.
+
+When PD_SCK pin changes fromm low to high and stays at high for longer than 60 &micro;s, HX711 enters power down mode. When internal regulator is used for HX711 and the external transducer, both HX711 and the transducer will be power down. When PD_SCK returns to low, chip will reset and enter normal operation mode.
+
+After a reset or power-down event, input selection is default to Channel A with gain of 128.
