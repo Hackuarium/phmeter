@@ -35,7 +35,7 @@ It can be programmed with a gain of 128 or 64. When 5V supply is used at the AVD
 **(For 3.3 AVDD the range is near to &plusmn; 13 mV and &plusmn; 26 mV respectively).**
 
 ### Channel B
-It has a fixed gain of 32. The full-scale input voltage range is &plusmn; 80 mV, when 5V suppl is used at the AVV pin.
+It has a fixed gain of 32. The full-scale input voltage range is &plusmn; 80 mV, when 5V supply is used at the AVDD pin.
 
 **(For 3.3 AVDD the range is near to &plusmn; 52 mV).**
 
@@ -49,7 +49,7 @@ If the on-chip analog supply regulator is not used, the VSUP pin should be conne
 
 Clock Source Options
 ---
-By connecting pin XI to Ground,, the on-chip oscillator is actived. The nominal output data rate when using the internal oscillator is 10 (RATE=0) or 80 SPS (RATE=1).
+By connecting pin XI to Ground, the on-chip oscillator is actived. The nominal output data rate when using the internal oscillator is 10 (RATE=0) or 80 SPS (RATE=1).
 
 Output Data Rate and Format
 ---
