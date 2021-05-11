@@ -9,3 +9,7 @@ Open source design of a battery powered pH meter
 - 2 pumps.
 - 4 I/O 12 V.
 - Battery charge.
+
+BOM
+---
+[iBOM](/pcb/main/bom/README.md)
