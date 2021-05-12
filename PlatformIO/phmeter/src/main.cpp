@@ -9,6 +9,7 @@
  * @section circuit Circuit
  * - Microcontroller ATMEGA32U4.
  * - Buck converter from 5V and 12 V to 3.3 V.
+ * - Battery charge.
  * - I2C communication.
  * - USB connection.
  * - Adquistion for pH.
@@ -57,12 +58,14 @@
 
 #include <Arduino.h>
 #include <NilRTOS.h>
+#include "config.h"
 
 /**
  * The standard Arduino setup function used for setup and configuration tasks.
  */
 void setup() {
   // put your setup code here, to run once:
+  nilSysBegin();
 }
 
 /**
