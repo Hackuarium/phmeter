@@ -1,7 +1,7 @@
 # ---
 # To buid Doxygen and PDF documentation all in one
 #
-all: docman pdf
+all: docman pdf pdf
 
 # ---
 # To buid Doxygen HTML and latex documentation of code

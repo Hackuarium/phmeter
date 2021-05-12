@@ -12,28 +12,44 @@ Include dependency graph for main.\+cpp\+:
 \doxysubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{main_8cpp_a4fc01d736fe50cf5b977f755b675f11d}\label{main_8cpp_a4fc01d736fe50cf5b977f755b675f11d}} 
-void {\bfseries setup} ()
+void \mbox{\hyperlink{main_8cpp_a4fc01d736fe50cf5b977f755b675f11d}{setup}} ()
 \item 
-\mbox{\Hypertarget{main_8cpp_afe461d27b9c48d5921c00d521181f12f}\label{main_8cpp_afe461d27b9c48d5921c00d521181f12f}} 
-void {\bfseries loop} ()
+void \mbox{\hyperlink{main_8cpp_afe461d27b9c48d5921c00d521181f12f}{loop}} ()
 \end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
 This file is the firmware to run ph\+Meter of Hackuarium. 
 
-\begin{DoxyAuthor}{Author}
-Andres Camilo Vargas Román (\href{mailto:andresc.vargasr@gmail.com}{\texttt{ andresc.\+vargasr@gmail.\+com}}) This file start the Nil\+R\+T\+OS threads for all components associates to pH and Conductivity meter board of Hackuarium.
-\end{DoxyAuthor}
+This file start the Nil\+R\+T\+OS threads for all components associates to pH and Conductivity meter board of Hackuarium.
+
 It uses the libraries and code of the bioreactor and simple-\/spectro project to deploy new conigurations on Platform\+IO.
 
+\begin{DoxyAuthor}{Author}
+Andres Camilo Vargas Román (\href{mailto:andresc.vargasr@gmail.com}{\texttt{ andresc.\+vargasr@gmail.\+com}}) 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2021-\/04-\/08 
+\end{DoxyDate}
 \begin{DoxyVersion}{Version}
 0.\+1 
 \end{DoxyVersion}
-\begin{DoxyDate}{Date}
-2021-\/04-\/08
-\end{DoxyDate}
 \begin{DoxyCopyright}{Copyright}
-Copyright (c) 2021 
+Copyright \copyright{} 2021 
 \end{DoxyCopyright}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{main_8cpp_afe461d27b9c48d5921c00d521181f12f}\label{main_8cpp_afe461d27b9c48d5921c00d521181f12f}} 
+\index{main.cpp@{main.cpp}!loop@{loop}}
+\index{loop@{loop}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{loop()}{loop()}}
+{\footnotesize\ttfamily void loop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+The standard Arduino loop function used for repeating tasks. \mbox{\Hypertarget{main_8cpp_a4fc01d736fe50cf5b977f755b675f11d}\label{main_8cpp_a4fc01d736fe50cf5b977f755b675f11d}} 
+\index{main.cpp@{main.cpp}!setup@{setup}}
+\index{setup@{setup}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{setup()}{setup()}}
+{\footnotesize\ttfamily void setup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+The standard Arduino setup function used for setup and configuration tasks. 
