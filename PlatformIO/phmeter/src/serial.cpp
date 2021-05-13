@@ -11,8 +11,10 @@
 // https://github.com/Hackuarium/simple-spectro.
 // Thread allowing serial over usb communication.
 
-#define SERIAL_BUFFER_LENGTH 32
-#define SERIAL_MAX_PARAM_VALUE_LENGTH 32
+#define SERIAL_BUFFER_LENGTH 32  // 32 - 1 (\0) space available
+/** EEPROM store 32 bits values:
+ * [−2.147.483.648,...,0,...,+2.147.483.647] */
+#define SERIAL_MAX_PARAM_VALUE_LENGTH 11 
 
 char serialBuffer[SERIAL_BUFFER_LENGTH];
 uint8_t serialBufferPosition = 0;
@@ -67,8 +69,8 @@ void noThread(Print* output) {
 }
 
 void printResult(char* data, Print* output) {
-  bool theEnd = false;
-  uint8_t paramCurrent = 0;  // Which parameter are we defining
+  bool theEnd = false;  /**< Check if serial read have finished. */
+  uint8_t paramCurrent = 0;  /**< Which parameter are we defining (A..Z,AA..AZ) */
   char paramValue[SERIAL_MAX_PARAM_VALUE_LENGTH];
   paramValue[0] = '\0';
   uint8_t paramValuePosition = 0;
@@ -84,7 +86,8 @@ void printResult(char* data, Print* output) {
     }
     if (inChar == '\0') { // NULL character is found
       theEnd = true;
-    } else if ((inChar > 47 && inChar < 58) || inChar == '-' ||
+    }
+    else if ((inChar > 47 && inChar < 58) || inChar == '-' ||
                inValue) {  // A number (could be negative)
       if ( paramValuePosition < SERIAL_MAX_PARAM_VALUE_LENGTH ) {
         paramValue[ paramValuePosition ] = inChar;
@@ -125,7 +128,7 @@ void printResult(char* data, Print* output) {
 */
           } else {
             // Check this (params.h)
-            //setAndSaveParameter(paramCurrent - 1, atoi(paramValue));
+            setAndSaveParameter(paramCurrent - 1, atoi(paramValue));
           }
         }
         if (wireTargetAddress > 0) {
@@ -138,20 +141,20 @@ void printResult(char* data, Print* output) {
 */
         } else {
           // Check this (params.h)
-          //output->println(parameters[paramCurrent - 1]);
+          output->println(parameters[paramCurrent - 1]);
         }
-        if (paramCurrent <= MAX_PARAM) {
-          paramCurrent++;
-          paramValuePosition = 0;
-          paramValue[0] = '\0';
-        }
+        // Reset current parameter and value position.
+        paramCurrent = 0;
+        paramValuePosition = 0;
+        paramValue[0] = '\0';
       }
     }
+    // It is not used.
     // we may have one or 2 lowercasee
-    if (data[0] > 96 && data[0] < 123 &&
-        (i > 1 || data[1] < 97 || data[1] > 122)) {
-      inValue = true;
-    }
+    // if (data[0] > 96 && data[0] < 123 &&
+    //     (i > 1 || data[1] < 97 || data[1] > 122)) {
+    //   inValue = true;
+    // }
   }
 
   // we will process the commands, it means it starts with lowercase
@@ -183,6 +186,7 @@ void printResult(char* data, Print* output) {
     default:
     // Check this
       //processSpecificCommand(data, paramValue, output);
+      output->println(F("Command not found. Please use 'h' for help."));
       break;
   }
   output->println("");
