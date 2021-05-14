@@ -109,6 +109,7 @@ void printParameter(Print* output, byte number) {
 }
 
 void printParameters(Print* output) {
+  setupParameters();
   for (int i = 0; i < MAX_PARAM; i++) {
     printParameter(output, i);
   }

@@ -176,7 +176,6 @@ void printResult(char* data, Print* output) {
       break;
 #endif
     case 's':
-      // Check this (params.h)
       printParameters(output);
       break;
     case 'u':

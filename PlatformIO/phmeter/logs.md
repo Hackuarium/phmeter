@@ -13,6 +13,8 @@
 
 05-14-2021:
 ---
+- Add setupParameters(); into printParameters(...) in *params.cpp* to see last values.
+- Complete resetParameters() in *serialUtilities.cpp*.
 
 ### NOTE 1
 - Click - PlatformIO.

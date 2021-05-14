@@ -9,7 +9,12 @@
 // https://github.com/Hackuarium/simple-spectro/tree/master/arduino/SimpleSpectro.
 // Allows serial monitoring communication.
 
-void resetParameters() {}
+void resetParameters() {
+  for (uint16_t i = 0 ; i < 512 ; i++) {
+    // eeprom_write_byte(i, 0);
+    eeprom_write_word((uint16_t*)i,0);
+  }
+}
 
 void printUtilitiesHelp(Print* output) {
   output->println(F("(uc) Compact settings"));

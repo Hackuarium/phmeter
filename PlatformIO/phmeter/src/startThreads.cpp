@@ -1,7 +1,7 @@
 #include "config.h"
 //#include "monitoring.h"
 #include "serial.h"
-//#include "I2C.h"
+#include "I2C.h"
 
 #ifdef THR_WIRE_MASTER
 //16/09/2020
@@ -37,14 +37,14 @@ NIL_THREADS_TABLE_ENTRY(NULL,
                         sizeof(waThreadSerial))
 #endif
 
-/*#ifdef THR_I2C
+#ifdef THR_I2C
 NIL_THREADS_TABLE_ENTRY(NULL,
                         ThreadI2C,
                         NULL,
                         waThreadI2C,
                         sizeof(waThreadI2C))
 #endif
-*/
+
 
 /*ifdef THR_WIRE_MASTER 
 NIL_THREADS_TABLE_ENTRY(NULL,
