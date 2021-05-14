@@ -120,8 +120,11 @@ void printCompactParameters(Print* output, byte number) {
   }
   byte checkDigit = 0;
 
-  // we first add epoch
-  checkDigit ^= toHex(output, (long)now());
+  // we first add epoch (32 bits)
+  long nowVal = (long)now();
+  checkDigit ^= toHex(output, nowVal);
+
+  // Now, we print every 16 bits parameters
   for (int i = 0; i < number; i++) {
     int value = getParameter(i);
     checkDigit ^= toHex(output, value);

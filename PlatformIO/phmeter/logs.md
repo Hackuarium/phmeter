@@ -8,10 +8,11 @@
 ---
 
 - Enable --echo flag for pio device monitor in PlatformIO [NOTE 1].
-- Change **SERIAL_MAX_PARAM_VALUE_LENGTH** from 32 to 16 because we're using 16 bits store data in the EEPROM (1024 bytes ATMEGA32U4).
+- Change **SERIAL_MAX_PARAM_VALUE_LENGTH** from 32 to 6 because we're using 16 bits store data in the EEPROM (1024 bytes ATMEGA32U4 - 512 words of 2 bytes length).
+- Update toHex.cpp file.
 
-22.99 585
-33.2 9512
+05-14-2021:
+---
 
 ### NOTE 1
 - Click - PlatformIO.

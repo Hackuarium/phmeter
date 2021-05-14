@@ -12,9 +12,9 @@
 // Thread allowing serial over usb communication.
 
 #define SERIAL_BUFFER_LENGTH 32  // 32 - 1 (\0) space available
-/** EEPROM store 32 bits values:
- * [−2.147.483.648,...,0,...,+2.147.483.647] */
-#define SERIAL_MAX_PARAM_VALUE_LENGTH 11 
+/** EEPROM store 16 bits values:
+ * [-65536,...,0,...,+65535] */
+#define SERIAL_MAX_PARAM_VALUE_LENGTH 6 
 
 char serialBuffer[SERIAL_BUFFER_LENGTH];
 uint8_t serialBufferPosition = 0;
@@ -186,7 +186,7 @@ void printResult(char* data, Print* output) {
     default:
     // Check this
       //processSpecificCommand(data, paramValue, output);
-      output->println(F("Command not found. Please use 'h' for help."));
+      // output->println(F("Command not found. Please use 'h' for help."));
       break;
   }
   output->println("");
