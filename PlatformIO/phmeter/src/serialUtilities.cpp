@@ -34,6 +34,7 @@ void processUtilitiesCommand(char command,
                              Print* output) {  // char and char* ??
   switch (command) {
     case 'c':
+      setupParameters();
       if (paramValue[0] != '\0') {
         printCompactParameters(output, atoi(paramValue));
       } else {

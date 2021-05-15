@@ -16,6 +16,11 @@
 - Add setupParameters(); into printParameters(...) in *params.cpp* to see last values.
 - Complete resetParameters() in *serialUtilities.cpp*.
 
+05-15-2021:
+---
+- Add setupParameters(); in 'uc' option in *serialUtilities.cpp* to see actual parameters stored in EEPROM.
+- Verified I2C thread.
+
 ### NOTE 1
 - Click - PlatformIO.
 - Click on: **Projects & Configuration**.
