@@ -1,5 +1,6 @@
 #include <Arduino.h>
-#include <NilRTOS.h>
+// #include <NilRTOS.h>
+#include <ChNil.h>
 #include "params.h"
 
 /* The qualifier represents the card ID and is stored just after the last
@@ -46,7 +47,8 @@ void getStatusEEPROM(Print* output) {
     if (j == bytesPerRow) {
       j = 0;
       output->println(buf);
-      nilThdSleepMilliseconds(25);
+      // nilThdSleepMilliseconds(25);
+      chThdSleep(25);
     } else {
       output->print(buf);
     }

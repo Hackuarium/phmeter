@@ -1,10 +1,12 @@
-#include <NilRTOS.h>
+// #include <NilRTOS.h>
+#include <ChNil.h>
 #include "config.h"
 #include <Wire.h>
 
 #ifdef THR_I2C
 
-NIL_THREAD(ThreadI2C, arg) {
+// NIL_THREAD(ThreadI2C, arg) {
+THD_FUNCTION(ThreadI2C, arg) {
   extern Serial_ Serial;
   Wire.begin();
 
@@ -45,7 +47,8 @@ NIL_THREAD(ThreadI2C, arg) {
       Serial.println("done\n");
     }
     
-    nilThdSleepMilliseconds(5000); // Wait 5 seconds for next scan
+    // nilThdSleepMilliseconds(5000); // Wait 5 seconds for next scan
+    chThdSleep(5000); // Wait 5 seconds for next scan
   }
 }
 

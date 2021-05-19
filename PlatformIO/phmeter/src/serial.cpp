@@ -1,4 +1,5 @@
-#include <NilRTOS.h>
+// #include <NilRTOS.h>
+#include <ChNil.h>
 #include "config.h"
 
 #include "serialUtilities.h"
@@ -194,7 +195,8 @@ void printResult(char* data, Print* output) {
 #ifdef THR_SERIAL
 
 //NIL_WORKING_AREA(waThreadSerial, 96);  // minimum 96
-NIL_THREAD(ThreadSerial, arg) {
+// NIL_THREAD(ThreadSerial, arg) {
+THD_FUNCTION(ThreadSerial, arg) {
   Serial.begin(9600);
   while (true) {
     while (Serial.available()) {

@@ -344,7 +344,7 @@ L Device:C C6
 U 1 1 5ED893AD
 P 2800 6575
 F 0 "C6" H 2915 6621 50  0000 L CNN
-F 1 "100n" H 2915 6530 50  0000 L CNN
+F 1 "10u" H 2915 6530 50  0000 L CNN
 F 2 "Capacitor_SMD:C_0805_2012Metric_Pad1.15x1.40mm_HandSolder" H 2838 6425 50  0001 C CNN
 F 3 "https://www.mouser.com/datasheet/2/445/885012207072-1727745.pdf" H 2800 6575 50  0001 C CNN
 F 4 "Multilayer Ceramic Capacitors MLCC - SMD/SMT WCAP-CSGP 0.1uF 0805 10% 25V MLCC " H 2800 6575 50  0001 C CNN "Description"
@@ -360,7 +360,7 @@ L Device:C C7
 U 1 1 5ED89E70
 P 3175 6575
 F 0 "C7" H 3290 6621 50  0000 L CNN
-F 1 "10u" H 3290 6530 50  0000 L CNN
+F 1 "100n" H 3290 6530 50  0000 L CNN
 F 2 "Capacitor_SMD:C_0805_2012Metric_Pad1.15x1.40mm_HandSolder" H 3213 6425 50  0001 C CNN
 F 3 "https://www.mouser.com/datasheet/2/585/MLCC-1837944.pdf" H 3175 6575 50  0001 C CNN
 F 4 "Multilayer Ceramic Capacitors MLCC - SMD/SMT 16V 10uF X5R 0805 10%" H 3175 6575 50  0001 C CNN "Description"

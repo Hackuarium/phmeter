@@ -1,4 +1,5 @@
-#include <NilRTOS.h>
+// #include <NilRTOS.h>
+#include <ChNil.h>
 #include "config.h"
 
 //#include "SerialUtilities.h"
@@ -17,7 +18,9 @@ void processSpecificCommand(char* data, char* paramValue, Print* output);
 
 #ifdef THR_SERIAL
 
-NIL_WORKING_AREA(waThreadSerial, 96);  // minimum 96
-NIL_THREAD(ThreadSerial, arg);
+// NIL_WORKING_AREA(waThreadSerial, 96);  // minimum 96
+// NIL_THREAD(ThreadSerial, arg);
+THD_WORKING_AREA(waThreadSerial, 96);  // minimum 96
+THD_FUNCTION(ThreadSerial, arg);
 
 #endif

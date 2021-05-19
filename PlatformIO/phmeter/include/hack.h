@@ -6,7 +6,9 @@
 #include "nil/nilUtility.cpp"
 #include "nil/nil.c"
 */
-#include <NilRTOS.h>
+// #include <NilRTOS.h>
+#include <ChNil.h>
+
 
 SEMAPHORE_DECL(lockTimeCriticalZone, 1); // only one process in some specific zones
 

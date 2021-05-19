@@ -1,5 +1,6 @@
 #include <Arduino.h>
-#include <NilRTOS.h>
+// #include <NilRTOS.h>
+#include <ChNil.h>
 #include <TimeLib.h>
 
 #include "eeprom.h"
@@ -26,7 +27,8 @@ void printUtilitiesHelp(Print* output) {
 }
 
 void printFreeMemory(Print* output) {
-  nilPrintUnusedStack(output);
+  // nilPrintUnusedStack(output);
+  chPrintUnusedStack(output);
 }
 
 void processUtilitiesCommand(char command,

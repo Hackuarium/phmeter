@@ -1,8 +1,37 @@
-05-12-2021:
+Task
+===
+- Defining parameters to set (see https://hackuarium.github.io/bioreactor/).
+
+05-19-2021:
 ---
-- Delete *if* condition for serial NIL_THREAD.
-- Delete *if* condition for A-Z check.
-- Display **ERR** if the serial is more than **SERIAL_BUFFER_LENGTH**.
+- Replace Nil library for PlatformIO recently library.
+- Replace HX711 for PlatformIO recently library.
+
+```
+lib_deps = 
+	bogde/HX711@^0.7.4
+	greiman/ChNil@^2017.8.2
+```
+- Replace new commands for NilRTOS with PlatformIO:
+
+| Old command                                                              | New command                                          |
+| ------------------------------------------------------------------------ | ---------------------------------------------------- |
+| nilThdSleepMilliseconds(1);                                              | chThdSleep(1);                                       |
+| nilPrintUnusedStack(&Serial);                                            | chPrintUnusedStack(&Serial);                         |
+| NIL_WORKING_AREA(waThreadI2C, 20);                                       | THD_WORKING_AREA(waThread2, 20);                     |
+| NIL_THREAD(Thread2, arg) {...}                                           | THD_FUNCTION(Thread2, arg) {...}                     |
+| NIL_THREADS_TABLE_BEGIN()                                                | THD_TABLE_BEGIN                                      |
+| NIL_THREADS_TABLE_ENTRY(NULL, Thread1, NULL, waThread1, sizeof(Thread1)) | THD_TABLE_ENTRY(waThread1, **"thread1" or NULL**, Thread1, NULL) |
+
+05-15-2021:
+---
+- Add setupParameters(); in 'uc' option in *serialUtilities.cpp* to see actual parameters stored in EEPROM.
+- Verified I2C thread.
+
+05-14-2021:
+---
+- Add setupParameters(); into printParameters(...) in *params.cpp* to see last values.
+- Complete resetParameters() in *serialUtilities.cpp*.
 
 05-13-2021:
 ---
@@ -11,15 +40,12 @@
 - Change **SERIAL_MAX_PARAM_VALUE_LENGTH** from 32 to 6 because we're using 16 bits store data in the EEPROM (1024 bytes ATMEGA32U4 - 512 words of 2 bytes length).
 - Update toHex.cpp file.
 
-05-14-2021:
+05-12-2021:
 ---
-- Add setupParameters(); into printParameters(...) in *params.cpp* to see last values.
-- Complete resetParameters() in *serialUtilities.cpp*.
+- Delete *if* condition for serial NIL_THREAD.
+- Delete *if* condition for A-Z check.
+- Display **ERR** if the serial is more than **SERIAL_BUFFER_LENGTH**.
 
-05-15-2021:
----
-- Add setupParameters(); in 'uc' option in *serialUtilities.cpp* to see actual parameters stored in EEPROM.
-- Verified I2C thread.
 
 ### NOTE 1
 - Click - PlatformIO.

@@ -57,7 +57,8 @@
  */
 
 #include <Arduino.h>
-#include <NilRTOS.h>
+// #include <NilRTOS.h>
+#include <ChNil.h>
 #include "config.h"
 
 /**
@@ -65,7 +66,9 @@
  */
 void setup() {
   // put your setup code here, to run once:
-  nilSysBegin();
+  // nilSysBegin();
+  // Start Nil RTOS.
+  chBegin();
 }
 
 /**
