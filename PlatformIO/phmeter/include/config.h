@@ -19,6 +19,10 @@
 // 08/21/2020
 #define THR_I2C 1
 
+// 06/01/2021
+#define THR_PH_AND_CONDUCTIVITY
+
+
 // 08/24/2020
 // Enable Thread into WireMaster[.h,.cpp] into hack folder
 //#define THR_WIRE_MASTER 1

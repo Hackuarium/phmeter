@@ -2,6 +2,7 @@
 //#include "monitoring.h"
 #include "serial.h"
 #include "I2C.h"
+#include "phAndConductivity.h"
 
 #ifdef THR_WIRE_MASTER
 //16/09/2020
@@ -77,6 +78,9 @@ THD_TABLE_BEGIN
 #endif
 #ifdef THR_I2C
       THD_TABLE_ENTRY(waThreadI2C, NULL, ThreadI2C, NULL)
+#endif
+#ifdef THR_PH_AND_CONDUCTIVITY
+      THD_TABLE_ENTRY(waThreadPhAndConductivity, NULL, ThreadPhAndConductivity, NULL)
 #endif
 //   THD_TABLE_ENTRY(waThread2, "thread2", Thread2, NULL)
 THD_TABLE_END

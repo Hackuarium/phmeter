@@ -9,7 +9,6 @@
 // #include <NilRTOS.h>
 #include <ChNil.h>
 
-
 SEMAPHORE_DECL(lockTimeCriticalZone, 1); // only one process in some specific zones
 
 #include <avr/wdt.h> // watchdog for automatic reboot in case of crash

@@ -2,6 +2,10 @@ Task
 ===
 - Defining parameters to set (see https://hackuarium.github.io/bioreactor/).
 
+06-01-2021:
+---
+- Add pH and Conductivity adquisition performed (step 1).
+
 05-19-2021:
 ---
 - Replace Nil library for PlatformIO recently library.
