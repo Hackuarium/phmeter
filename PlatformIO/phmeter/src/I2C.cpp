@@ -12,11 +12,11 @@ THD_FUNCTION(ThreadI2C, arg) {
 
   while (true) {
     while (!Serial); // Leonardo: wait for serial monitor
-    Serial.println("\nI2C Scanner");Wire.begin();
+    //Serial.println("\nI2C Scanner");Wire.begin();
     
     int nDevices = 0;
     
-    Serial.println("Scanning...");
+    //Serial.println("Scanning...");
     for (byte address = 1; address < 127; ++address) {
       // The i2c_scanner uses the return value of
       // the Write.endTransmisstion to see if
@@ -42,7 +42,7 @@ THD_FUNCTION(ThreadI2C, arg) {
       }
     }
     if (nDevices == 0) {
-      Serial.println("No I2C devices found\n");
+      //Serial.println("No I2C devices found\n");
     } else {
       Serial.println("done\n");
     }

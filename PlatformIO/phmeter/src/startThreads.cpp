@@ -10,6 +10,12 @@
 #include"WireM.h"
 
 #endif
+
+#ifdef THR_LCD
+
+#include "lcd.h"
+
+#endif
 //#include "hack/Serial.h"
 
 //#include <SerialSpecific.h>
@@ -81,6 +87,9 @@ THD_TABLE_BEGIN
 #endif
 #ifdef THR_PH_AND_CONDUCTIVITY
       THD_TABLE_ENTRY(waThreadPhAndConductivity, NULL, ThreadPhAndConductivity, NULL)
+#endif
+#ifdef THR_LCD
+      THD_TABLE_ENTRY(waThreadLCD, NULL, ThreadLCD, NULL)
 #endif
 //   THD_TABLE_ENTRY(waThread2, "thread2", Thread2, NULL)
 THD_TABLE_END

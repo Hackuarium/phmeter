@@ -7,16 +7,18 @@
 #ifdef THR_PH_AND_CONDUCTIVITY
 
 #include <HX711.h>
-//#include <phAndConductivity.h>
 
 HX711 scale;
-//HX711 scale(PH_AND_CONDUCTIVITY_DATA, PH_AND_CONDUCTIVITY_CLK);
 
 THD_FUNCTION(ThreadPhAndConductivity, arg) {
   chThdSleep(1234); // wait a little bit not everything starts at once
+  scale.begin(PH_AND_CONDUCTIVITY_DATA, PH_AND_CONDUCTIVITY_CLK, 32);
+  scale.set_gain(32);
+  scale.set_scale();
+  scale.tare(); //Reset the scale to 0
 
   /********************************************
-               initialisation
+               initialization
   ********************************************/
   //int weight;
 
@@ -24,16 +26,12 @@ THD_FUNCTION(ThreadPhAndConductivity, arg) {
                Thread Loop
   ********************************************/
   while (true) {
-    chThdSleep(1000);
+    chThdSleep(10);//1000
 
-    scale.begin(PH_AND_CONDUCTIVITY_DATA, PH_AND_CONDUCTIVITY_CLK);
-    scale.set_gain(32);
-    scale.set_scale();
-    scale.tare(); //Reset the scale to 0
-
-    long zero_factor = scale.read_average(); //Get a baseline reading
-    Serial.print("Zero factor: "); //This can be used to remove the need to tare the scale. Useful in permanent scale projects.
-    Serial.println(zero_factor);
+    long zero_factor_B = scale.read_average(1); //Get a baseline reading
+    //scale.set_gain(32);
+    Serial.print("Zero factor B: "); //This can be used to remove the need to tare the scale. Useful in permanent scale projects.
+    Serial.println(zero_factor_B);
 
     /*
 
