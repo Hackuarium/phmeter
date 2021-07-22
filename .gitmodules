@@ -1,0 +1,3 @@
+[submodule "CAD/laser-cut-box"]
+	path = CAD/laser-cut-box
+	url = https://github.com/Hackuarium/laser-cut-box.git

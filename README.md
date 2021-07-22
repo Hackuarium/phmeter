@@ -13,3 +13,13 @@ Open source design of a battery powered pH meter
 BOM
 ---
 [iBOM](/pcb/main/bom/README.md)
+
+## Cloning the project
+
+In order to clone it use:
+
+git clone --recurse-submodules hhttps://github.com/Hackuarium/phmeter
+
+To update the submodules:
+
+git submodule update --recursive --remote
