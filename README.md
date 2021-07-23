@@ -18,7 +18,7 @@ BOM
 
 In order to clone it use:
 
-git clone --recurse-submodules hhttps://github.com/Hackuarium/phmeter
+git clone --recurse-submodules https://github.com/Hackuarium/phmeter
 
 To update the submodules:
 
