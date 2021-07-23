@@ -46,7 +46,11 @@ pcb(
          [100 - 7.29, 41.2, 14],  // pH probe
     ],
     frontHolesB=[
-      [100 - (135.2806 - 50), 2.25, 11.6, 9.5]    // usb connector
+        [100 - (135.2806 - 50), 2.25, 11.6, 9.5],    // usb connector
+        [100 - (120.5992 - 50), 2.25 + 3.5, 14, 16.5],    // RJ12 I2C connector
+        [100 - 55.524, 1.5, 7],    // one-wire 3.5mm plug
+        [100 - 41.275, 1.5, 7],    // one-wire 3.5mm plug
+    
     ],
     showLabels=showLabels,    //should we show the labels
     active=[1,1,1,1,1,1],
