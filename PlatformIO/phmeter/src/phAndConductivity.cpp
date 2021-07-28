@@ -26,9 +26,9 @@ THD_FUNCTION(ThreadPhAndConductivity, arg) {
                Thread Loop
   ********************************************/
   while (true) {
-    chThdSleep(10);//1000
+    chThdSleep(100);//1000
 
-    long zero_factor_B = scale.read_average(1); //Get a baseline reading
+    long zero_factor_B = scale.read_average(); //Get a baseline reading
     //scale.set_gain(32);
     Serial.print("Zero factor B: "); //This can be used to remove the need to tare the scale. Useful in permanent scale projects.
     Serial.println(zero_factor_B);
