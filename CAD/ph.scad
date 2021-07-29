@@ -2,7 +2,7 @@ $fn=40;
 
 use <laser-cut-box/pcbbox/pcb.scad>;
 
-3d=false;
+3d=true;
 
 showLabels=false;
 
@@ -51,6 +51,12 @@ pcb(
         [100 - 55.524, 1.5, 7],    // one-wire 3.5mm plug
         [100 - 41.275, 1.5, 7],    // one-wire 3.5mm plug
     
+    ],
+    leftHoles=[         // holes on the left of the box, over the PCB
+        [10,-5,8.2,8.2],
+        [21,-5,8.2,8.2],
+        [32,-5,8.2,8.2],
+        [43,-5,8.2,8.2],
     ],
     showLabels=showLabels,    //should we show the labels
     active=[1,1,1,1,1,1],
