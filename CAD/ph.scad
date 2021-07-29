@@ -2,7 +2,7 @@ $fn=40;
 
 use <laser-cut-box/pcbbox/pcb.scad>;
 
-3d=true;
+3d=false;
 
 showLabels=false;
 
@@ -53,10 +53,10 @@ pcb(
     
     ],
     leftHoles=[         // holes on the left of the box, over the PCB
-        [10,-5,8.2,8.2],
-        [21,-5,8.2,8.2],
-        [32,-5,8.2,8.2],
-        [43,-5,8.2,8.2],
+        [17,-5,8.2,8.2],
+        [28,-5,8.2,8.2],
+        [39,-5,8.2,8.2],
+        [51,-5,8.2,8.2],
     ],
     showLabels=showLabels,    //should we show the labels
     active=[1,1,1,1,1,1],
