@@ -130,7 +130,7 @@ unzip -p 2021-05-07-raspios-buster-armhff.zip | sudo dd of=/dev/mmcblk0 bs=4M co
 
 ![dd-finish](Images/07-dd-finish.png)
 
-### (optional): checking whether the image was correctly written to the SD card]
+### (optional): checking whether the image was correctly written to the SD card
 
 See: [Installing Operative System images on Linux](https://www.raspberrypi.org/documentation/installation/installing-images/linux.md).
 
