@@ -23,3 +23,5 @@ git clone --recurse-submodules https://github.com/Hackuarium/phmeter
 To update the submodules:
 
 git submodule update --recursive --remote
+
+Last update: 04/08/2021
