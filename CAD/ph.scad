@@ -47,12 +47,12 @@ pcb(
          [100 - 7.29, 41.2, 14],  // pH probe
     ],
     frontHolesB=[
-        [100 - (135.2806 - 50), 2.25, 11.6, 9.5],    // usb connector
+        [100 - (135.2806 - 50), 1.25, 11.6, 7.5],    // usb connector
         [100 - (120.5992 - 50), 2.25 + 3.5, 14, 16.5],    // RJ12 I2C connector
         //[100 - 55.524, 1.5, 7],    // one-wire 3.5mm plug
-        [100 - (38.165 + 6.2 + 8.032 + 3.1), 3.1, 7],    // one-wire 3.5mm plug
+        [100 - (38.165 + 6.2 + 8.032 + 3.1), 3.5, 8],    // one-wire 3.5mm plug
         //[100 - 41.275, 1.5, 7],    // one-wire 3.5mm plug
-        [100 - (38.165 + 3.1), 3.1, 7],    // one-wire 3.5mm plug
+        [100 - (38.165 + 3.1), 3.5, 8],    // one-wire 3.5mm plug
     ],
     leftHoles=[         // holes on the left of the box, over the PCB
         [17,-5,8.2,8.2],
