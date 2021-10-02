@@ -31,6 +31,7 @@ lib_deps =
 | NIL_THREAD(Thread2, arg) {...}                                           | THD_FUNCTION(Thread2, arg) {...}                                 |
 | NIL_THREADS_TABLE_BEGIN()                                                | THD_TABLE_BEGIN                                                  |
 | NIL_THREADS_TABLE_ENTRY(NULL, Thread1, NULL, waThread1, sizeof(Thread1)) | THD_TABLE_ENTRY(waThread1, **"thread1" or NULL**, Thread1, NULL) |
+| NIL_THREADS_TABLE_END()                                                  | THD_TABLE_END                                                    |
 
 ## 05-15-2021:
 
