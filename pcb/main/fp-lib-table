@@ -1,3 +1,5 @@
 (fp_lib_table
   (lib (name pHMeter)(type KiCad)(uri ${KIPRJMOD}/pHMeter.pretty)(options "")(descr ""))
+  (lib (name CD4060BM)(type KiCad)(uri ${KIPRJMOD}/library/CD4060/footprints.pretty)(options "")(descr ""))
+  (lib (name LM2060M)(type KiCad)(uri ${KIPRJMOD}/library/LM2060M/footprints.pretty)(options "")(descr ""))
 )

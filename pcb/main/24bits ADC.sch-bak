@@ -18,7 +18,7 @@ L Bertha_main-eagle-import:JUMPER-PAD-2-NC_BY_TRACE SJ1
 U 1 1 5E3C27B4
 P 3550 4900
 F 0 "SJ1" H 3650 5025 59  0000 R CNN
-F 1 "JUMPER-PAD-2-NC_BY_TRACE" H 4375 5150 59  0000 R CNN
+F 1 "JUMPER-PAD-2-NC_BY_TRACE" H 4250 5200 59  0000 R CNN
 F 2 "Jumper:SolderJumper-2_P1.3mm_Open_RoundedPad1.0x1.5mm" H 3550 4900 50  0001 C CNN
 F 3 "" H 3550 4900 50  0001 C CNN
 	1    3550 4900
@@ -138,12 +138,8 @@ Text HLabel 7575 2575 1    59   Input ~ 0
 3.3V
 Text HLabel 3950 4550 1    59   Input ~ 0
 3.3V
-Text Label 4825 3825 2    59   ~ 0
-LGND
 Wire Wire Line
 	4825 3700 4825 3825
-Text Label 3550 4600 0    59   ~ 0
-LGND
 Text Notes 7100 7000 0    315  ~ 0
 24bits HX711
 Text HLabel 7475 4000 2    50   Input ~ 0
@@ -220,8 +216,6 @@ Wire Wire Line
 	5500 3700 5600 3700
 Wire Wire Line
 	5600 3600 5600 3700
-Text Label 5650 4000 2    50   ~ 0
-LGND
 Wire Wire Line
 	5650 4000 6025 4000
 Wire Wire Line
@@ -258,4 +252,10 @@ Wire Wire Line
 Wire Wire Line
 	7325 4200 7475 4200
 NoConn ~ 6025 3800
+Text GLabel 5650 4000 0    50   Input ~ 0
+LGND
+Text GLabel 4825 3825 0    50   Input ~ 0
+LGND
+Text GLabel 3550 4600 0    50   Input ~ 0
+LGND
 $EndSCHEMATC

@@ -5,8 +5,8 @@ $Descr A3 16535 11693
 encoding utf-8
 Sheet 1 6
 Title "PHMeter"
-Date "2021-05-09"
-Rev "0.2"
+Date "2021-11-26"
+Rev "0.3"
 Comp "Hackuarium"
 Comment1 "New version for pH and conductivity Meter"
 Comment2 ""
@@ -1670,14 +1670,6 @@ F5 "GND" I L 4225 4150 50
 F6 "SCK" I R 4975 4100 50 
 F7 "MOSI" I R 4975 3975 50 
 $EndSheet
-$Sheet
-S 700  4300 650  350 
-U 5F3634CD
-F0 "Conductometer" 50
-F1 "Conductometer.sch" 50
-F2 "VIn" I L 700 4475 50 
-F3 "VOut" I R 1350 4475 50 
-$EndSheet
 Text GLabel 625  4400 1    50   Input ~ 0
 3.3V
 Wire Wire Line
@@ -2535,107 +2527,6 @@ D7
 Wire Wire Line
 	11000 6450 11100 6450
 $Comp
-L Device:R R56
-U 1 1 5F9CF052
-P 14900 5875
-F 0 "R56" V 14693 5875 50  0000 C CNN
-F 1 "1k" V 14784 5875 50  0000 C CNN
-F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 14830 5875 50  0001 C CNN
-F 3 "~" H 14900 5875 50  0001 C CNN
-	1    14900 5875
-	0    1    1    0   
-$EndComp
-$Comp
-L Device:R R54
-U 1 1 5F9CF058
-P 14675 6100
-F 0 "R54" H 14605 6054 50  0000 R CNN
-F 1 "100" H 14605 6145 50  0000 R CNN
-F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 14605 6100 50  0001 C CNN
-F 3 "~" H 14675 6100 50  0001 C CNN
-	1    14675 6100
-	-1   0    0    1   
-$EndComp
-Text GLabel 14600 5875 0    50   Input ~ 0
-3.3V
-Wire Wire Line
-	14600 5875 14675 5875
-Wire Wire Line
-	14675 5950 14675 5875
-Connection ~ 14675 5875
-Wire Wire Line
-	14675 5875 14750 5875
-Wire Wire Line
-	15050 5875 15125 5875
-Wire Wire Line
-	15125 5875 15125 5950
-Wire Wire Line
-	15125 6250 15125 6325
-Wire Wire Line
-	15125 6325 15200 6325
-Wire Wire Line
-	14675 6250 14675 6325
-Wire Wire Line
-	14675 6325 15125 6325
-Connection ~ 15125 6325
-$Comp
-L Device:R R52
-U 1 1 5F9CF06A
-P 14450 6325
-F 0 "R52" V 14657 6325 50  0000 C CNN
-F 1 "4.7k" V 14566 6325 50  0000 C CNN
-F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 14380 6325 50  0001 C CNN
-F 3 "~" H 14450 6325 50  0001 C CNN
-	1    14450 6325
-	0    -1   -1   0   
-$EndComp
-$Comp
-L Device:R R50
-U 1 1 5F9CF070
-P 14000 6475
-F 0 "R50" V 14207 6475 50  0000 C CNN
-F 1 "1k" V 14116 6475 50  0000 C CNN
-F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 13930 6475 50  0001 C CNN
-F 3 "~" H 14000 6475 50  0001 C CNN
-	1    14000 6475
-	0    -1   -1   0   
-$EndComp
-Wire Wire Line
-	14600 6325 14675 6325
-Connection ~ 14675 6325
-$Comp
-L Bertha_main-eagle-import:GND #U06
-U 1 1 5F9CF078
-P 14675 6900
-F 0 "#U06" H 14725 6950 50  0001 C CNN
-F 1 "GND" H 14778 6938 42  0000 L CNN
-F 2 "" H 14675 6900 50  0001 C CNN
-F 3 "" H 14675 6900 50  0001 C CNN
-	1    14675 6900
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	15200 6425 14675 6425
-Wire Wire Line
-	14675 6425 14675 6800
-NoConn ~ 15200 6525
-NoConn ~ 15200 6725
-Wire Wire Line
-	15200 6625 14225 6625
-Wire Wire Line
-	14225 6625 14225 6475
-Wire Wire Line
-	14225 6325 14300 6325
-Wire Wire Line
-	14150 6475 14225 6475
-Connection ~ 14225 6475
-Wire Wire Line
-	14225 6475 14225 6325
-Text GLabel 13750 6475 0    50   Input ~ 0
-D7
-Wire Wire Line
-	13750 6475 13850 6475
-$Comp
 L Connector:AudioJack3_SwitchTR J4
 U 1 1 5FA04BCE
 P 12650 6400
@@ -2644,17 +2535,6 @@ F 1 "AudioJack3_SwitchTR" V 12275 6650 50  0000 R CNN
 F 2 "Connector_Audio:Jack_3.5mm_Ledino_KB3SPRS_Horizontal" H 12650 6400 50  0001 C CNN
 F 3 "~" H 12650 6400 50  0001 C CNN
 	1    12650 6400
-	-1   0    0    -1  
-$EndComp
-$Comp
-L Connector:AudioJack3_SwitchTR J6
-U 1 1 5FA2F68F
-P 15400 6425
-F 0 "J6" V 15100 6325 50  0000 R CNN
-F 1 "AudioJack3_SwitchTR" V 15025 6725 50  0000 R CNN
-F 2 "Connector_Audio:Jack_3.5mm_Ledino_KB3SPRS_Horizontal" H 15400 6425 50  0001 C CNN
-F 3 "~" H 15400 6425 50  0001 C CNN
-	1    15400 6425
 	-1   0    0    -1  
 $EndComp
 $Comp
@@ -2671,22 +2551,6 @@ F 6 "150080YS75000" H 12375 6075 50  0001 C CNN "MFP"
 F 7 "https://www.mouser.com/ProductDetail/Wurth-Elektronik/150080YS75000?qs=LlUlMxKIyB3k0fZGrDMI2w%3D%3D" H 12375 6075 50  0001 C CNN "S1PL"
 F 8 " 710-150080YS75000 " H 12375 6075 50  0001 C CNN "S1PN"
 	1    12375 6075
-	0    1    -1   0   
-$EndComp
-$Comp
-L Device:LED D20
-U 1 1 5FA5C1EC
-P 15125 6100
-F 0 "D20" V 15164 6180 50  0000 L CNN
-F 1 "YELLOW" V 15073 6180 50  0000 L CNN
-F 2 "LED_SMD:LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder" H 15125 6100 50  0001 C CNN
-F 3 "https://www.mouser.com/datasheet/2/445/150080YS75000-1715432.pdf" H 15125 6100 50  0001 C CNN
-F 4 "Standard LEDs - SMD WL-SMCW SMDMono TpVw Waterclr 0805 Yellow " H 15125 6100 50  0001 C CNN "Description"
-F 5 "Wurth Elektronik " H 15125 6100 50  0001 C CNN "MFN"
-F 6 "150080YS75000" H 15125 6100 50  0001 C CNN "MFP"
-F 7 "https://www.mouser.com/ProductDetail/Wurth-Elektronik/150080YS75000?qs=LlUlMxKIyB3k0fZGrDMI2w%3D%3D" H 15125 6100 50  0001 C CNN "S1PL"
-F 8 " 710-150080YS75000 " H 15125 6100 50  0001 C CNN "S1PN"
-	1    15125 6100
 	0    1    -1   0   
 $EndComp
 Text GLabel 5425 9775 0    50   Input ~ 0
@@ -2789,4 +2653,12 @@ Wire Notes Line
 	6500 5025 6500 7075
 Text Notes 6250 4875 1    50   ~ 0
 Power LED for 3.3 V is place into 3.sch.
+$Sheet
+S 700  4325 650  300 
+U 61A4519E
+F0 "Conductometer_2" 50
+F1 "Conductometer_2.sch" 50
+F2 "Vout" I R 1350 4475 50 
+F3 "Vin" I L 700 4475 50 
+$EndSheet
 $EndSCHEMATC
