@@ -141,33 +141,14 @@ F 3 "~" H 7875 3850 50  0001 C CNN
 	1    7875 3850
 	1    0    0    -1  
 $EndComp
-$Comp
-L Device:R R23
-U 1 1 5EDC8DAC
-P 7400 3850
-F 0 "R23" H 7470 3896 50  0000 L CNN
-F 1 "1k" H 7470 3805 50  0000 L CNN
-F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 7330 3850 50  0001 C CNN
-F 3 "~" H 7400 3850 50  0001 C CNN
-	1    7400 3850
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	7875 3700 7875 3600
 Wire Wire Line
-	7400 3700 7400 3600
-Wire Wire Line
 	7875 4000 7875 4100
-Wire Wire Line
-	7400 4000 7400 4100
-Text GLabel 7400 4500 3    50   Input ~ 0
-TXLED
 Text GLabel 7875 4500 3    50   Input ~ 0
 TX
 Wire Wire Line
 	7875 4400 7875 4500
-Wire Wire Line
-	7400 4400 7400 4500
 Text GLabel 3500 4000 2    50   Input ~ 0
 A0
 Text GLabel 3500 4100 2    50   Input ~ 0
@@ -429,8 +410,6 @@ Text GLabel 2025 3700 1    50   Input ~ 0
 3.3V
 Text GLabel 7875 3600 1    50   Input ~ 0
 3.3V
-Text GLabel 7400 3600 1    50   Input ~ 0
-3.3V
 Text GLabel 5250 5850 2    50   Input ~ 0
 VUSB
 Wire Wire Line
@@ -472,27 +451,6 @@ Wire Notes Line
 	475  2800 8275 2800
 Text Notes 6925 3175 0    100  ~ 0
 COM LEDs
-Text GLabel 6925 3600 1    50   Input ~ 0
-3.3V
-Wire Wire Line
-	6925 4400 6925 4500
-Text GLabel 6925 4500 3    50   Input ~ 0
-RXLED
-Wire Wire Line
-	6925 4100 6925 4000
-Wire Wire Line
-	6925 3600 6925 3700
-$Comp
-L Device:R R21
-U 1 1 5EDC90A6
-P 6925 3850
-F 0 "R21" H 6995 3896 50  0000 L CNN
-F 1 "1k" H 6995 3805 50  0000 L CNN
-F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 6855 3850 50  0001 C CNN
-F 3 "~" H 6925 3850 50  0001 C CNN
-	1    6925 3850
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	6475 4400 6475 4500
 $Comp
@@ -1052,38 +1010,6 @@ F 8 " 710-150080GS75000 " H 6475 4250 50  0001 C CNN "S1PN"
 	0    1    -1   0   
 $EndComp
 $Comp
-L Device:LED D9
-U 1 1 5EE57147
-P 6925 4250
-F 0 "D9" V 6964 4330 50  0000 L CNN
-F 1 "YELLOW" V 6873 4330 50  0000 L CNN
-F 2 "LED_SMD:LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder" H 6925 4250 50  0001 C CNN
-F 3 "https://www.mouser.com/datasheet/2/445/150080YS75000-1715432.pdf" H 6925 4250 50  0001 C CNN
-F 4 "Standard LEDs - SMD WL-SMCW SMDMono TpVw Waterclr 0805 Yellow " H 6925 4250 50  0001 C CNN "Description"
-F 5 "Wurth Elektronik " H 6925 4250 50  0001 C CNN "MFN"
-F 6 "150080YS75000" H 6925 4250 50  0001 C CNN "MFP"
-F 7 "https://www.mouser.com/ProductDetail/Wurth-Elektronik/150080YS75000?qs=LlUlMxKIyB3k0fZGrDMI2w%3D%3D" H 6925 4250 50  0001 C CNN "S1PL"
-F 8 " 710-150080YS75000 " H 6925 4250 50  0001 C CNN "S1PN"
-	1    6925 4250
-	0    1    -1   0   
-$EndComp
-$Comp
-L Device:LED D10
-U 1 1 5EE5769A
-P 7400 4250
-F 0 "D10" V 7439 4330 50  0000 L CNN
-F 1 "YELLOW" V 7348 4330 50  0000 L CNN
-F 2 "LED_SMD:LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder" H 7400 4250 50  0001 C CNN
-F 3 "https://www.mouser.com/datasheet/2/445/150080YS75000-1715432.pdf" H 7400 4250 50  0001 C CNN
-F 4 "Standard LEDs - SMD WL-SMCW SMDMono TpVw Waterclr 0805 Yellow " H 7400 4250 50  0001 C CNN "Description"
-F 5 "Wurth Elektronik " H 7400 4250 50  0001 C CNN "MFN"
-F 6 "150080YS75000" H 7400 4250 50  0001 C CNN "MFP"
-F 7 "https://www.mouser.com/ProductDetail/Wurth-Elektronik/150080YS75000?qs=LlUlMxKIyB3k0fZGrDMI2w%3D%3D" H 7400 4250 50  0001 C CNN "S1PL"
-F 8 " 710-150080YS75000 " H 7400 4250 50  0001 C CNN "S1PN"
-	1    7400 4250
-	0    1    -1   0   
-$EndComp
-$Comp
 L Device:LED D11
 U 1 1 5EE57AA9
 P 7875 4250
@@ -1216,14 +1142,10 @@ Wire Wire Line
 	14300 3350 14450 3350
 Text GLabel 14450 3450 2    50   Input ~ 0
 SCK
-Text GLabel 14450 3550 2    50   Input ~ 0
-RXLED
 Text GLabel 14450 3750 2    50   Input ~ 0
 D6
 Text GLabel 14450 3850 2    50   Input ~ 0
 D12
-Text GLabel 14450 3950 2    50   Input ~ 0
-TXLED
 Text GLabel 14450 4050 2    50   Input ~ 0
 A6
 Text GLabel 14450 4150 2    50   Input ~ 0
@@ -1231,13 +1153,9 @@ TX
 Wire Wire Line
 	14450 3450 14300 3450
 Wire Wire Line
-	14300 3550 14450 3550
-Wire Wire Line
 	14450 3750 14300 3750
 Wire Wire Line
 	14300 3850 14450 3850
-Wire Wire Line
-	14450 3950 14300 3950
 Wire Wire Line
 	14300 4050 14450 4050
 Wire Wire Line
@@ -1676,8 +1594,6 @@ Wire Wire Line
 	625  4400 625  4475
 Wire Wire Line
 	625  4475 700  4475
-Text GLabel 1450 4475 2    50   Input ~ 0
-A+
 Wire Wire Line
 	1450 4475 1350 4475
 Text Notes 675  3150 0    100  ~ 0
@@ -1783,15 +1699,6 @@ F 3 "" H 650 2375 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	650  2275 650  2150
-Wire Wire Line
-	1025 1775 1100 1775
-Wire Wire Line
-	1100 1775 1100 1600
-Connection ~ 1100 1775
-Wire Wire Line
-	1100 1775 1250 1775
-Text GLabel 1100 1600 1    50   Input ~ 0
-A5
 Wire Wire Line
 	650  1675 650  1775
 Text GLabel 2125 1500 1    50   Input ~ 0
@@ -2523,7 +2430,7 @@ Connection ~ 11475 6450
 Wire Wire Line
 	11475 6450 11475 6300
 Text GLabel 11000 6450 0    50   Input ~ 0
-D7
+ONE-WIRE-1
 Wire Wire Line
 	11000 6450 11100 6450
 $Comp
@@ -2661,4 +2568,144 @@ F1 "Conductometer_2.sch" 50
 F2 "Vout" I R 1350 4475 50 
 F3 "Vin" I L 700 4475 50 
 $EndSheet
+Wire Wire Line
+	1025 1775 1250 1775
+Text GLabel 1450 4475 2    50   Input ~ 0
+A5
+$Comp
+L Device:R R23
+U 1 1 61B59881
+P 14875 5825
+F 0 "R23" V 14668 5825 50  0000 C CNN
+F 1 "1k" V 14759 5825 50  0000 C CNN
+F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 14805 5825 50  0001 C CNN
+F 3 "~" H 14875 5825 50  0001 C CNN
+	1    14875 5825
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R R22
+U 1 1 61B59E35
+P 14650 6050
+F 0 "R22" H 14580 6004 50  0000 R CNN
+F 1 "100" H 14580 6095 50  0000 R CNN
+F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 14580 6050 50  0001 C CNN
+F 3 "~" H 14650 6050 50  0001 C CNN
+	1    14650 6050
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:LED D9
+U 1 1 61B5AB1F
+P 15100 6050
+F 0 "D9" V 15139 6130 50  0000 L CNN
+F 1 "YELLOW" V 15048 6130 50  0000 L CNN
+F 2 "LED_SMD:LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder" H 15100 6050 50  0001 C CNN
+F 3 "https://www.mouser.com/datasheet/2/445/150080YS75000-1715432.pdf" H 15100 6050 50  0001 C CNN
+F 4 "Standard LEDs - SMD WL-SMCW SMDMono TpVw Waterclr 0805 Yellow " H 15100 6050 50  0001 C CNN "Description"
+F 5 "Wurth Elektronik " H 15100 6050 50  0001 C CNN "MFN"
+F 6 "150080YS75000" H 15100 6050 50  0001 C CNN "MFP"
+F 7 "https://www.mouser.com/ProductDetail/Wurth-Elektronik/150080YS75000?qs=LlUlMxKIyB3k0fZGrDMI2w%3D%3D" H 15100 6050 50  0001 C CNN "S1PL"
+F 8 " 710-150080YS75000 " H 15100 6050 50  0001 C CNN "S1PN"
+	1    15100 6050
+	0    1    -1   0   
+$EndComp
+$Comp
+L Connector:AudioJack3_SwitchTR J6
+U 1 1 61B5B879
+P 15400 6400
+F 0 "J6" V 15100 6300 50  0000 R CNN
+F 1 "AudioJack3_SwitchTR" V 15025 6650 50  0000 R CNN
+F 2 "Connector_Audio:Jack_3.5mm_Ledino_KB3SPRS_Horizontal" H 15400 6400 50  0001 C CNN
+F 3 "~" H 15400 6400 50  0001 C CNN
+	1    15400 6400
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Device:R R21
+U 1 1 61B5D37C
+P 14425 6300
+F 0 "R21" V 14632 6300 50  0000 C CNN
+F 1 "4.7k" V 14541 6300 50  0000 C CNN
+F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 14355 6300 50  0001 C CNN
+F 3 "~" H 14425 6300 50  0001 C CNN
+	1    14425 6300
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Device:R R19
+U 1 1 61B5DB7D
+P 13975 6450
+F 0 "R19" V 14182 6450 50  0000 C CNN
+F 1 "1k" V 14091 6450 50  0000 C CNN
+F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 13905 6450 50  0001 C CNN
+F 3 "~" H 13975 6450 50  0001 C CNN
+	1    13975 6450
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	14575 6300 14650 6300
+Wire Wire Line
+	14650 6300 14650 6200
+Wire Wire Line
+	14650 5900 14650 5825
+Wire Wire Line
+	14650 5825 14725 5825
+Wire Wire Line
+	15025 5825 15100 5825
+Wire Wire Line
+	15100 5825 15100 5900
+NoConn ~ 15200 6500
+NoConn ~ 15200 6700
+Wire Wire Line
+	14650 6300 15100 6300
+Connection ~ 14650 6300
+Wire Wire Line
+	15100 6200 15100 6300
+Connection ~ 15100 6300
+Wire Wire Line
+	15100 6300 15200 6300
+Text GLabel 14575 5825 0    50   Input ~ 0
+3.3V
+Wire Wire Line
+	14575 5825 14650 5825
+Connection ~ 14650 5825
+Wire Wire Line
+	14125 6450 14200 6450
+Wire Wire Line
+	14200 6450 14200 6300
+Wire Wire Line
+	14200 6300 14275 6300
+Wire Wire Line
+	15200 6600 14200 6600
+Wire Wire Line
+	14200 6600 14200 6450
+Connection ~ 14200 6450
+$Comp
+L Bertha_main-eagle-import:GND #U0106
+U 1 1 61CD0E6E
+P 14650 6875
+F 0 "#U0106" H 14700 6925 50  0001 C CNN
+F 1 "GND" H 14753 6913 42  0000 L CNN
+F 2 "" H 14650 6875 50  0001 C CNN
+F 3 "" H 14650 6875 50  0001 C CNN
+	1    14650 6875
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	14650 6775 14650 6400
+Wire Wire Line
+	14650 6400 15200 6400
+Text GLabel 14450 3550 2    50   Input ~ 0
+ONE-WIRE-1
+Text GLabel 14450 3950 2    50   Input ~ 0
+ONE-WIRE-2
+Wire Wire Line
+	14450 3950 14300 3950
+Wire Wire Line
+	14450 3550 14300 3550
+Text GLabel 13725 6450 0    50   Input ~ 0
+ONE-WIRE-2
+Wire Wire Line
+	13725 6450 13825 6450
 $EndSCHEMATC
