@@ -174,7 +174,7 @@ U 1 1 5EDCF040
 P 5125 3750
 F 0 "L2" V 5315 3750 50  0000 C CNN
 F 1 "3.9u" V 5224 3750 50  0000 C CNN
-F 2 "Inductor_SMD:L_Taiyo-Yuden_NR-40xx_HandSoldering" H 5125 3750 50  0001 C CNN
+F 2 "Inductor_SMD:L_Taiyo-Yuden_NR-24xx_HandSoldering" H 5125 3750 50  0001 C CNN
 F 3 "~" H 5125 3750 50  0001 C CNN
 	1    5125 3750
 	0    -1   -1   0   

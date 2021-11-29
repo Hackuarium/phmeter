@@ -5,8 +5,8 @@ $Descr A3 16535 11693
 encoding utf-8
 Sheet 1 6
 Title "PHMeter"
-Date "2021-11-26"
-Rev "0.3"
+Date "2021-11-29"
+Rev "1.0"
 Comp "Hackuarium"
 Comment1 "New version for pH and conductivity Meter"
 Comment2 ""
