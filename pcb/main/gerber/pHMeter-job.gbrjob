@@ -7,7 +7,7 @@
       "Application": "Pcbnew",
       "Version":     "(5.1.5)-3"
     },
-    "CreationDate":  "2021-11-29T13:09:52+01:00"
+    "CreationDate":  "2021-11-30T10:32:48+01:00"
   },
   "GeneralSpecs":
   {
@@ -15,7 +15,7 @@
     {
       "Name": "pHMeter",
       "GUID": "70484d65-7465-4722-9e6b-696361645f70",
-      "Revision": "0.1"
+      "Revision": "1.0"
     },
     "Size":
     {
@@ -50,6 +50,16 @@
       "FilePolarity":  "Positive"
     },
     {
+      "Path":  "pHMeter-F_Paste.gbr",
+      "FileFunction":  "SolderPaste,Top",
+      "FilePolarity":  "Positive"
+    },
+    {
+      "Path":  "pHMeter-B_Paste.gbr",
+      "FileFunction":  "SolderPaste,Bot",
+      "FilePolarity":  "Positive"
+    },
+    {
       "Path":  "pHMeter-F_SilkS.gbr",
       "FileFunction":  "Legend,Top",
       "FilePolarity":  "Positive"
@@ -58,6 +68,16 @@
       "Path":  "pHMeter-B_SilkS.gbr",
       "FileFunction":  "Legend,Bot",
       "FilePolarity":  "Positive"
+    },
+    {
+      "Path":  "pHMeter-F_Mask.gbr",
+      "FileFunction":  "SolderMask,Top",
+      "FilePolarity":  "Negative"
+    },
+    {
+      "Path":  "pHMeter-B_Mask.gbr",
+      "FileFunction":  "SolderMask,Bot",
+      "FilePolarity":  "Negative"
     },
     {
       "Path":  "pHMeter-Edge_Cuts.gbr",
@@ -72,6 +92,14 @@
       "Notes":  "Layer F.SilkS"
     },
     {
+      "Type":  "SolderPaste",
+      "Notes":  "Layer F.Paste"
+    },
+    {
+      "Type":  "SolderMask",
+      "Notes":  "Layer F.Mask"
+    },
+    {
       "Type":  "Copper",
       "Notes":  "Layer F.Cu"
     },
@@ -83,6 +111,14 @@
     {
       "Type":  "Copper",
       "Notes":  "Layer B.Cu"
+    },
+    {
+      "Type":  "SolderMask",
+      "Notes":  "Layer B.Mask"
+    },
+    {
+      "Type":  "SolderPaste",
+      "Notes":  "Layer B.Paste"
     },
     {
       "Type":  "Legend",
