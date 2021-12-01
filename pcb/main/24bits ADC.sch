@@ -157,10 +157,6 @@ Wire Wire Line
 Wire Wire Line
 	7475 3200 7325 3200
 NoConn ~ 7325 3400
-Wire Wire Line
-	5925 4200 6025 4200
-Text HLabel 5925 4200 0    50   Input ~ 0
-A+
 $Comp
 L Device:R R41
 U 1 1 5E3C2866
@@ -217,8 +213,6 @@ Wire Wire Line
 Wire Wire Line
 	5600 3600 5600 3700
 Wire Wire Line
-	5650 4000 6025 4000
-Wire Wire Line
 	5500 3400 6025 3400
 Wire Wire Line
 	5600 3600 6025 3600
@@ -252,10 +246,10 @@ Wire Wire Line
 Wire Wire Line
 	7325 4200 7475 4200
 NoConn ~ 6025 3800
-Text GLabel 5650 4000 0    50   Input ~ 0
-LGND
 Text GLabel 4825 3825 0    50   Input ~ 0
 LGND
 Text GLabel 3550 4600 0    50   Input ~ 0
 LGND
+NoConn ~ 6025 4000
+NoConn ~ 6025 4200
 $EndSCHEMATC
