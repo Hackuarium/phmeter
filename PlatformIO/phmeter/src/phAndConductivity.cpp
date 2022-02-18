@@ -33,6 +33,19 @@ THD_FUNCTION(ThreadPhAndConductivity, arg) {
     Serial.print("Zero factor B: "); //This can be used to remove the need to tare the scale. Useful in permanent scale projects.
     Serial.println(zero_factor_B);
 
+    /********************************************
+    *  Calibration
+    ********************************************/
+    
+    /********************************************
+    *  Control
+    ********************************************/
+
+    /********************************************
+    *  
+    ********************************************/ 
+
+
     /*
 
     weight = getWeight(); //sensor read, better to have a higher value if the weight increase
