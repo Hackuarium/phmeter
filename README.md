@@ -25,3 +25,10 @@ To update the submodules:
 git submodule update --recursive --remote
 
 Last update: 04/08/2021
+
+
+To Do
+---
+- Check I2C communication.
+- Temperature sensors.
+- Equation for pH.
