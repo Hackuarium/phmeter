@@ -1,128 +1,127 @@
 {
-  "Header":
-  {
-    "GenerationSoftware":
-    {
-      "Vendor":      "KiCad",
+  "Header": {
+    "GenerationSoftware": {
+      "Vendor": "KiCad",
       "Application": "Pcbnew",
-      "Version":     "(5.1.5)-3"
+      "Version": "(6.0.2)"
     },
-    "CreationDate":  "2021-11-30T10:32:48+01:00"
+    "CreationDate": "2022-04-26T20:30:59-05:00"
   },
-  "GeneralSpecs":
-  {
-    "ProjectId":
-    {
+  "GeneralSpecs": {
+    "ProjectId": {
       "Name": "pHMeter",
       "GUID": "70484d65-7465-4722-9e6b-696361645f70",
       "Revision": "1.0"
     },
-    "Size":
-    {
-      "X": 100.050,
-      "Y": 87.070
+    "Size": {
+      "X": 100.05,
+      "Y": 87.0704
     },
     "LayerNumber": 2,
-    "BoardThickness":  1.600
+    "BoardThickness": 1.6,
+    "Finish": "None"
   },
-  "DesignRules":
-  [
+  "DesignRules": [
     {
       "Layers": "Outer",
-      "PadToPad":  0.100,
-      "PadToTrack":  0.100,
-      "TrackToTrack":  0.100,
-      "MinLineWidth":  0.406,
-      "TrackToRegion":  0.508,
-      "RegionToRegion":  0.508
+      "PadToPad": 0.0,
+      "PadToTrack": 0.0,
+      "TrackToTrack": 0.1,
+      "MinLineWidth": 0.4064,
+      "TrackToRegion": 0.508,
+      "RegionToRegion": 0.508
     }
   ],
-  "FilesAttributes":
-  [
+  "FilesAttributes": [
     {
-      "Path":  "pHMeter-F_Cu.gbr",
-      "FileFunction":  "Copper,L1,Top",
-      "FilePolarity":  "Positive"
+      "Path": "pHMeter-F_Cu.gbr",
+      "FileFunction": "Copper,L1,Top",
+      "FilePolarity": "Positive"
     },
     {
-      "Path":  "pHMeter-B_Cu.gbr",
-      "FileFunction":  "Copper,L2,Bot",
-      "FilePolarity":  "Positive"
+      "Path": "pHMeter-B_Cu.gbr",
+      "FileFunction": "Copper,L2,Bot",
+      "FilePolarity": "Positive"
     },
     {
-      "Path":  "pHMeter-F_Paste.gbr",
-      "FileFunction":  "SolderPaste,Top",
-      "FilePolarity":  "Positive"
+      "Path": "pHMeter-F_Paste.gbr",
+      "FileFunction": "SolderPaste,Top",
+      "FilePolarity": "Positive"
     },
     {
-      "Path":  "pHMeter-B_Paste.gbr",
-      "FileFunction":  "SolderPaste,Bot",
-      "FilePolarity":  "Positive"
+      "Path": "pHMeter-B_Paste.gbr",
+      "FileFunction": "SolderPaste,Bot",
+      "FilePolarity": "Positive"
     },
     {
-      "Path":  "pHMeter-F_SilkS.gbr",
-      "FileFunction":  "Legend,Top",
-      "FilePolarity":  "Positive"
+      "Path": "pHMeter-F_Silkscreen.gbr",
+      "FileFunction": "Legend,Top",
+      "FilePolarity": "Positive"
     },
     {
-      "Path":  "pHMeter-B_SilkS.gbr",
-      "FileFunction":  "Legend,Bot",
-      "FilePolarity":  "Positive"
+      "Path": "pHMeter-B_Silkscreen.gbr",
+      "FileFunction": "Legend,Bot",
+      "FilePolarity": "Positive"
     },
     {
-      "Path":  "pHMeter-F_Mask.gbr",
-      "FileFunction":  "SolderMask,Top",
-      "FilePolarity":  "Negative"
+      "Path": "pHMeter-F_Mask.gbr",
+      "FileFunction": "SolderMask,Top",
+      "FilePolarity": "Negative"
     },
     {
-      "Path":  "pHMeter-B_Mask.gbr",
-      "FileFunction":  "SolderMask,Bot",
-      "FilePolarity":  "Negative"
+      "Path": "pHMeter-B_Mask.gbr",
+      "FileFunction": "SolderMask,Bot",
+      "FilePolarity": "Negative"
     },
     {
-      "Path":  "pHMeter-Edge_Cuts.gbr",
-      "FileFunction":  "Profile",
-      "FilePolarity":  "Positive"
+      "Path": "pHMeter-Edge_Cuts.gbr",
+      "FileFunction": "Profile",
+      "FilePolarity": "Positive"
     }
   ],
-  "MaterialStackup":
-  [
+  "MaterialStackup": [
     {
-      "Type":  "Legend",
-      "Notes":  "Layer F.SilkS"
+      "Type": "Legend",
+      "Name": "Top Silk Screen"
     },
     {
-      "Type":  "SolderPaste",
-      "Notes":  "Layer F.Paste"
+      "Type": "SolderPaste",
+      "Name": "Top Solder Paste"
     },
     {
-      "Type":  "SolderMask",
-      "Notes":  "Layer F.Mask"
+      "Type": "SolderMask",
+      "Thickness": 0.01,
+      "Name": "Top Solder Mask"
     },
     {
-      "Type":  "Copper",
-      "Notes":  "Layer F.Cu"
+      "Type": "Copper",
+      "Thickness": 0.035,
+      "Name": "F.Cu"
     },
     {
-      "Type":  "Dielectric",
-      "Material":  "FR4",
-      "Notes":  "Layers L1/L2"
+      "Type": "Dielectric",
+      "Thickness": 1.51,
+      "Material": "FR4",
+      "Name": "F.Cu/B.Cu",
+      "Notes": "Type: dielectric layer 1 (from F.Cu to B.Cu)"
     },
     {
-      "Type":  "Copper",
-      "Notes":  "Layer B.Cu"
+      "Type": "Copper",
+      "Thickness": 0.035,
+      "Name": "B.Cu"
     },
     {
-      "Type":  "SolderMask",
-      "Notes":  "Layer B.Mask"
+      "Type": "SolderMask",
+      "Thickness": 0.01,
+      "Name": "Bottom Solder Mask"
     },
     {
-      "Type":  "SolderPaste",
-      "Notes":  "Layer B.Paste"
+      "Type": "SolderPaste",
+      "Name": "Bottom Solder Paste"
     },
     {
-      "Type":  "Legend",
-      "Notes":  "Layer B.SilkS"
+      "Type": "Legend",
+      "Name": "Bottom Silk Screen"
     }
   ]
 }
