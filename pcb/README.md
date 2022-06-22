@@ -1,4 +1,4 @@
-PH Meter
+# PHMeter
 
 PH Meter and Conductometer that can work independently
 
@@ -9,29 +9,99 @@ PH Meter and Conductometer that can work independently
 - 64 Mbit memory ISP.
 - 2 pumps.
 
-[Arduino Leonardo](https://www.arduino.cc/en/Hacking/PinMapping32u4)
+## Tips
 
-| Arduino | Port | Function  | Assigned       |
-|---------|------|-----------|----------------|
-| 0       | 20   | RX        | Programming    |
-| 1       | 21   | TX        | Programming    |
-| 2       | 19   | SDA       | RJ-12 SDA      |
-| 3       | 18   | SCL       | RJ-12 SCL      |
-| 4       | 25   |           | rotary 2       |Lylipad
-| 5       | 31   |           | rotary push    |
-| 6       | 27   | OC0A      | LCD 1          |
-| 7       | 1    |           | LCD 2          |
-| 8       | 28   |           | LCD 3          |
-| 9       | 29   | OC1A      |                |
-| 10      | 30   | SS        |                |
-| 11      | 12   | MOSI      | ICSP           |
-| 12      | 26   | MISO      | ICSP           |
-| 13      | 32   | SCK       | ICSP           |
-| A0      | 36   |           | LCD 4  - Power |
-| A1      | 37   |           | LCD 5          |
-| A2      | 38   |           | LCD 6          |
-| A3      | 39   |           | LCD 7          |
-| A4      | 40   |           |                |
-| A5      | 41   |           |                |
-| D18     |      | INT0      | rotary 1       |
-| D19     |      | INT1 OC2B |                |
+### Configure permission for USBTinyISP
+
+- Check the ID for USBTinyISP:
+
+´´´
+$ lsusb
+´´´
+
+´´´
+Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+Bus 001 Device 005: ID 8087:0a2b Intel Corp.
+Bus 001 Device 006: ID 047f:0115 Plantronics, Inc. Voyager Legend
+Bus 001 Device 003: ID 046d:c31c Logitech, Inc. Keyboard K120
+Bus 001 Device 002: ID 046d:c011 Logitech, Inc. Optical MouseMan
+Bus 001 Device 007: ID 1781:0c9f Multiple Vendors USBtiny
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+´´´
+
+Show _Device 007_ permissions:
+
+´´´
+$ ls -al /dev/bus/usb/001/007
+´´´
+
+´´´
+crw-rw---- 1 root root 189, 6 Okt 2 09:45 /dev/bus/usb/001/007
+´´´
+
+Change permissions:
+
+´´´
+$ sudo chmod 666 /dev/bus/usb/001/007
+´´´
+
+Check the new permissions:
+
+´´´
+$ ls -al /dev/bus/usb/001/007
+´´´
+
+´´´
+crw-rw-rw- 1 root root 189, 6 Okt 2 09:45 /dev/bus/usb/001/007
+´´´
+
+## Pin Configuration - PHMeter V 0.1 (PCB version 0.2)
+
+Based on: [ATMEGA32U4 - Arduino Lilypad USB/Leonardo](https://docs.arduino.cc/hacking/hardware/PinMapping32u4)
+
+| µC Pin | Pin Port | Digital Port | Analog Port | Alternate Functions                           | Arduino Functions | PHMeter Functions | Description                                                                                                                                                                                                                                   |
+| ------ | -------- | ------------ | ----------- | --------------------------------------------- | ----------------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1      | PE6      | 7            |             | INT6 <br /> /AIN0                             |                   | ROT_PUSH          | - **Rotary push button**. <br /> - External Interrupt 6 Input. <br /> - Analog Comparator Positive Input.                                                                                                                                     |
+| 2      | UVcc     |              |             |                                               | UVCC              | UVCC              | USB Pads Internal Regulator Input supply voltage.                                                                                                                                                                                             |
+| 3      | D-       |              |             |                                               | RD-               | D-                | USB Full speed / Low Speed Negative Data Upstream Port. Should be connected to the USB D- connector pin with a serial 22 Ohm resistor.                                                                                                        |
+| 4      | D+       |              |             |                                               | RD+               | D+                | USB Full speed / Low Speed Positive Data Upstream Port. Should be connected to the USB D+ connector pin with a serial 22 Ohm resistor.                                                                                                        |
+| 5      | UGND     |              |             |                                               | UGND              | GND               | USB Pads Ground.                                                                                                                                                                                                                              |
+| 6      | UCap     |              |             |                                               | UCAP              | UCAP              | USB Pads Internal Regulator Output supply voltage. Should be connected to an external capacitor (1μF).                                                                                                                                        |
+| 7      | VBus     |              |             |                                               | VUSB              | VUSB              | USB VBUS monitor input.                                                                                                                                                                                                                       |
+| 8      | PB0      |              |             | /SS <br /> PCINT0                             | RXLED             | ONE_WIRE_1        | - **Ext. OneWire 1**. <br /> - SPI Slave Select input. <br /> - Pin Change Interrupt 0.                                                                                                                                                       |
+| 9      | PB1      |              |             | SCK <br /> PCINT1                             | SCK               | SCK               | - SPI Bus Serial Clock. <br /> - Pin Change Interrupt 1.                                                                                                                                                                                      |
+| 10     | PB2      |              |             | PDI <br /> MOSI <br /> PCINT2                 | MOSI              | MOSI              | - Programming Data Input. <br /> - SPI Bus Master Output/Slave Input. <br /> - Pin Change Interrupt 2.                                                                                                                                        |
+| 11     | PB3      |              |             | PDO <br /> MISO <br /> PCINT3                 | MISO              | MISO              | - Programming Data Output. <br /> - SPI Bus Master Input/Slave Output. <br /> - Pin Change Interrupt 3.                                                                                                                                       |
+| 12     | PB7      | 11           |             | OC0A <br /> OC1C <br /> PCINT7 <br /> /RTS    | PWM               | OUT_1             | - **Pin for Input/Ouput 1 (PWM alkaline)**. <br /> - Output Compare and PWM Output A for Timer/Counter0. <br /> - Output Compare and PWM Output C for Timer/Counter1. <br /> - Pin Change Interrupt 7. <br /> - UART flow control RTS signal. |
+| 13     | /RESET   |              |             |                                               | /RESET            | /RESET            | Reset input.                                                                                                                                                                                                                                  |
+| 14     | Vcc      |              |             |                                               | VCC               | VCC               |                                                                                                                                                                                                                                               |
+| 15     | GND      |              |             |                                               | GND               | GND               |                                                                                                                                                                                                                                               |
+| 16     | XTAL2    |              |             |                                               | XTAL2             | XTAL2             |                                                                                                                                                                                                                                               |
+| 17     | XTAL1    |              |             |                                               | XTAL1             | XTAL1             |                                                                                                                                                                                                                                               |
+| 18     | PD0      | 3            |             | /INT0 <br /> SCL <br /> OC0B                  | SCL <br /> PWM    | SCL               | - External Interrupt0 Input. <br /> - TWI Serial CLock. <br /> - Output Compare for Timer/Counter0.                                                                                                                                           |
+| 19     | PD1      | 2            |             | /INT1 <br /> SDA                              | SDA               | SDA               | - External Interrupt1 Input. <br /> - TWI Serial Data.                                                                                                                                                                                        |
+| 20     | PD2      | 0            |             | /INT2 <br /> RXD1                             | RX                | ROT_A             | - **Rotary A pin**. <br /> - External Interrupt2 Input. <br /> - USART1 Receive Pin.                                                                                                                                                          |
+| 21     | PD3      | 1            |             | /INT3 <br > TXD1                              | TX                | ROT_B             | - **Rotary B pin**. <br /> - **Enable flash memory**. <br /> - External Interrupt3 Input. <br /> - USART1 Trasmit Pin.                                                                                                                        |
+| 22     | PD5      |              |             | XCK1 <br /> /CTS                              | TXLED             | ONE_WIRE_2        | - **Ext. OneWire 2**. <br /> - USART1 External Clock Input/Output. <br /> - UART flow control /CTS signal).                                                                                                                                   |
+| 23     | GND1     |              |             |                                               | GND               | GND               |                                                                                                                                                                                                                                               |
+| 24     | AVCC     |              |             |                                               | AVCC              | VCC               |                                                                                                                                                                                                                                               |
+| 25     | PD4      | 4            | A6          | ICP1 <br /> ADC8                              |                   | LCD_RS            | **LCD - Chip Select pin**.                                                                                                                                                                                                                    |
+| 26     | PD6      | 12           | A11         | T1 <br /> /OC.4D <br /> ADC9                  |                   | OUT_2             | - **Pin for Input/Ouput 2 (acidic)**. <br /> - Timer/Counter1 Clock Input . <br /> - Timer 4 Output Complementary Compare D / PWM output. <br /> - Analog to Digital Converter channel 9.                                                     |
+| 27     | PD7      | 6            | A7          | T0 <br /> OC.4D <br /> ADC10                  | PWM               | LCD_EN            | - **LCD - Enable pin**. <br /> - Timer/Counter0 Clock Input. <br /> - Timer 4 Output Compare D / PWM output. <br /> - Analog to Digital Converter channel 10.                                                                                 |
+| 28     | PB4      | 8            | A8          | PCINT4 <br /> ADC11                           |                   | LCD_D4            | - **LCD - D4 pin**. <br /> - Pin Change Interrupt 4. <br /> - Analog to Digital Converter channel 11.                                                                                                                                         |
+| 29     | PB5      | 9            | A9          | OC1A <br /> PCINT5 <br /> /OC.4B <br /> ADC12 | PWM               | LCD_D5            | - **LCD - D5 pin**. <br /> - Output Compare and PWM Output A for Timer/Counter1. <br /> - Pin Change Interrupt 5. <br /> - Timer 4 Complementary Output Compare B / PWM output. <br /> - Analog to Digital Converter channel 12.              |
+| 30     | PB6      | 10           | A10         | OC1B <br /> PCINT6 <br /> OC.4B <br /> ADC13  | PWM               | LCD_D6            | - **LCD - D6 pin**. <br /> - Output Compare and PWM Output B for Timer/Counter1. <br /> - Pin Change Interrupt 6. <br /> - Timer 4 Output Compare B / PWM output. <br /> - Analog to Digital Converter channel 13.                            |
+| 31     | PC6      | 5            |             | OC.3A <br /> /OC4A                            | PWM               | LCD_D7            | - **LCD - D7 pin**. <br /> - Output Compare and PWM output A for Timer/Counter3. <br /> - Output Compare and complementary PWM output A for Timer 4.                                                                                          |
+| 32     | PC7      | 13           |             | ICP3 <br /> CLK0 <br /> OC4A                  | PWM               | MONITORING_LED    | - **LED for check bioreactor code run correctly**. <br /> - Input Capture Timer 3. <br /> - CLK0 (Divided System Clock). <br /> - Output Compare and direct PWM output A for Timer 4.                                                         |
+| 33     | PE2      |              |             | /HWB                                          | /HWB              | /HWB              | Hardware bootloader activation.                                                                                                                                                                                                               |
+| 34     | VCC1     |              |             |                                               | VCC               | VCC               |                                                                                                                                                                                                                                               |
+| 35     | GND2     |              |             |                                               | GND               | GND               |                                                                                                                                                                                                                                               |
+| 36     | PF7      |              | A0          | ADC7 <br /> TDI                               |                   | WEIGHT_DATA       | - **Data for HX711**. <br /> - ADC input channel 7. <br /> - JTAG Test Data Input.                                                                                                                                                            |
+| 37     | PF6      |              | A1          | ADC6 <br /> TDO                               |                   | WEIGHT_CLK        | - **Clock for HX711**. <br /> - ADC input channel 6. <BR /> - JTAG Test Data Output.                                                                                                                                                          |
+| 38     | PF5      |              | A2          | ADC5 <br /> TMS                               |                   | OUT_3             | - **Pin for Input/Ouput 3**. <br /> - ADC input channel 5. <br /> - JTAG Test Mode Select.                                                                                                                                                    |
+| 39     | PF4      |              | A3          | ADC4 <br /> TCK                               |                   | OUT_4             | - **Pin for Input/Ouput 4**. <br /> - ADC input channel 4. <br /> - JTAG Test Clock.                                                                                                                                                          |
+| 40     | PF1      |              | A4          | ADC1                                          |                   | BAT_LEVEL         | - **Battery level**. <br /> - ADC input channel. 1.                                                                                                                                                                                           |
+| 41     | PF0      |              | A5          | ADC0                                          |                   | CONDUCTOMETER     | - **Conductometer pin**. <br /> - ADC input channel.0.                                                                                                                                                                                        |
+| 42     | AREF     |              |             |                                               | AREF              | AREF              | AREF                                                                                                                                                                                                                                          |
+| 43     | GND3     |              |             |                                               | GND               | GND               |                                                                                                                                                                                                                                               |
+| 44     | AVCC1    |              |             |                                               | AVCC              | VCC               |                                                                                                                                                                                                                                               |
