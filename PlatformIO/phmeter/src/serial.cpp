@@ -1,6 +1,5 @@
-// #include <NilRTOS.h>
+#include <Arduino.h>
 #include <ChNil.h>
-#include "config.h"
 
 #include "serialUtilities.h"
 #include "params.h"
@@ -221,7 +220,7 @@ THD_FUNCTION(ThreadSerial, arg) {
         }
       }
     }
-    nilThdSleepMilliseconds(1);
+    chThdSleepMilliseconds(1);
   }
 }
 

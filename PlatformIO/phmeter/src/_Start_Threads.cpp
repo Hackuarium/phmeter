@@ -1,14 +1,17 @@
 #include <Arduino.h>
 #include <ChNil.h>
 
-#include "Params.h"
+#include "params.h"
 
 //#include "monitoring.h"
-#include "serial.h"
+#ifdef THR_SERIAL
+#include "serialThread.h"
+#endif
+
 #include "I2C.h"
 
 #ifdef THR_PH
-#include "PhThread.h"
+#include "phThread.h"
 #endif
 
 #ifdef THR_WIRE_MASTER

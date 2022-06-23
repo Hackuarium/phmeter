@@ -58,7 +58,8 @@
 
 #include <Arduino.h>
 #include <ChNil.h>
-#include "Params.h"
+
+#include "params.h"
 
 #define SOFTWARE_VERSION "v1.0.0-beta"
 

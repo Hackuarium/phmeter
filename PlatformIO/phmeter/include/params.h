@@ -76,6 +76,7 @@ void printParameter(Print* output, byte number);
 // 06/01/2021
 // #define THR_PH_AND_CONDUCTIVITY
 #define THR_PH
+#define THR_SERIAL
 
 //#define THR_LCD
 
@@ -85,3 +86,10 @@ void printParameter(Print* output, byte number);
 //#define THR_WIRE_MASTER 1
 // Enable Thread into WireM[.h,.cpp] src folder
 //#define THR_WIRE_M 1
+
+/*******************************************************************************
+      Serial.h
+*******************************************************************************/
+
+#define SERIAL_BUFFER_LENGTH 32
+#define SERIAL_MAX_PARAM_VALUE_LENGTH 32
