@@ -1,18 +1,20 @@
+#include <Arduino.h>
 #include <ChNil.h>
-#include "config.h"
 
-#define PH_AND_CONDUCTIVITY_DATA        A0
-#define PH_AND_CONDUCTIVITY_CLK         A1 
+#include "Params.h"
 
-#ifdef THR_PH_AND_CONDUCTIVITY
+#define PH_DATA        A0
+#define PH_CLK         A1 
+
+#ifdef THR_PH
 
 #include <HX711.h>
 
 HX711 scale;
 
-THD_FUNCTION(ThreadPhAndConductivity, arg) {
+THD_FUNCTION(ThreadPh, arg) {
   chThdSleep(1234); // wait a little bit not everything starts at once
-  scale.begin(PH_AND_CONDUCTIVITY_DATA, PH_AND_CONDUCTIVITY_CLK, 32);
+  scale.begin(PH_DATA, PH_CLK, 32);
   scale.set_gain(32);
   scale.set_scale();
   scale.tare(); //Reset the scale to 0
