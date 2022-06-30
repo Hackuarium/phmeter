@@ -18,18 +18,14 @@
   THREADS
 *******************************/
 
+#define THR_LCD
 // #define THR_WIRE_MASTER 1
 #define THR_SST_LOGGER 1
 #define THR_SERIAL 1
 #define THR_ONEWIRE 1
-#define THR_PID 1
-#define THR_FAN 1
 #define THR_ERROR 1
-#define THR_STEPPER 1
 #define THR_STEPS 1
-#define THR_WEIGHT 1
 #define THR_OUTPUTS 1
-#define THR_MONITORING 1
 
 #define NB_PARAMETERS_LINEAR_LOGS 26
 

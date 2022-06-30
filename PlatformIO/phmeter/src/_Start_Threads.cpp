@@ -8,18 +8,10 @@
 #include "serialThread.h"
 #endif
 
-#include "I2C.h"
-
 #ifdef THR_PH
 #include "phThread.h"
 #endif
 
-#ifdef THR_WIRE_MASTER
-//16/09/2020
-//#include "WireMaster.h"
-#include"WireM.h"
-
-#endif
 
 #ifdef THR_LCD
 
@@ -46,15 +38,10 @@ THD_TABLE_BEGIN
 
 // logger should have priority to prevent any corruption of flash memory
 
-#ifdef THR_MONITORING
-      THD_TABLE_ENTRY(waThreadMonitoring, NULL, ThreadMonitoring, NULL)
-#endif
 #ifdef THR_SERIAL
       THD_TABLE_ENTRY(waThreadSerial, NULL, ThreadSerial, NULL)
 #endif
-#ifdef THR_I2C
-      THD_TABLE_ENTRY(waThreadI2C, NULL, ThreadI2C, NULL)
-#endif
+
 #ifdef THR_PH
       THD_TABLE_ENTRY(waThreadPh, NULL, ThreadPh, NULL)
 #endif

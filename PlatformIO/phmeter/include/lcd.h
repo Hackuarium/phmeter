@@ -1,5 +1,7 @@
+#include <Arduino.h>
 #include <ChNil.h>
-#include "config.h"
+
+#include "Params.h"
 
 #ifdef THR_LCD
 

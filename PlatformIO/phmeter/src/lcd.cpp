@@ -1,7 +1,7 @@
-
+#include <Arduino.h>
 #include <ChNil.h>
 
-#define LANGUAGE 'en'
+#define LANGUAGE 'es'
 
 // https://docs.google.com/spreadsheets/d/1oek6pKHUvD7NI2u9-_iEOfVL-NeUmnj1pZCFRRo7n_4/edit?usp=sharing
 
@@ -78,14 +78,14 @@
 #include <LiquidCrystal.h>
 
 #define LCD_E 6
-#define LCD_RS A6
+#define LCD_RS 4
 #define LCD_D4 8
 #define LCD_D5 9
 #define LCD_D6 10
 #define LCD_D7 5
 #define LCD_BL 13    // back light
 #define LCD_VO 13    // contrast (on / off to spare energy)
-#define LCD_ON MOSI  // power on LCD
+#define LCD_ON 13  // power on LCD
 
 #define LCD_NB_ROWS 2
 #define LCD_NB_COLUMNS 16
