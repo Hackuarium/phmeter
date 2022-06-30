@@ -111,10 +111,24 @@ boolean captureCounter =
     false;  // use when you need to setup a parameter from the menu
 
 void setupRotary() {
-  //attachInterrupt(digitalPinToInterrupt(ROT_A), rotate, CHANGE);
-  //attachInterrupt(digitalPinToInterrupt(ROT_B), rotate, CHANGE);
+  // attachInterrupt(digitalPinToInterrupt(ROT_A), rotate, CHANGE);
+  // attachInterrupt(digitalPinToInterrupt(ROT_B), rotate, CHANGE);
   pinMode(ROT_PUSH, INPUT_PULLUP);
   //attachInterrupt(digitalPinToInterrupt(ROT_PUSH), eventRotaryPressed, CHANGE);
+}
+
+// Copy from sleep file in simple-spectro
+void wakeUpScreen() {
+  for (byte i = 0; i < sizeof(lcdPins); i++) {
+    pinMode(lcdPins[i], OUTPUT);
+  }
+  pinMode(LCD_BL, OUTPUT);
+  digitalWrite(LCD_BL, HIGH); // backlight
+  pinMode(LCD_ON, HIGH); // LCD on / off
+  digitalWrite(LCD_ON, HIGH); // LCD on
+
+  chThdSleepMilliseconds(200);
+  lcd.begin(LCD_NB_COLUMNS, LCD_NB_ROWS);
 }
 
 //NIL_WORKING_AREA(waThreadLcd, 250);
@@ -123,8 +137,8 @@ THD_FUNCTION(ThreadLCD, arg) {
   setupRotary();
   lcd.begin(LCD_NB_COLUMNS,LCD_NB_ROWS);
   lcd.clear();
-/*  wakeUpScreen();
-
+  wakeUpScreen();
+/*
   setParameter(PARAM_MENU, 0);
   setParameter(PARAM_STATUS, 0);
   */
