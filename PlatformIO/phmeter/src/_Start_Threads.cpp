@@ -15,7 +15,7 @@
 
 #ifdef THR_LCD
 
-#include "lcd.h"
+#include "LCDThread.h"
 
 #endif
 //#include "hack/Serial.h"

@@ -63,25 +63,19 @@
 #define OUT_3 A6
 #define OUT_4 12
 
-// FAN Thread
-#define OUT_FAN 11
-#define TEMP_FAN_ON 3500
+// LCD Thread
+#define PARAM_FLAGS 17
+#define PARAM_FLAG_INVERT_ROTARY 0  // invert rotary direction
+#define PARAM_FLAG_RAW_VALUES 1     // invert rotary direction
 
 // ERROR Thread
 #define OUT_ERROR A4
-
-// Weght Thread
-#define WEIGHT_DATA A1
-#define WEIGHT_CLK \
-  A0  // need to redefine the calibration parameters and process (see "HX711")
 
 // ONE WIRE Thread
 #define TEMP_EXT1 7
 #define TEMP_EXT2 A5
 #define TEMP_PCB A2
 
-// PID Thread
-#define PID_CONTROL 6
 
 // EEPROM || SST Thread
 #define EVENT_LOGGING 1
