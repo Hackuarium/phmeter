@@ -22,10 +22,6 @@ THD_FUNCTION(ThreadLCD, arg) {
 
   while (true) {
     lcdMenu();
-    // lcd.setCursor(0, 0);
-    // lcd.print("pH"); lcd.print(2022);
-    // lcd.setCursor(0, 1);
-    // lcd.print("pHMeter v1.0");
     chThdSleep(40);
   }
 }

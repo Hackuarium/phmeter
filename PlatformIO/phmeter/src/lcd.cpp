@@ -3,6 +3,7 @@
 
 #include "Funcs.h"
 #include "sleep.h"
+#include "Utility.h"
 
 #define LANGUAGE 'es'
 
@@ -89,9 +90,6 @@ LiquidCrystal lcd(LCD_RS, LCD_E, LCD_D4, LCD_D5, LCD_D6, LCD_D7);
 
 
 #include "Rotary.h"
-#define ROT_A 0
-#define ROT_B 1
-#define ROT_PUSH 7
 
 // Rotary encoder is wired with the common to ground and the two
 // outputs to pins 2 and 3.
@@ -101,7 +99,7 @@ int noEventCounter = 0;
 byte previousMenu = 0;
 
 /* Declaring a function pointer called reboot that points to address 0. */
-void(* reboot) (void) = 0;
+// void(* reboot) (void) = 0;
 
 // Old variables from spectro - 20220701
 byte nbLeds;              // number of active leds
@@ -115,16 +113,14 @@ byte ALL_PARAMETERS[] = {RED, GREEN, BLUE, UV1, TEMPERATURE, BATTERY_LEVEL};  //
 byte ACTIVE_PARAMETERS[sizeof(ALL_PARAMETERS)];
 byte dataRowSize;         // size of a data row (number of entries in data)
 
-
 bool rotaryPressed = false;
 int rotaryCounter = 0;
-bool captureCounter =
-    false;  // use when you need to setup a parameter from the menu
-
+bool captureCounter = false;  // use when you need to setup a parameter from the menu
+bool rotaryMayPress = true;  // be sure to go through release. Seems to allow some deboucing
 
 uint8_t accelerationMode = 0;
 int lastIncrement = 0;
-long unsigned lastRotaryEvent = millis();
+unsigned long lastRotaryEvent = millis();
 
 /**
  * If the rotary encoder is turned, then increment the rotaryCounter variable by 1
@@ -172,9 +168,6 @@ void rotate() {
     }
   }
 }
-
-bool rotaryMayPress =
-    true;  // be sure to go through release. Seems to allow some deboucing
 
 void eventRotaryPressed() {
   cli();
@@ -515,7 +508,7 @@ void lcdStatus(int counter, boolean doAction) {
     lcd.setCursor(0, 1);
     lcd.print(millis() / 1000);
     lcd.print("s");
-    lcd.setCursor(9, 1);
+    lcd.setCursor(7, 1);
     lcd.print(F(SOFTWARE_VERSION));
   }
 }

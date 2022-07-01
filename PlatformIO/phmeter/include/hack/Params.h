@@ -14,7 +14,7 @@
 #include <Arduino.h>
 #include <ChNil.h>
 
-#define SOFTWARE_VERSION "v1.0.0-beta"
+#define SOFTWARE_VERSION "v1.0.0-b"
 
 /******************************
   THREADS
@@ -96,6 +96,10 @@
 #define TEMPERATURE   129   // not available in version A
 #define PARAM_WAIT 15      // current time to wait
 #define STATUS_TEST_LEDS 4
+
+#define ROT_A 0
+#define ROT_B 1
+#define ROT_PUSH 7
 
 
 #define PARAM_FLAGS 17

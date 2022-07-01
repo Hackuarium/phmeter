@@ -31,5 +31,5 @@ void epochToString(time_t time, Print* output) {
 
 void reboot() {
   wdt_enable(WDTO_15MS);
-  delay(20);
+  chThdSleepMilliseconds(20);
 }
