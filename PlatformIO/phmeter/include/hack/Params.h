@@ -64,6 +64,19 @@
 #define OUT_4 12
 
 // LCD Thread
+#define LCD_E 6
+#define LCD_RS 4
+#define LCD_D4 8
+#define LCD_D5 9
+#define LCD_D6 10
+#define LCD_D7 5
+#define LCD_BL 13    // back light
+#define LCD_VO 13    // contrast (on / off to spare energy)
+#define LCD_ON 13  // power on LCD
+
+#define LCD_NB_ROWS 2
+#define LCD_NB_COLUMNS 16
+
 #define PARAM_FLAGS 17
 #define PARAM_FLAG_INVERT_ROTARY 0  // invert rotary direction
 #define PARAM_FLAG_RAW_VALUES 1     // invert rotary direction

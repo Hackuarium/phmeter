@@ -2,6 +2,7 @@
 #include <ChNil.h>
 
 #include "Funcs.h"
+#include "sleep.h"
 
 #define LANGUAGE 'es'
 
@@ -79,26 +80,10 @@
 
 #include <LiquidCrystal.h>
 
-#define LCD_E 6
-#define LCD_RS 4
-#define LCD_D4 8
-#define LCD_D5 9
-#define LCD_D6 10
-#define LCD_D7 5
-#define LCD_BL 13    // back light
-#define LCD_VO 13    // contrast (on / off to spare energy)
-#define LCD_ON 13  // power on LCD
-
-#define LCD_NB_ROWS 2
-#define LCD_NB_COLUMNS 16
-
-byte lcdPins[] = {LCD_E,  LCD_RS, LCD_D4, LCD_D5, LCD_D6,
-                  LCD_D7, LCD_VO, LCD_BL, LCD_ON};
-
 LiquidCrystal lcd(LCD_RS, LCD_E, LCD_D4, LCD_D5, LCD_D6, LCD_D7);
 
-#include "Rotary.h"
 
+#include "Rotary.h"
 #define ROT_A 0
 #define ROT_B 1
 #define ROT_PUSH 7
@@ -106,6 +91,9 @@ LiquidCrystal lcd(LCD_RS, LCD_E, LCD_D4, LCD_D5, LCD_D6, LCD_D7);
 // Rotary encoder is wired with the common to ground and the two
 // outputs to pins 2 and 3.
 Rotary rotary = Rotary(ROT_A, ROT_B);
+
+void(* resetFunc) (void) = 0;  // declare reset fuction at address 0
+
 
 boolean rotaryPressed = false;
 int rotaryCounter = 0;
@@ -157,25 +145,34 @@ void rotate() {
   }
 }
 
-void setupRotary() {
-  attachInterrupt(digitalPinToInterrupt(ROT_A), rotate, CHANGE);
-  // attachInterrupt(digitalPinToInterrupt(ROT_B), rotate, CHANGE);
-  pinMode(ROT_PUSH, INPUT_PULLUP);
-  //attachInterrupt(digitalPinToInterrupt(ROT_PUSH), eventRotaryPressed, CHANGE);
+boolean rotaryMayPress =
+    true;  // be sure to go through release. Seems to allow some deboucing
+
+void eventRotaryPressed() {
+  cli();
+  byte state = digitalRead(ROT_PUSH);
+  long unsigned eventMillis = millis();
+  if (state == 0) {
+    if (rotaryMayPress && ((eventMillis - lastRotaryEvent) > 200)) {
+      rotaryPressed = true;
+      rotaryMayPress = false;
+      lastRotaryEvent = eventMillis;
+    }
+  } else {
+    rotaryMayPress = true;
+    if ((eventMillis - lastRotaryEvent) > 5000) {
+      resetParameters();
+      resetFunc();
+    }
+  }
+  sei();
 }
 
-// Copy from sleep file in simple-spectro
-void wakeUpScreen() {
-  for (byte i = 0; i < sizeof(lcdPins); i++) {
-    pinMode(lcdPins[i], OUTPUT);
-  }
-  pinMode(LCD_BL, OUTPUT);
-  digitalWrite(LCD_BL, HIGH); // backlight
-  pinMode(LCD_ON, HIGH); // LCD on / off
-  digitalWrite(LCD_ON, HIGH); // LCD on
-
-  chThdSleepMilliseconds(200);
-  lcd.begin(LCD_NB_COLUMNS, LCD_NB_ROWS);
+void setupRotary() {
+  attachInterrupt(digitalPinToInterrupt(ROT_A), rotate, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(ROT_B), rotate, CHANGE);
+  pinMode(ROT_PUSH, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(ROT_PUSH), eventRotaryPressed, CHANGE);
 }
 
 int noEventCounter = 0;
@@ -770,34 +767,5 @@ void lcdPrintBlank(byte number) {
   for (byte i = 0; i < number; i++) {
     lcd.print(" ");
   }
-}
-*/
-
-
-
-
-
-/*
-boolean rotaryMayPress =
-    true;  // be sure to go through release. Seems to allow some deboucing
-
-void eventRotaryPressed() {
-  cli();
-  byte state = digitalRead(ROT_PUSH);
-  long unsigned eventMillis = millis();
-  if (state == 0) {
-    if (rotaryMayPress && ((eventMillis - lastRotaryEvent) > 200)) {
-      rotaryPressed = true;
-      rotaryMayPress = false;
-      lastRotaryEvent = eventMillis;
-    }
-  } else {
-    rotaryMayPress = true;
-    if ((eventMillis - lastRotaryEvent) > 5000) {
-      resetParameters();
-      reboot();
-    }
-  }
-  sei();
 }
 */

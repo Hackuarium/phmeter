@@ -1,8 +1,12 @@
 #include <Arduino.h>
 #include <ChNil.h>
-#include "lcd.h"
+
+#include "Params.h"
+
+#ifdef THR_LCD
 
 #include <LiquidCrystal.h>
+#include "lcd.h"
 
 extern LiquidCrystal lcd;
 
@@ -24,3 +28,5 @@ THD_FUNCTION(ThreadLCD, arg) {
     chThdSleep(40);
   }
 }
+
+#endif
