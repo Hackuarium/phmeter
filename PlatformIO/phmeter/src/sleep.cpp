@@ -19,6 +19,20 @@ void sleepScreen() {
   }
 }
 
+void wakeUpScreen() {
+  for (byte i = 0; i < sizeof(lcdPins); i++) {
+    pinMode(lcdPins[i], OUTPUT);
+  }
+  pinMode(LCD_BL, OUTPUT);
+  digitalWrite(LCD_BL, HIGH); // backlight
+  pinMode(LCD_ON, HIGH); // LCD on / off
+  digitalWrite(LCD_ON, HIGH); // LCD on
+
+  chThdSleepMilliseconds(200);
+  lcd.begin(LCD_NB_COLUMNS, LCD_NB_ROWS);
+}
+
+
 void sleepNow () {
   // more information about sleep: https://www.nongnu.org/avr-libc/user-manual/group__avr__sleep.html
 
@@ -41,16 +55,3 @@ void sleepNow () {
 }
 
 void empty() {}
-
-void wakeUpScreen() {
-  for (byte i = 0; i < sizeof(lcdPins); i++) {
-    pinMode(lcdPins[i], OUTPUT);
-  }
-  pinMode(LCD_BL, OUTPUT);
-  digitalWrite(LCD_BL, HIGH); // backlight
-  pinMode(LCD_ON, HIGH); // LCD on / off
-  digitalWrite(LCD_ON, HIGH); // LCD on
-
-  chThdSleepMilliseconds(200);
-  lcd.begin(LCD_NB_COLUMNS, LCD_NB_ROWS);
-}

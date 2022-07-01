@@ -14,6 +14,8 @@
 #include <Arduino.h>
 #include <ChNil.h>
 
+#define SOFTWARE_VERSION "v1.0.0-beta"
+
 /******************************
   THREADS
 *******************************/
@@ -73,9 +75,28 @@
 #define LCD_BL 13    // back light
 #define LCD_VO 13    // contrast (on / off to spare energy)
 #define LCD_ON 13  // power on LCD
-
 #define LCD_NB_ROWS 2
 #define LCD_NB_COLUMNS 16
+#define PARAM_MENU 25  // current menu
+#define PARAM_NEXT_EXP 14  // next experiment, 0 blank and then for kinetic
+#define STATUS_ONE_SPECTRUM 1
+#define STATUS_KINETIC 2
+#define STATUS_SEQUENCE 3
+#define PARAM_BEFORE_DELAY 10  // delay before taking blank
+#define PARAM_FIRST_DELAY 11
+#define PARAM_INTER_DELAY 12
+#define PARAM_NUMPER_EXP 13
+#define PARAM_COLOR 23  // color used to display the results
+#define PARAM_ACTIVE_LEDS 21
+#define RED    A0
+#define GREEN  A1
+#define BLUE   A2
+#define UV1    A4 // 5mm
+#define BATTERY_LEVEL 128   // not available in version A
+#define TEMPERATURE   129   // not available in version A
+#define PARAM_WAIT 15      // current time to wait
+#define STATUS_TEST_LEDS 4
+
 
 #define PARAM_FLAGS 17
 #define PARAM_FLAG_INVERT_ROTARY 0  // invert rotary direction

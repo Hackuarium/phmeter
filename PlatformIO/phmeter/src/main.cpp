@@ -61,7 +61,9 @@
 
 #include "Params.h"
 
+#ifndef SOFTWARE_VERSION
 #define SOFTWARE_VERSION "v1.0.0-beta"
+#endif
 
 /**
  * The standard Arduino setup function used for setup and configuration tasks.

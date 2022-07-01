@@ -54,10 +54,14 @@
 #define TEXT_ACQUIRING "Adquiriendo"
 #define TEXT_BLANK "Blanco"
 #define TEXT_SAMPLE "Muestra"
+#define TEXT_SEQUENCE "Secuencia"
 #define TEXT_KINETIC "Cinetica"
 #define TEXT_STOP "Detener"
 #define TEXT_ACQUIRE "Adquirir"
+#define TEXT_ACQ_SEQUENCE "Adq. secuencia"
+#define TEXT_CONT_SEQUENCE "Continuar sec."
 #define TEXT_ACQ_KINETIC "Adq. Cinetica"
+#define TEXT_CONT_KINETC "Continuar Cin."
 #define TEXT_RESULTS "Resultados"
 #define TEXT_SETTINGS "Ajustes"
 #define TEXT_STATUS "Estado"
@@ -65,6 +69,7 @@
 #define TEXT_SLEEP "Dormir"
 #define TEXT_TEST_LEDS "prueba de LED"
 #define TEXT_RESET "Reiniciar"
+#define TEXT_REBOOT "Reiniciar"
 #define TEXT_MAIN_MENU "Menu"
 #define TEXT_RED "Rojo"
 #define TEXT_GREEN "Verde"
@@ -92,19 +97,42 @@ LiquidCrystal lcd(LCD_RS, LCD_E, LCD_D4, LCD_D5, LCD_D6, LCD_D7);
 // outputs to pins 2 and 3.
 Rotary rotary = Rotary(ROT_A, ROT_B);
 
-void(* resetFunc) (void) = 0;  // declare reset fuction at address 0
+int noEventCounter = 0;
+byte previousMenu = 0;
+
+/* Declaring a function pointer called reboot that points to address 0. */
+void(* reboot) (void) = 0;
+
+// Old variables from spectro - 20220701
+byte nbLeds;              // number of active leds
+byte maxNbRows;           // calculate value depending the size of EEPROM dedicated to logs
+byte nbParameters;        // number of parameters to record
+#if VERSION == 1
+byte ALL_PARAMETERS[] = {RED, GREEN, BLUE, UV1};  // all possible leds
+#else
+byte ALL_PARAMETERS[] = {RED, GREEN, BLUE, UV1, TEMPERATURE, BATTERY_LEVEL};  // all possible leds
+#endif
+byte ACTIVE_PARAMETERS[sizeof(ALL_PARAMETERS)];
+byte dataRowSize;         // size of a data row (number of entries in data)
 
 
-boolean rotaryPressed = false;
+bool rotaryPressed = false;
 int rotaryCounter = 0;
-boolean captureCounter =
+bool captureCounter =
     false;  // use when you need to setup a parameter from the menu
 
 
-byte accelerationMode = 0;
+uint8_t accelerationMode = 0;
 int lastIncrement = 0;
 long unsigned lastRotaryEvent = millis();
 
+/**
+ * If the rotary encoder is turned, then increment the rotaryCounter variable by 1
+ * or -1, depending on the direction of the turn
+ * 
+ * @return The rotary encoder is being read and the direction of rotation is being
+ * determined.
+ */
 void rotate() {
   int increment = 0;
 
@@ -145,7 +173,7 @@ void rotate() {
   }
 }
 
-boolean rotaryMayPress =
+bool rotaryMayPress =
     true;  // be sure to go through release. Seems to allow some deboucing
 
 void eventRotaryPressed() {
@@ -162,7 +190,7 @@ void eventRotaryPressed() {
     rotaryMayPress = true;
     if ((eventMillis - lastRotaryEvent) > 5000) {
       resetParameters();
-      resetFunc();
+      reboot();
     }
   }
   sei();
@@ -175,304 +203,7 @@ void setupRotary() {
   attachInterrupt(digitalPinToInterrupt(ROT_PUSH), eventRotaryPressed, CHANGE);
 }
 
-int noEventCounter = 0;
-byte previousMenu = 0;
-/*
-void lcdMenu() {
-  byte currentMenu = getParameter(PARAM_MENU);
-  if (previousMenu != currentMenu) {  // this is used to clear screen from
-                                      // external process for example
-    noEventCounter = 0;
-    previousMenu = currentMenu;
-  }
-  if (rotaryCounter == 0 && !rotaryPressed) {
-    if (noEventCounter < 32760)
-      noEventCounter++;
-  } else {
-    noEventCounter = 0;
-  }
-  if (noEventCounter > 250 && getParameter(PARAM_STATUS) == 0) {
-    if (currentMenu - currentMenu % 10 != 20) {
-      setParameter(PARAM_MENU, 20 + nbLeds);
-    }
-    captureCounter = false;
-  }
-
-#ifdef BATTERY_CHARGING
-  if (noEventCounter > 500 &&
-      getParameter(PARAM_CHARGING) >
-          500) {  // battery is charging so we are on USB : no sleep !
-    noEventCounter = 500;
-  }
-#endif
-
-  if (noEventCounter > 1500 && getParameter(PARAM_STATUS) == 0) {
-    sleepNow();
-    noEventCounter = 0;
-  }
-
-  boolean doAction = rotaryPressed;
-  rotaryPressed = false;
-  int counter = rotaryCounter;
-  rotaryCounter = 0;
-  switch (currentMenu < 100 ? currentMenu - currentMenu % 10
-                            : currentMenu - currentMenu % 50) {
-    case 0:
-      lcdMenuHome(counter, doAction);
-      break;
-    case 10:
-      lcdMenuSettings(counter, doAction);
-      break;
-    case 20:
-      lcdStatus(counter, doAction);
-      break;
-    case 30:
-      lcdAcquisition(counter, doAction);
-      break;
-    case 40:
-      lcdUtilities(counter, doAction);
-      break;
-    case 100:
-      lcdResults(counter, doAction);
-      break;
-  }
-}
-
-void lcdResults(int counter, boolean doAction) {
-  if (doAction)
-    setParameter(PARAM_MENU, 0);
-  if (noEventCounter < 2)
-    lcd.clear();
-
-  // calculate the last experiment based on epoch of each experiment
-  byte lastExperiment = 1;
-  long dataZero = getDataLong(0);
-  for (lastExperiment; lastExperiment < maxNbRows; lastExperiment++) {
-    if (getDataLong(lastExperiment * dataRowSize) <= dataZero)
-      break;
-  }
-
-  updateCurrentMenu(counter, lastExperiment - 1, 50);
-  int start = getParameter(PARAM_MENU) % 50 - 1;
-  boolean header = start == -1;
-  if (!getParameterBit(PARAM_FLAGS, PARAM_FLAG_RAW_VALUES))
-    start++;  // we add one it we don't show blank
-  for (int i = start; i < min(lastExperiment, start + LCD_NB_ROWS); i++) {
-    lcd.setCursor(0, i - start);
-    if (header) {
-      printColor(&lcd, getParameter(PARAM_COLOR) - 1);
-      header = false;
-    } else {
-      lcd.print(i);
-      lcd.print(" ");
-      if (getParameterBit(PARAM_FLAGS, PARAM_FLAG_RAW_VALUES)) {
-        lcd.print((getDataLong(i * dataRowSize) - getDataLong(0)) / 1000);
-        lcd.print(" ");
-      }
-      if (getParameterBit(PARAM_FLAGS, PARAM_FLAG_RAW_VALUES) == 1) {
-        lcd.print(getDataLong(i * dataRowSize + getParameter(PARAM_COLOR)));
-      } else {
-        if (getDataLong(getParameter(PARAM_COLOR)) == LONG_MAX_VALUE ||
-            getDataLong(i * dataRowSize + getParameter(PARAM_COLOR)) ==
-                LONG_MAX_VALUE) {
-          lcd.print(F("OVER"));
-        } else {
-          if (getParameter(PARAM_COLOR) < 4) {
-            lcd.print(log10((double)getDataLong(getParameter(PARAM_COLOR)) /
-                            (double)getDataLong(i * dataRowSize +
-                                                getParameter(PARAM_COLOR))));
-          } else {
-            lcd.print(getDataLong(i * dataRowSize + getParameter(PARAM_COLOR)) -
-                      getDataLong(getParameter(PARAM_COLOR)));
-          }
-        }
-      }
-    }
-    lcdPrintBlank(6);
-  }
-}
-
-void lcdStatus(int counter, boolean doAction) {
-  if (doAction)
-    setParameter(PARAM_MENU, 0);
-  updateCurrentMenu(counter, nbLeds);
-  if (noEventCounter < 2)
-    lcd.clear();
-  byte menu = getParameter(PARAM_MENU) % 10;
-  if (menu < nbLeds) {
-    lcd.setCursor(0, 0);
-    printColor(&lcd, ACTIVE_PARAMETERS[menu]);
-    lcd.setCursor(0, 1);
-
-    if (getParameter(menu + 5) == INT_MAX_VALUE ||
-        getParameter(menu) == INT_MAX_VALUE) {
-      lcd.print(F("OVER"));
-    } else {
-      if (menu < 3) {
-        lcd.print(F(TEXT_ABSORBANCE));
-        lcd.setCursor(8, 1);
-        lcd.print(
-            log10((double)getParameter(menu + 5) / (double)getParameter(menu)));
-      } else {
-        lcd.print(F(TEXT_FLUORESCENCE));
-        lcd.setCursor(8, 1);
-        lcd.print(getParameter(menu) - getParameter(menu + 5));
-      }
-    }
-    lcdPrintBlank(2);
-  } else {
-    lcd.setCursor(0, 0);
-#ifdef TEMPERATURE_ADDRESS
-    lcd.print("T:");
-    lcd.print(((float)getParameter(PARAM_TEMPERATURE)) / 100, 1);
-    lcd.print("\xDF\x43");
-#endif
-#ifdef BATTERY
-    lcd.print(F(" B:"));
-    lcd.print(((float)getParameter(PARAM_BATTERY)) / 1000);
-
-#ifdef BATTERY_CHARGING
-    if (getParameter(PARAM_CHARGING) > 1000) {
-      lcd.print("~");
-    } else if (getParameter(PARAM_CHARGING) > 500) {
-      lcd.print("+");
-    } else {
-      lcd.print("-");
-    }
-
-#else
-    lcd.print("V");
-#endif
-#endif
-    lcd.setCursor(0, 1);
-    lcd.print(millis() / 1000);
-    lcd.print("s");
-    lcd.setCursor(9, 1);
-    lcd.print(F(SOFTWARE_VERSION));
-  }
-}
-
-// this code is currently not USED
-void lcdDefaultExact(int counter, boolean doAction) {
-  if (doAction)
-    setParameter(PARAM_MENU, 0);
-  updateCurrentMenu(counter, 1);
-  if (noEventCounter < 2)
-    lcd.clear();
-  switch (getParameter(PARAM_MENU) % 10) {
-    case 0:
-      for (byte i = 0; i < min(nbLeds, 4); i++) {
-        lcd.setCursor((i % 2) * 8, floor(i / 2));
-        printColorOne(&lcd, ACTIVE_PARAMETERS[i]);
-        lcd.print(": ");
-        lcd.print(getParameter(i + 5) - getParameter(i));
-        lcdPrintBlank(2);
-      }
-      break;
-    case 1:
-      lcd.setCursor(0, 0);
-      epochToString(now(), &lcd);
-      lcd.setCursor(6, 1);
-      lcd.print("s: ");
-      lcd.print(millis() / 1000);
-      break;
-  }
-}
-
-void lcdAcquisition(int counter, boolean doAction) {
-  byte menu = getParameter(PARAM_MENU) % 10;
-  // if it is a sequence we should go to menu only if in an acquisition
-  if (counter) {  // the button was turned
-    setParameter(PARAM_MENU, 0);
-  }
-  if (doAction) {     // the button was pressed
-    if (menu == 3) {  // test sequence
-      setParameter(PARAM_MENU, 0);
-      setParameter(PARAM_NEXT_EXP, -1);
-      setParameter(PARAM_STATUS, 0);
-    } else if (menu == 2 || getParameter(PARAM_STATUS) != STATUS_SEQUENCE) {
-      setParameter(PARAM_MENU, 0);
-    } else {  // next experiment, it is a manual sequence
-      setParameter(PARAM_WAIT, 0);
-    }
-  }
-  if (noEventCounter < 2)
-    lcd.clear();
-  switch (menu) {
-    case 0:  // waiting for blank
-      lcd.setCursor(0, 0);
-      lcd.print(F(TEXT_WAITING_BLANK));
-      lcdWait();
-      break;
-    case 1:  // waiting for acquisition
-      lcd.setCursor(0, 0);
-      lcd.print(F(TEXT_WAITING_EXP));
-      lcd.print(getParameter(PARAM_NEXT_EXP));
-      lcdWait();
-      break;
-    case 2:  // acquiring
-      lcd.setCursor(0, 0);
-      lcd.print(F(TEXT_ACQUIRING));
-      lcd.setCursor(0, 1);
-      if (getParameter(PARAM_NEXT_EXP) == 0) {
-        lcd.print(F(TEXT_BLANK));
-      } else if (getParameter(PARAM_NEXT_EXP) == 1) {
-        lcd.print(F(TEXT_SAMPLE));
-      } else if (getParameter(PARAM_NEXT_EXP) > 1) {
-        if (getParameter(PARAM_STATUS) == STATUS_SEQUENCE) {
-          lcd.print(F(TEXT_KINETIC));
-        } else {
-          lcd.print(F(TEXT_SEQUENCE));
-        }
-        lcdPrintBlank(1);
-        lcd.print(getParameter(PARAM_NEXT_EXP));
-      }
-      break;
-    case 3:  // TEST mode
-      lcd.setCursor(0, 0);
-      lcd.print("R:");
-      lcd.print(getDataLong(1));
-      lcdPrintBlank(6);
-      lcd.setCursor(8, 0);
-      lcd.print("G:");
-      lcd.print(getDataLong(2));
-      lcdPrintBlank(6);
-      lcd.setCursor(0, 1);
-      lcd.print("B:");
-      lcd.print(getDataLong(3));
-      lcdPrintBlank(6);
-      lcd.setCursor(8, 2);
-      lcd.print("U:");
-      lcd.print(getDataLong(4));
-      lcdPrintBlank(6);
-  }
-}
-
-void lcdWait() {
-  lcd.setCursor(0, 1);
-  if (getParameter(PARAM_STATUS) ==
-      STATUS_SEQUENCE) {  // need to press enter for next acquisition
-    lcd.print(F(TEXT_PRESS_NEXT));
-  } else {
-    lcd.print(getParameter(PARAM_WAIT));
-    lcd.print(" s ");
-  }
-}
-
-void lcdNumberLine(byte line) {
-  lcd.print(getParameter(PARAM_MENU) % 10 + line + 1);
-  if (line == 0) {
-    lcd.print(".*");
-  } else {
-    lcd.print(". ");
-  }
-}
-
-void updateCurrentMenu(int counter, byte maxValue) {
-  updateCurrentMenu(counter, maxValue, 10);
-}
-
-void updateCurrentMenu(int counter, byte maxValue, byte modulo) {
+void updateCurrentMenu(int counter, uint8_t maxValue, uint8_t modulo) {
   byte currentMenu = getParameter(PARAM_MENU);
   if (captureCounter)
     return;
@@ -484,7 +215,20 @@ void updateCurrentMenu(int counter, byte maxValue, byte modulo) {
   }
 }
 
-void lcdMenuHome(int counter, boolean doAction) {
+void updateCurrentMenu(int counter, uint8_t maxValue) {
+  updateCurrentMenu(counter, maxValue, 10);
+}
+
+void lcdNumberLine(uint8_t line) {
+  lcd.print(getParameter(PARAM_MENU) % 10 + line + 1);
+  if (line == 0) {
+    lcd.print(".*");
+  } else {
+    lcd.print(". ");
+  }
+}
+
+void lcdMenuHome(int counter, bool doAction) {
   if (noEventCounter > 2)
     return;
   lcd.clear();
@@ -519,7 +263,8 @@ void lcdMenuHome(int counter, boolean doAction) {
              STATUS_SEQUENCE)) {  // continue acquisition
           lcd.print(F(TEXT_CONT_SEQUENCE));
           if (doAction) {
-            setAcquisitionMenu();
+            // Check for pH or EC - 20220701
+            // setAcquisitionMenu();
           }
         } else {
           lcd.print(F(TEXT_ACQ_SEQUENCE));
@@ -535,7 +280,8 @@ void lcdMenuHome(int counter, boolean doAction) {
              STATUS_KINETIC)) {  // continue acquisition
           lcd.print(F(TEXT_CONT_KINETC));
           if (doAction) {
-            setAcquisitionMenu();
+            // Check for pH or EC - 20220701
+            // setAcquisitionMenu();
           }
         } else {
           lcd.print(F(TEXT_ACQ_KINETIC));
@@ -569,65 +315,6 @@ void lcdMenuHome(int counter, boolean doAction) {
           setParameter(PARAM_MENU, 40);
         }
         break;
-    }
-    doAction = false;
-  }
-}
-
-void lcdUtilities(int counter, boolean doAction) {
-  if (noEventCounter > 2)
-    return;
-  lcd.clear();
-  byte lastMenu = 4;
-  updateCurrentMenu(counter, lastMenu);
-
-  for (byte line = 0; line < LCD_NB_ROWS; line++) {
-    lcd.setCursor(0, line);
-    if (getParameter(PARAM_MENU) % 10 + line <= lastMenu)
-      lcdNumberLine(line);
-
-    switch (getParameter(PARAM_MENU) % 10 + line) {
-      case 0:
-        lcd.print(F(TEXT_SLEEP));
-        if (doAction) {
-          sleepNow();
-        }
-        break;
-      case 1:
-        if (getParameter(PARAM_STATUS) == STATUS_TEST_LEDS) {
-          lcd.print(F("Stop test"));
-          setParameter(PARAM_MENU, 33);
-          if (doAction) {
-            setParameter(PARAM_STATUS, 0);
-          }
-        } else {
-          lcd.print(F(TEXT_TEST_LEDS));
-          if (doAction) {
-            setParameter(PARAM_STATUS, STATUS_TEST_LEDS);
-          }
-        }
-
-        break;
-      case 2:
-        lcd.print(F(TEXT_RESET));
-        if (doAction) {
-          resetParameters();
-          setParameter(PARAM_MENU, 20);
-        }
-        break;
-      case 3:
-        lcd.print(F(TEXT_REBOOT));
-        if (doAction) {
-          reboot();
-        }
-        break;
-
-      case 4:
-        lcd.print(F(TEXT_MAIN_MENU));
-        if (doAction) {
-          setParameter(PARAM_MENU, 1);
-        }
-        return;
     }
     doAction = false;
   }
@@ -733,14 +420,17 @@ void lcdMenuSettings(int counter, boolean doAction) {
   }
   switch (getParameter(PARAM_MENU) % 10) {
     case 4:
-      printColor(&lcd, ACTIVE_PARAMETERS[getParameter(currentParameter) - 1]);
+      // Check for pH or EC - 20220701
+      // printColor(&lcd, ACTIVE_PARAMETERS[getParameter(currentParameter) - 1]);
       break;
     case 6:  // active leds
       lcd.print((getParameter(currentParameter)));
       lcd.print(" ");
-      setActiveLeds();
+      // Check for pH or EC - 20220701
+      // setActiveLeds();
       for (byte i = 0; i < nbParameters; i++) {
-        printColorOne(&lcd, ACTIVE_PARAMETERS[i]);
+        // Check for pH or EC - 20220701
+        // printColorOne(&lcd, ACTIVE_PARAMETERS[i]);
         lcd.print(" ");
       }
       break;
@@ -768,4 +458,365 @@ void lcdPrintBlank(byte number) {
     lcd.print(" ");
   }
 }
+
+void lcdStatus(int counter, boolean doAction) {
+  if (doAction)
+    setParameter(PARAM_MENU, 0);
+  updateCurrentMenu(counter, nbLeds);
+  if (noEventCounter < 2)
+    lcd.clear();
+  byte menu = getParameter(PARAM_MENU) % 10;
+  if (menu < nbLeds) {
+    lcd.setCursor(0, 0);
+    // Check for pH or EC - 20220701
+    // printColor(&lcd, ACTIVE_PARAMETERS[menu]);
+    lcd.setCursor(0, 1);
+
+    if (getParameter(menu + 5) == INT_MAX_VALUE ||
+        getParameter(menu) == INT_MAX_VALUE) {
+      lcd.print(F("OVER"));
+    } else {
+      if (menu < 3) {
+        lcd.print(F(TEXT_ABSORBANCE));
+        lcd.setCursor(8, 1);
+        lcd.print(
+            log10((double)getParameter(menu + 5) / (double)getParameter(menu)));
+      } else {
+        lcd.print(F(TEXT_FLUORESCENCE));
+        lcd.setCursor(8, 1);
+        lcd.print(getParameter(menu) - getParameter(menu + 5));
+      }
+    }
+    lcdPrintBlank(2);
+  } else {
+    lcd.setCursor(0, 0);
+#ifdef TEMPERATURE_ADDRESS
+    lcd.print("T:");
+    lcd.print(((float)getParameter(PARAM_TEMPERATURE)) / 100, 1);
+    lcd.print("\xDF\x43");
+#endif
+#ifdef BATTERY
+    lcd.print(F(" B:"));
+    lcd.print(((float)getParameter(PARAM_BATTERY)) / 1000);
+
+#ifdef BATTERY_CHARGING
+    if (getParameter(PARAM_CHARGING) > 1000) {
+      lcd.print("~");
+    } else if (getParameter(PARAM_CHARGING) > 500) {
+      lcd.print("+");
+    } else {
+      lcd.print("-");
+    }
+
+#else
+    lcd.print("V");
+#endif
+#endif
+    lcd.setCursor(0, 1);
+    lcd.print(millis() / 1000);
+    lcd.print("s");
+    lcd.setCursor(9, 1);
+    lcd.print(F(SOFTWARE_VERSION));
+  }
+}
+
+void lcdWait() {
+  lcd.setCursor(0, 1);
+  if (getParameter(PARAM_STATUS) ==
+      STATUS_SEQUENCE) {  // need to press enter for next acquisition
+    lcd.print(F(TEXT_PRESS_NEXT));
+  } else {
+    lcd.print(getParameter(PARAM_WAIT));
+    lcd.print(" s ");
+  }
+}
+
+void lcdAcquisition(int counter, boolean doAction) {
+  byte menu = getParameter(PARAM_MENU) % 10;
+  // if it is a sequence we should go to menu only if in an acquisition
+  if (counter) {  // the button was turned
+    setParameter(PARAM_MENU, 0);
+  }
+  if (doAction) {     // the button was pressed
+    if (menu == 3) {  // test sequence
+      setParameter(PARAM_MENU, 0);
+      setParameter(PARAM_NEXT_EXP, -1);
+      setParameter(PARAM_STATUS, 0);
+    } else if (menu == 2 || getParameter(PARAM_STATUS) != STATUS_SEQUENCE) {
+      setParameter(PARAM_MENU, 0);
+    } else {  // next experiment, it is a manual sequence
+      setParameter(PARAM_WAIT, 0);
+    }
+  }
+  if (noEventCounter < 2)
+    lcd.clear();
+  switch (menu) {
+    case 0:  // waiting for blank
+      lcd.setCursor(0, 0);
+      lcd.print(F(TEXT_WAITING_BLANK));
+      lcdWait();
+      break;
+    case 1:  // waiting for acquisition
+      lcd.setCursor(0, 0);
+      lcd.print(F(TEXT_WAITING_EXP));
+      lcd.print(getParameter(PARAM_NEXT_EXP));
+      lcdWait();
+      break;
+    case 2:  // acquiring
+      lcd.setCursor(0, 0);
+      lcd.print(F(TEXT_ACQUIRING));
+      lcd.setCursor(0, 1);
+      if (getParameter(PARAM_NEXT_EXP) == 0) {
+        lcd.print(F(TEXT_BLANK));
+      } else if (getParameter(PARAM_NEXT_EXP) == 1) {
+        lcd.print(F(TEXT_SAMPLE));
+      } else if (getParameter(PARAM_NEXT_EXP) > 1) {
+        if (getParameter(PARAM_STATUS) == STATUS_SEQUENCE) {
+          lcd.print(F(TEXT_KINETIC));
+        } else {
+          lcd.print(F(TEXT_SEQUENCE));
+        }
+        lcdPrintBlank(1);
+        lcd.print(getParameter(PARAM_NEXT_EXP));
+      }
+      break;
+    case 3:  // TEST mode
+      lcd.setCursor(0, 0);
+      lcd.print("R:");
+      // Check EEPROMLogger - 20220701
+      // lcd.print(getDataLong(1));
+      lcd.print("Data 1L EEPROM");
+      lcdPrintBlank(6);
+      lcd.setCursor(8, 0);
+      lcd.print("G:");
+      // Check EEPROMLogger - 20220701
+      // lcd.print(getDataLong(2));
+      lcd.print("Data 2L EEPROM");
+      lcdPrintBlank(6);
+      lcd.setCursor(0, 1);
+      lcd.print("B:");
+      // Check EEPROMLogger - 20220701
+      // lcd.print(getDataLong(3));
+      lcd.print("Data 3L EEPROM");
+      lcdPrintBlank(6);
+      lcd.setCursor(8, 2);
+      lcd.print("U:");
+      // Check EEPROMLogger - 20220701
+      // lcd.print(getDataLong(4));
+      lcd.print("Data 4L EEPROM");
+      lcdPrintBlank(6);
+  }
+}
+
+void lcdUtilities(int counter, boolean doAction) {
+  if (noEventCounter > 2)
+    return;
+  lcd.clear();
+  byte lastMenu = 4;
+  updateCurrentMenu(counter, lastMenu);
+
+  for (byte line = 0; line < LCD_NB_ROWS; line++) {
+    lcd.setCursor(0, line);
+    if (getParameter(PARAM_MENU) % 10 + line <= lastMenu)
+      lcdNumberLine(line);
+
+    switch (getParameter(PARAM_MENU) % 10 + line) {
+      case 0:
+        lcd.print(F(TEXT_SLEEP));
+        if (doAction) {
+          sleepNow();
+        }
+        break;
+      case 1:
+        if (getParameter(PARAM_STATUS) == STATUS_TEST_LEDS) {
+          lcd.print(F("Stop test"));
+          setParameter(PARAM_MENU, 33);
+          if (doAction) {
+            setParameter(PARAM_STATUS, 0);
+          }
+        } else {
+          lcd.print(F(TEXT_TEST_LEDS));
+          if (doAction) {
+            setParameter(PARAM_STATUS, STATUS_TEST_LEDS);
+          }
+        }
+
+        break;
+      case 2:
+        lcd.print(F(TEXT_RESET));
+        if (doAction) {
+          resetParameters();
+          setParameter(PARAM_MENU, 20);
+        }
+        break;
+      case 3:
+        lcd.print(F(TEXT_REBOOT));
+        if (doAction) {
+          reboot();
+        }
+        break;
+
+      case 4:
+        lcd.print(F(TEXT_MAIN_MENU));
+        if (doAction) {
+          setParameter(PARAM_MENU, 1);
+        }
+        return;
+    }
+    doAction = false;
+  }
+}
+
+void lcdResults(int counter, boolean doAction) {
+  if (doAction)
+    setParameter(PARAM_MENU, 0);
+  if (noEventCounter < 2)
+    lcd.clear();
+
+  // calculate the last experiment based on epoch of each experiment
+  byte lastExperiment = 1;
+  // Check EEPROMLogger - 20220701
+  // long dataZero = getDataLong(0);
+  long dataZero = 0L;
+  for (lastExperiment; lastExperiment < maxNbRows; lastExperiment++) {
+    // Check EEPROMLogger - 20220701
+    // if (getDataLong(lastExperiment * dataRowSize) <= dataZero)
+    if (0L <= dataZero)
+      break;
+  }
+
+  updateCurrentMenu(counter, lastExperiment - 1, 50);
+  int start = getParameter(PARAM_MENU) % 50 - 1;
+  boolean header = start == -1;
+  if (!getParameterBit(PARAM_FLAGS, PARAM_FLAG_RAW_VALUES))
+    start++;  // we add one it we don't show blank
+  for (int i = start; i < min(lastExperiment, start + LCD_NB_ROWS); i++) {
+    lcd.setCursor(0, i - start);
+    if (header) {
+      // Check for pH or EC - 20220701
+      // printColor(&lcd, getParameter(PARAM_COLOR) - 1);
+      header = false;
+    } else {
+      lcd.print(i);
+      lcd.print(" ");
+      if (getParameterBit(PARAM_FLAGS, PARAM_FLAG_RAW_VALUES)) {
+        // Check EEPROMLogger - 20220701
+        // lcd.print((getDataLong(i * dataRowSize) - getDataLong(0)) / 1000);
+        lcd.print((i * dataRowSize - 0) / 1000);
+        lcd.print(" ");
+      }
+      if (getParameterBit(PARAM_FLAGS, PARAM_FLAG_RAW_VALUES) == 1) {
+        // Check EEPROMLogger - 20220701
+        // lcd.print(getDataLong(i * dataRowSize + getParameter(PARAM_COLOR)));
+        lcd.print(i * dataRowSize + getParameter(PARAM_COLOR));
+      } else {
+        // Check EEPROMLogger - 20220701
+        // if (getDataLong(getParameter(PARAM_COLOR)) == LONG_MAX_VALUE || getDataLong(i * dataRowSize + getParameter(PARAM_COLOR)) == LONG_MAX_VALUE) {
+        if (getParameter(PARAM_COLOR) == LONG_MAX_VALUE || i * dataRowSize + getParameter(PARAM_COLOR) == LONG_MAX_VALUE) {
+          lcd.print(F("OVER"));
+        } else {
+          if (getParameter(PARAM_COLOR) < 4) {
+            // Check EEPROMLogger - 20220701
+            // lcd.print(log10((double)getDataLong(getParameter(PARAM_COLOR)) / (double)getDataLong(i * dataRowSize + getParameter(PARAM_COLOR))));
+            lcd.print(log10((double)getParameter(PARAM_COLOR) / (double)i * dataRowSize + getParameter(PARAM_COLOR)));
+          } else {
+            // Check EEPROMLogger - 20220701
+            // lcd.print(getDataLong(i * dataRowSize + getParameter(PARAM_COLOR)) - getDataLong(getParameter(PARAM_COLOR)));
+            lcd.print(i * dataRowSize + getParameter(PARAM_COLOR) - getParameter(PARAM_COLOR));
+          }
+        }
+      }
+    }
+    lcdPrintBlank(6);
+  }
+}
+
+void lcdMenu() {
+  byte currentMenu = getParameter(PARAM_MENU);
+  if (previousMenu != currentMenu) {  // this is used to clear screen from
+                                      // external process for example
+    noEventCounter = 0;
+    previousMenu = currentMenu;
+  }
+  if (rotaryCounter == 0 && !rotaryPressed) {
+    if (noEventCounter < 32760)
+      noEventCounter++;
+  } else {
+    noEventCounter = 0;
+  }
+  if (noEventCounter > 250 && getParameter(PARAM_STATUS) == 0) {
+    if (currentMenu - currentMenu % 10 != 20) {
+      setParameter(PARAM_MENU, 20);
+    }
+    captureCounter = false;
+  }
+
+#ifdef BATTERY_CHARGING
+  if (noEventCounter > 500 &&
+      getParameter(PARAM_CHARGING) >
+          500) {  // battery is charging so we are on USB : no sleep !
+    noEventCounter = 500;
+  }
+#endif
+
+  if (noEventCounter > 1500 && getParameter(PARAM_STATUS) == 0) {
+    sleepNow();
+    noEventCounter = 0;
+  }
+
+  boolean doAction = rotaryPressed;
+  rotaryPressed = false;
+  int counter = rotaryCounter;
+  rotaryCounter = 0;
+  switch (currentMenu < 100 ? currentMenu - currentMenu % 10
+                            : currentMenu - currentMenu % 50) {
+    case 0:
+      lcdMenuHome(counter, doAction);
+      break;
+    case 10:
+      lcdMenuSettings(counter, doAction);
+      break;
+    case 20:
+      lcdStatus(counter, doAction);
+      break;
+    case 30:
+      lcdAcquisition(counter, doAction);
+      break;
+    case 40:
+      lcdUtilities(counter, doAction);
+      break;
+    case 100:
+      lcdResults(counter, doAction);
+      break;
+  }
+}
+
+/*
+// this code is currently not USED
+void lcdDefaultExact(int counter, boolean doAction) {
+  if (doAction)
+    setParameter(PARAM_MENU, 0);
+  updateCurrentMenu(counter, 1);
+  if (noEventCounter < 2)
+    lcd.clear();
+  switch (getParameter(PARAM_MENU) % 10) {
+    case 0:
+      for (byte i = 0; i < min(nbLeds, 4); i++) {
+        lcd.setCursor((i % 2) * 8, floor(i / 2));
+        printColorOne(&lcd, ACTIVE_PARAMETERS[i]);
+        lcd.print(": ");
+        lcd.print(getParameter(i + 5) - getParameter(i));
+        lcdPrintBlank(2);
+      }
+      break;
+    case 1:
+      lcd.setCursor(0, 0);
+      epochToString(now(), &lcd);
+      lcd.setCursor(6, 1);
+      lcd.print("s: ");
+      lcd.print(millis() / 1000);
+      break;
+  }
+}
+
 */
