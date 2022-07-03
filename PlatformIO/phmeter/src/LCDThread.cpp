@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <ChNil.h>
 
-#include "Params.h"
+#include "Funcs.h"
 
 #ifdef THR_LCD
 
@@ -15,10 +15,9 @@ THD_FUNCTION(ThreadLCD, arg) {
   // initialize the library with the numbers of the interface pins
   setupRotary();
   wakeUpScreen();
-/*
+
   setParameter(PARAM_MENU, 0);
   setParameter(PARAM_STATUS, 0);
-  */
 
   while (true) {
     lcdMenu();

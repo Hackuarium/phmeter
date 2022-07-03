@@ -225,6 +225,7 @@ void lcdMenuHome(int counter, bool doAction) {
   if (noEventCounter > 2)
     return;
   lcd.clear();
+  // Define number of options in the Menu
   byte lastMenu = 6;
   updateCurrentMenu(counter, lastMenu);
 
@@ -234,7 +235,14 @@ void lcdMenuHome(int counter, bool doAction) {
       lcdNumberLine(line);
 
     switch (getParameter(PARAM_MENU) % 10 + line) {
+      // 1st option (default)
       case 0:
+        /* Checking if the next exposure is greater than or equal to 0. If it is,
+        it prints "STOP" on the LCD. If the doAction is true, it sets the next
+        exposure to -1, the status to 0, and the menu to 100. If the next
+        exposure is not greater than or equal to 0, it prints "ACQUIRE" on the
+        LCD. If the doAction is true, it sets the status to STATUS_ONE_SPECTRUM
+        and the next exposure to 0. */
         if (getParameter(PARAM_NEXT_EXP) >= 0) {
           lcd.print(F(TEXT_STOP));
           if (doAction) {
@@ -737,6 +745,7 @@ void lcdMenu() {
   } else {
     noEventCounter = 0;
   }
+  // Show std_by Menu
   if (noEventCounter > 250 && getParameter(PARAM_STATUS) == 0) {
     if (currentMenu - currentMenu % 10 != 20) {
       setParameter(PARAM_MENU, 20);
@@ -751,7 +760,8 @@ void lcdMenu() {
     noEventCounter = 500;
   }
 #endif
-
+  
+  // Enter to sleep
   if (noEventCounter > 1500 && getParameter(PARAM_STATUS) == 0) {
     sleepNow();
     noEventCounter = 0;
