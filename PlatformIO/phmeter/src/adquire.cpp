@@ -178,14 +178,20 @@ void calculateResult(byte experimentNumber) {
   }
 }
 
-long acquireOne(byte led) {
-
-  chThdSleepMilliseconds(5);
-  FreqCount.begin(100);
-  chThdSleepMilliseconds(105);
-  long count = FreqCount.read();
-  ledOff(led);
-
+long acquireOne(uint8_t led) {
+    volatile int pHRaw;
+    switch (led)
+    {
+    case 0: // pH reading
+        pHRaw = getPH();
+        setPH(&pHRaw);
+        break;
+    case 1: // EC reading
+        count = getEC();
+        break;    
+    default:
+        break;
+    }
   return count;
 }
 

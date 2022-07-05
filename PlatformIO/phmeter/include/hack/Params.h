@@ -127,6 +127,7 @@
 #define PH_DATA        A0
 #define PH_CLK         A1
 
+
 /******************************
   SERIAL, LOGGER AND DEBUGGERS
 *******************************/
@@ -150,6 +151,8 @@
 #define PARAM_WEIGHT_G 6                 // G - in unit of the balance (gr)
 #define PARAM_WEIGHT_SINCE_LAST_EVENT 7  // H - last weight
 #define PARAM_WEIGHT_MAX 8               // I - Maximum weight
+#define PARAM_PH 9                       // J - pH in unit of bits
+#define PARAM_PH_H  10                   // K - pH in unit of potential of hydrogen
 
 #define PARAM_STEPPER_SPEED 26  // AA - motor speed, in RPM
 #define PARAM_STEPPER_SECONDS \
