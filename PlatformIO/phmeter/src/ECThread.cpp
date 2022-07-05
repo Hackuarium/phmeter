@@ -3,13 +3,13 @@
 
 #include "Params.h" 
 
-#ifdef THR_PH
+#ifdef THR_EC
 
 #include <HX711.h>
 
 HX711 scale;
 
-THD_FUNCTION(ThreadPh, arg) {
+THD_FUNCTION(ThreadEC, arg) {
   chThdSleep(1234); // wait a little bit not everything starts at once
   scale.begin(PH_DATA, PH_CLK, 32);
   scale.set_gain(32);

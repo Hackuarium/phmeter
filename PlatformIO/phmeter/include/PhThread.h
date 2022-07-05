@@ -1,3 +1,4 @@
+#include <Arduino.h>
 #include <ChNil.h>
 
 #include "Params.h"

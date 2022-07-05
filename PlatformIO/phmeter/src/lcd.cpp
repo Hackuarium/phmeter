@@ -583,7 +583,7 @@ void lcdAcquisition(int counter, boolean doAction) {
       break;
     case 3:  // TEST mode
       lcd.setCursor(0, 0);
-      lcd.print("R:");
+      lcd.print("pH:");
       // Check EEPROMLogger - 20220701
       // lcd.print(getDataLong(1));
       lcd.print("Data 1L EEPROM");
@@ -595,13 +595,13 @@ void lcdAcquisition(int counter, boolean doAction) {
       lcd.print("Data 2L EEPROM");
       lcdPrintBlank(6);
       lcd.setCursor(0, 1);
-      lcd.print("B:");
+      lcd.print("EC:");
       // Check EEPROMLogger - 20220701
       // lcd.print(getDataLong(3));
       lcd.print("Data 3L EEPROM");
       lcdPrintBlank(6);
       lcd.setCursor(8, 2);
-      lcd.print("U:");
+      lcd.print("[uS]");
       // Check EEPROMLogger - 20220701
       // lcd.print(getDataLong(4));
       lcd.print("Data 4L EEPROM");
@@ -745,7 +745,7 @@ void lcdMenu() {
   } else {
     noEventCounter = 0;
   }
-  // Show std_by Menu
+  // Show standby Menu
   if (noEventCounter > 250 && getParameter(PARAM_STATUS) == 0) {
     if (currentMenu - currentMenu % 10 != 20) {
       setParameter(PARAM_MENU, 20);

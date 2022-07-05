@@ -21,6 +21,8 @@
 *******************************/
 
 #define THR_LCD
+// #define THR_PH
+// #define THR_EC
 // #define THR_WIRE_MASTER 1
 #define THR_SST_LOGGER 1
 #define THR_SERIAL 1
@@ -106,6 +108,9 @@
 #define PARAM_FLAG_INVERT_ROTARY 0  // invert rotary direction
 #define PARAM_FLAG_RAW_VALUES 1     // invert rotary direction
 
+// Adquire Thread
+#define TOTAL_NUMBER_PROBES 4
+
 // ERROR Thread
 #define OUT_ERROR A4
 
@@ -114,9 +119,13 @@
 #define TEMP_EXT2 A5
 #define TEMP_PCB A2
 
-
 // EEPROM || SST Thread
 #define EVENT_LOGGING 1
+
+
+// PH Thread
+#define PH_DATA        A0
+#define PH_CLK         A1
 
 /******************************
   SERIAL, LOGGER AND DEBUGGERS
