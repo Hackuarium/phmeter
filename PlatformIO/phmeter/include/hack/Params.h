@@ -89,11 +89,11 @@
 #define PARAM_INTER_DELAY 12
 #define PARAM_NUMPER_EXP 13
 #define PARAM_COLOR 23  // color used to display the results
-#define PARAM_ACTIVE_LEDS 21
-#define RED    A0
-#define GREEN  A1
-#define BLUE   A2
-#define UV1    A4 // 5mm
+#define PARAM_ACTIVE_PROBES 21
+#define PH_DOUT  A0
+#define EC       A5
+#define TEMP_1   PIN_SPI_SS
+#define TEMP_2   30
 #define BATTERY_LEVEL 128   // not available in version A
 #define TEMPERATURE   129   // not available in version A
 #define PARAM_WAIT 15      // current time to wait
@@ -126,6 +126,14 @@
 // PH Thread
 #define PH_DATA        A0
 #define PH_CLK         A1
+
+// Acquire Thread
+#define TARGET_INTENSITY_PH 45000
+#define TARGET_INTENSITY_EC 45000
+#define DATA_SIZE 240
+#define PARAM_BATTERY 18      // battery voltage (hundredths of volt)
+#define PARAM_NUMBER_ACQ \
+  16  // number of acquisition of 100ms that will be taken
 
 
 /******************************

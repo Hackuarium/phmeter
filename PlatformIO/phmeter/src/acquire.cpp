@@ -1,14 +1,88 @@
 #include <Arduino.h>
 #include <ChNil.h>
 
-#include "Params.h"
+#include "Funcs.h"
+#include "HackEEPROM.h"
 
-#include "libino/FreqCount/FreqCount.cpp"
+// Old variables from spectro - 20220701
+// Used in acquire.h->setActiveProbes()
+extern uint8_t nbProbes;              // number of active leds
+extern uint8_t nbParameters;        // number of parameters to record
+extern uint8_t dataRowSize;         // size of a data row (number of entries in data)
+extern uint8_t maxNbRows;           // calculate value depending the size of EEPROM dedicated to logs
 
-// Check - 20220705
-#define TARGET_INTENSITY_PH 45000
-#define TARGET_INTENSITY_EC 45000
+// Duplicated from lcd.h - 20220706
 int PROBES[TOTAL_NUMBER_PROBES];
+uint8_t ALL_PARAMETERS_ACQ[] = {PH_DOUT, EC, TEMP_1, TEMP_2, BATTERY_LEVEL};  // all possible reading values
+uint8_t ACTIVE_PARAMETERS_ACQ[sizeof(ALL_PARAMETERS_ACQ)];
+
+
+
+long acquireOne(uint8_t probe) {
+    volatile int rawMeasurement;
+    switch (probe)
+    {
+    case 0: // pH reading
+        // rawMeasurement = getPH();
+        // setPH(&rawMeasurement);
+        break;
+    case 1: // EC reading
+        // rawMeasurement = getEC();
+        // setEC(&rawMeasurement);
+        break; 
+    default:
+        break;
+    }
+  return rawMeasurement;
+}
+
+void acquire(bool testMode) {
+  if (!testMode) setParameter(PARAM_MENU, 32);
+  byte target = getParameter(PARAM_NEXT_EXP) * dataRowSize;
+  if (target < 0) return;
+
+  setDataLong(target, millis());
+  for (byte i = 0; i < nbParameters; i++) {
+    long newValue = 0;
+    if (ALL_PARAMETERS_ACQ[ACTIVE_PARAMETERS_ACQ[i]] < 128) {
+      for (byte j = 0; j <  getParameter(PARAM_NUMBER_ACQ); j++) {
+        long currentCount = acquireOne(ACTIVE_PARAMETERS_ACQ[i]);
+        newValue += currentCount;
+        if (currentCount > 50000) {
+          // there is an error, the frequency was too high for the detector
+          // this means we should either work in a darker environnement (at least close the box)
+          // or that the LED is too strong !
+          setDataLong(target + i + 1, LONG_MAX_VALUE);
+          break;
+        }
+        // FreqCount.begin(100);
+        chThdSleepMilliseconds(105);
+        // currentCount = FreqCount.read();
+        if (currentCount > 10000) {
+          // there is an error, the frequency was too high without led on
+          // this means we should work in a darker environnement (at least close the box)
+          setDataLong(target + i + 1, LONG_MAX_VALUE);
+          break;
+        }
+        newValue -= currentCount;
+        if (getParameter(PARAM_NEXT_EXP) < 0) return;
+      }
+    } else {
+      switch (ALL_PARAMETERS_ACQ[ACTIVE_PARAMETERS_ACQ[i]]) {
+        case BATTERY_LEVEL:
+          newValue = getParameter(PARAM_BATTERY);
+          break;
+        case TEMP_1:
+          newValue = getParameter(PARAM_TEMP_EXT1);
+          break;
+        case TEMP_2:
+          newValue = getParameter(PARAM_TEMP_EXT2);
+          break;
+      }
+    }
+    setDataLong(target + i + 1, newValue);
+  }
+}
 
 /**
  * The function calibrate() takes a boolean value as an argument. If the boolean
@@ -28,10 +102,10 @@ void calibrate(bool probePH) {
     while ((highPHNeutral - lowPHNeutral) >= 2) {
       PROBES[0] = (lowPHNeutral + highPHNeutral) / 2;
       long one = acquireOne(0);
-      if (one > TARGET_INTENSITY) {
-        highPHNeutral = PROBES[i];
+      if (one > TARGET_INTENSITY_PH) {
+        highPHNeutral = PROBES[0];
       } else {
-        lowPHNeutral = PROBES[i];
+        lowPHNeutral = PROBES[0];
       }
     }
   }
@@ -40,7 +114,7 @@ void calibrate(bool probePH) {
     while ((highECWater - lowECWater) >= 2) {
       PROBES[0] = (lowECWater + highECWater) / 2;
       long one = acquireOne(1);
-      if (one > TARGET_INTENSITY) {
+      if (one > TARGET_INTENSITY_EC) {
         highECWater = PROBES[1];
       } else {
         lowECWater = PROBES[1];
@@ -50,7 +124,7 @@ void calibrate(bool probePH) {
   
 }
 
-void testRGB() {
+void testProbe() {
 #if VERSION>=5
   calibrate();
 #endif
@@ -59,7 +133,8 @@ void testRGB() {
     acquire(true);
 
     for (byte i = 1; i < 5; i++) {
-      Serial.print(getDataLong(i));
+      // Check with HackEEPROM.h -> 20220706
+      // Serial.print(getDataLong(i));
       Serial.print(" ");
     }
     Serial.println("");
@@ -70,47 +145,28 @@ void testRGB() {
   }
 }
 
-void setActiveLeds() {
-  int active = getParameter(PARAM_ACTIVE_LEDS);
-  nbLeds = 0;
+/**
+ * It takes a bitmask of active probes and sets the number of active probes, the
+ * number of active parameters, the number of LEDs, the size of a data row, and the
+ * maximum number of rows in the data buffer
+ */
+void setActiveProbes() {
+  int active = getParameter(PARAM_ACTIVE_PROBES);
+  nbProbes = 0;
   nbParameters = 0;
-  for (byte i = 0; i < sizeof(ALL_PARAMETERS); i++) {
+  for (byte i = 0; i < sizeof(ALL_PARAMETERS_ACQ); i++) {
     if (active & (1 << i)) {
-      ACTIVE_PARAMETERS[nbParameters] = i;
-      if (ALL_PARAMETERS[i] < 128) {
-        nbLeds++;
+      ACTIVE_PARAMETERS_ACQ[nbParameters] = i;
+      if (ALL_PARAMETERS_ACQ[i] < 128) {
+        (nbProbes)++;
       }
-      nbParameters++;
+      (nbParameters)++;
     }
   }
-  dataRowSize = nbParameters + 1;
+  dataRowSize = (nbParameters) + 1;
   maxNbRows = DATA_SIZE / dataRowSize;
 }
 
-THD_FUNCTION(ThreadAcquisition, arg) {
-  setParameter(PARAM_NEXT_EXP, -1);
-  while (true) {
-    if (getParameter(PARAM_NEXT_EXP) == 0) {
-      setActiveLeds();
-      byte numberExperiments = min(maxNbRows, getParameter(PARAM_NUMPER_EXP));
-      switch (getParameter(PARAM_STATUS)) {
-        case STATUS_ONE_SPECTRUM:
-          runExperiment();
-          break;
-        case STATUS_KINETIC:
-          runExperiment(numberExperiments);
-          break;
-        case STATUS_SEQUENCE:
-          runSequence(numberExperiments);
-          break;
-      }
-    }
-    if (getParameter(PARAM_STATUS) == STATUS_TEST_LEDS) {
-      testRGB();
-    }
-    chThdSleepMilliseconds(100);
-  }
-}
 
 void setAcquisitionMenu() {
   if (getParameter(PARAM_NEXT_EXP) == 0) {
@@ -137,11 +193,34 @@ void waitExperiment() {
   }
 }
 
-void runExperiment() {
-  runExperiment(1);
+
+void clearData() {
+  for (byte i = 0; i < DATA_SIZE; i++) {
+    if (getDataLong(i) != 0) {
+      setDataLong(i, 0);
+    }
+  }
 }
 
-void runExperiment(byte nbExperiments) {
+// Check with HackEEPROM - 20220706
+void calculateResult(uint8_t experimentNumber) {
+  // we calculate the difference with blank
+  for (byte i = 0; i < nbProbes; i++) {
+    if (getDataLong(experimentNumber * dataRowSize + i + 1) == LONG_MAX_VALUE) {
+      setParameter(i, INT_MAX_VALUE); // current experiment
+    } else {
+      setParameter(i, getDataLong(experimentNumber * dataRowSize + i + 1) / 16); // current experiment
+    }
+    if (getDataLong(i + 1) == LONG_MAX_VALUE) {
+      setParameter(i + 5, INT_MAX_VALUE); // blank saturation
+    } else {
+      setParameter(i + 5, getDataLong(i + 1) / 16); // blank value
+    }
+  }
+}
+
+
+void runExperiment(uint8_t nbExperiments) {
 #if VERSION>=5
   calibrate();
 #endif
@@ -162,7 +241,11 @@ void runExperiment(byte nbExperiments) {
   setParameter(PARAM_NEXT_EXP, -1);
 }
 
-void runSequence(byte nbExperiments) { // TODO update this code
+void runExperiment() {
+  runExperiment(1);
+}
+
+void runSequence(uint8_t nbExperiments) { // TODO update this code
 #if VERSION>=5
   calibrate();
 #endif
@@ -187,89 +270,57 @@ void runSequence(byte nbExperiments) { // TODO update this code
   setParameter(PARAM_NEXT_EXP, -1);
 }
 
-void calculateResult(byte experimentNumber) {
-  // we calculate the difference with blank
-  for (byte i = 0; i < nbLeds; i++) {
-    if (getDataLong(experimentNumber * dataRowSize + i + 1) == LONG_MAX_VALUE) {
-      setParameter(i, INT_MAX_VALUE); // current experiment
-    } else {
-      setParameter(i, getDataLong(experimentNumber * dataRowSize + i + 1) / 16); // current experiment
-    }
-    if (getDataLong(i + 1) == LONG_MAX_VALUE) {
-      setParameter(i + 5, INT_MAX_VALUE); // blank saturation
-    } else {
-      setParameter(i + 5, getDataLong(i + 1) / 16); // blank value
-    }
+
+/******************************
+  Copy from UtilitiesSpecific
+*******************************/
+void printColor(Print* output, uint8_t parameter) {
+  switch (parameter) {
+    case 0:
+      output->print(F("pH"));
+      break;
+    case 1:
+      output->print(F("EC"));
+      break;
+    case 2:
+      output->print(F("Temp. 1"));
+      break;
+    case 3:
+      output->print(F("Temp. 1"));
+      break;
+    case 4:
+      output->print(F("Battery level"));
+      break;
   }
 }
 
-long acquireOne(uint8_t probe) {
-    volatile int rawMeasurement;
-    switch (probe)
-    {
-    case 0: // pH reading
-        rawMeasurement = getPH();
-        setPH(&rawMeasurement);
-        break;
-    case 1: // EC reading
-        rawMeasurement = getEC();
-        setEC(&rawMeasurement);
-        break; 
-    default:
-        break;
-    }
-  return rawMeasurement;
-}
-
-void acquire(boolean testMode) {
-  if (!testMode) setParameter(PARAM_MENU, 32);
-  byte target = getParameter(PARAM_NEXT_EXP) * dataRowSize;
-  if (target < 0) return;
-
-  setDataLong(target, millis());
-  for (byte i = 0; i < nbParameters; i++) {
-    long newValue = 0;
-    if (ALL_PARAMETERS[ACTIVE_PARAMETERS[i]] < 128) {
-      for (byte j = 0; j <  getParameter(PARAM_NUMBER_ACQ); j++) {
-        long currentCount = acquireOne(ACTIVE_PARAMETERS[i]);
-        newValue += currentCount;
-        if (currentCount > 50000) {
-          // there is an error, the frequency was too high for the detector
-          // this means we should either work in a darker environnement (at least close the box)
-          // or that the LED is too strong !
-          setDataLong(target + i + 1, LONG_MAX_VALUE);
-          break;
-        }
-        FreqCount.begin(100);
-        nilThdSleepMilliseconds(105);
-        currentCount = FreqCount.read();
-        if (currentCount > 10000) {
-          // there is an error, the frequency was too high without led on
-          // this means we should work in a darker environnement (at least close the box)
-          setDataLong(target + i + 1, LONG_MAX_VALUE);
-          break;
-        }
-        newValue -= currentCount;
-        if (getParameter(PARAM_NEXT_EXP) < 0) return;
-      }
-    } else {
-      switch (ALL_PARAMETERS[ACTIVE_PARAMETERS[i]]) {
-        case BATTERY_LEVEL:
-          newValue = getParameter(PARAM_BATTERY);
-          break;
-        case TEMPERATURE:
-          newValue = getParameter(PARAM_TEMPERATURE);
-          break;
-      }
-    }
-    setDataLong(target + i + 1, newValue);
+void printColorOne(Print* output, uint8_t parameter) {
+  switch (parameter) {
+    case 0:
+      output->print("pH");
+      break;
+    case 1:
+      output->print("EC");
+      break;
+    case 2:
+      output->print("T 1");
+      break;
+    case 3:
+      output->print("T 2");
+      break;
+    case 4:
+      output->print("BAT");
+      break;
+    case 5:
+      output->print("");
+      break;
   }
 }
 
 void printData(Print* output) {
   output->print("E ");
   for (byte i = 0; i < nbParameters; i++) {
-    printColorOne(output, ACTIVE_PARAMETERS[i]);
+    printColorOne(output, ACTIVE_PARAMETERS_ACQ[i]);
     output->print(" ");
   }
   output->println("");
@@ -283,13 +334,5 @@ void printData(Print* output) {
       output->print(" ");
     }
     output->println("");
-  }
-}
-
-void clearData() {
-  for (byte i = 0; i < DATA_SIZE; i++) {
-    if (getDataLong(i) != 0) {
-      setDataLong(i, 0);
-    }
   }
 }

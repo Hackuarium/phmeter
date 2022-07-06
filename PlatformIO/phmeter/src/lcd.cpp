@@ -5,6 +5,8 @@
 #include "sleep.h"
 #include "Utility.h"
 
+#include "acquire.h"
+
 #define LANGUAGE 'es'
 
 // https://docs.google.com/spreadsheets/d/1oek6pKHUvD7NI2u9-_iEOfVL-NeUmnj1pZCFRRo7n_4/edit?usp=sharing
@@ -101,17 +103,15 @@ byte previousMenu = 0;
 /* Declaring a function pointer called reboot that points to address 0. */
 // void(* reboot) (void) = 0;
 
+uint8_t ALL_PARAMETERS[] = {PH_DOUT, EC, TEMP_1, TEMP_2, BATTERY_LEVEL};  // all possible reading values
 // Old variables from spectro - 20220701
-byte nbLeds;              // number of active leds
-byte maxNbRows;           // calculate value depending the size of EEPROM dedicated to logs
-byte nbParameters;        // number of parameters to record
-#if VERSION == 1
-byte ALL_PARAMETERS[] = {RED, GREEN, BLUE, UV1};  // all possible leds
-#else
-byte ALL_PARAMETERS[] = {RED, GREEN, BLUE, UV1, TEMPERATURE, BATTERY_LEVEL};  // all possible leds
-#endif
-byte ACTIVE_PARAMETERS[sizeof(ALL_PARAMETERS)];
-byte dataRowSize;         // size of a data row (number of entries in data)
+// Used in acquire.h->setActiveProbes()
+uint8_t nbProbes = 2;              // number of active leds
+uint8_t nbParameters = sizeof(ALL_PARAMETERS);        // number of parameters to record
+uint8_t dataRowSize = nbParameters + 1;         // size of a data row (number of entries in data)
+uint8_t maxNbRows = DATA_SIZE / dataRowSize;           // calculate value depending the size of EEPROM dedicated to logs
+
+uint8_t ACTIVE_PARAMETERS[sizeof(ALL_PARAMETERS)];
 
 bool rotaryPressed = false;
 int rotaryCounter = 0;
@@ -212,6 +212,11 @@ void updateCurrentMenu(int counter, uint8_t maxValue) {
   updateCurrentMenu(counter, maxValue, 10);
 }
 
+/**
+ * It prints the current menu line and a dot to the LCD
+ * 
+ * @param line the line number of the LCD display (0 or 1)
+ */
 void lcdNumberLine(uint8_t line) {
   lcd.print(getParameter(PARAM_MENU) % 10 + line + 1);
   if (line == 0) {
@@ -375,7 +380,7 @@ void lcdMenuSettings(int counter, boolean doAction) {
       break;
     case 6:
       lcd.print(F("Active leds"));
-      currentParameter = PARAM_ACTIVE_LEDS;
+      currentParameter = PARAM_ACTIVE_PROBES;
       minValue = 0;
       maxValue = pow(2, sizeof(ALL_PARAMETERS)) - 1;
       break;
@@ -427,8 +432,7 @@ void lcdMenuSettings(int counter, boolean doAction) {
     case 6:  // active leds
       lcd.print((getParameter(currentParameter)));
       lcd.print(" ");
-      // Check for pH or EC - 20220701
-      // setActiveLeds();
+      setActiveProbes();
       for (byte i = 0; i < nbParameters; i++) {
         // Check for pH or EC - 20220701
         // printColorOne(&lcd, ACTIVE_PARAMETERS[i]);
@@ -463,11 +467,11 @@ void lcdPrintBlank(byte number) {
 void lcdStatus(int counter, boolean doAction) {
   if (doAction)
     setParameter(PARAM_MENU, 0);
-  updateCurrentMenu(counter, nbLeds);
+  updateCurrentMenu(counter, nbProbes);
   if (noEventCounter < 2)
     lcd.clear();
   byte menu = getParameter(PARAM_MENU) % 10;
-  if (menu < nbLeds) {
+  if (menu < nbProbes) {
     lcd.setCursor(0, 0);
     // Check for pH or EC - 20220701
     // printColor(&lcd, ACTIVE_PARAMETERS[menu]);
@@ -804,7 +808,7 @@ void lcdDefaultExact(int counter, boolean doAction) {
     lcd.clear();
   switch (getParameter(PARAM_MENU) % 10) {
     case 0:
-      for (byte i = 0; i < min(nbLeds, 4); i++) {
+      for (byte i = 0; i < min(nbProbes, 4); i++) {
         lcd.setCursor((i % 2) * 8, floor(i / 2));
         printColorOne(&lcd, ACTIVE_PARAMETERS[i]);
         lcd.print(": ");
