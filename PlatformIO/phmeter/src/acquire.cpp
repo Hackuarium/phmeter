@@ -9,20 +9,45 @@
 #define TARGET_INTENSITY_PH 45000
 #define TARGET_INTENSITY_EC 45000
 int PROBES[TOTAL_NUMBER_PROBES];
-void calibrate() {
-  for (byte i = 0; i < 2; i++) {
-    int lowIntensity = 0;
-    int highIntensity = 4091;
-    while ((highIntensity - lowIntensity) >= 2) {
-      PROBES[i] = (lowIntensity + highIntensity) / 2;
-      long one = acquireOne(i);
+
+/**
+ * The function calibrate() takes a boolean value as an argument. If the boolean
+ * value is true, the function will calibrate the pH probe. If the boolean 
+ * value is false, the function will calibrate the EC probe.
+ * 
+ * @param probePH true if calibrating the pH probe, false if calibrating the EC
+ * probe
+ */
+void calibrate(bool probePH) {
+  int lowPHNeutral = 0;
+  int highPHNeutral = 4091;
+  int lowECWater = 0;
+  int highECWater = 4091;
+  if (probePH)
+  {
+    while ((highPHNeutral - lowPHNeutral) >= 2) {
+      PROBES[0] = (lowPHNeutral + highPHNeutral) / 2;
+      long one = acquireOne(0);
       if (one > TARGET_INTENSITY) {
-        highIntensity = PROBES[i];
+        highPHNeutral = PROBES[i];
       } else {
-        lowIntensity = PROBES[i];
+        lowPHNeutral = PROBES[i];
       }
     }
   }
+  else
+  {
+    while ((highECWater - lowECWater) >= 2) {
+      PROBES[0] = (lowECWater + highECWater) / 2;
+      long one = acquireOne(1);
+      if (one > TARGET_INTENSITY) {
+        highECWater = PROBES[1];
+      } else {
+        lowECWater = PROBES[1];
+      }
+    }
+  }
+  
 }
 
 void testRGB() {
@@ -178,21 +203,22 @@ void calculateResult(byte experimentNumber) {
   }
 }
 
-long acquireOne(uint8_t led) {
-    volatile int pHRaw;
-    switch (led)
+long acquireOne(uint8_t probe) {
+    volatile int rawMeasurement;
+    switch (probe)
     {
     case 0: // pH reading
-        pHRaw = getPH();
-        setPH(&pHRaw);
+        rawMeasurement = getPH();
+        setPH(&rawMeasurement);
         break;
     case 1: // EC reading
-        count = getEC();
-        break;    
+        rawMeasurement = getEC();
+        setEC(&rawMeasurement);
+        break; 
     default:
         break;
     }
-  return count;
+  return rawMeasurement;
 }
 
 void acquire(boolean testMode) {

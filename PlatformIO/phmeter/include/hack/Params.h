@@ -109,7 +109,7 @@
 #define PARAM_FLAG_RAW_VALUES 1     // invert rotary direction
 
 // Adquire Thread
-#define TOTAL_NUMBER_PROBES 4
+#define TOTAL_NUMBER_PROBES 2
 
 // ERROR Thread
 #define OUT_ERROR A4
