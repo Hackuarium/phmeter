@@ -103,7 +103,8 @@ byte previousMenu = 0;
 /* Declaring a function pointer called reboot that points to address 0. */
 // void(* reboot) (void) = 0;
 
-uint8_t ALL_PARAMETERS[] = {PH_DOUT, EC, TEMP_1, TEMP_2, BATTERY_LEVEL};  // all possible reading values
+uint8_t ALL_PARAMETERS[TOTAL_PARAMETERS] = {PH_DOUT, EC, TEMP_1, TEMP_2, BATTERY_LEVEL};  // all possible reading values
+uint8_t ACTIVE_PARAMETERS[TOTAL_PARAMETERS];
 // Old variables from spectro - 20220701
 // Used in acquire.h->setActiveProbes()
 uint8_t nbProbes = 2;              // number of active leds
@@ -111,7 +112,6 @@ uint8_t nbParameters = sizeof(ALL_PARAMETERS);        // number of parameters to
 uint8_t dataRowSize = nbParameters + 1;         // size of a data row (number of entries in data)
 uint8_t maxNbRows = DATA_SIZE / dataRowSize;           // calculate value depending the size of EEPROM dedicated to logs
 
-uint8_t ACTIVE_PARAMETERS[sizeof(ALL_PARAMETERS)];
 
 bool rotaryPressed = false;
 int rotaryCounter = 0;

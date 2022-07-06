@@ -43,9 +43,6 @@
 #define EVENT_ERROR_FAILED 6
 #define EVENT_ERROR_RECOVER 7
 
-#define EVENT_MOTOR_START 20
-#define EVENT_MOTOR_STOP 21
-
 #define EVENT_ERROR_NOT_FOUND_ENTRY_N 150
 
 #define EVENT_SAVE_ALL_PARAMETER 255
@@ -54,21 +51,14 @@
 // .... (if more parameters than 262 ...)
 #define EVENT_PARAMETER_SET 256
 
-// MONITORING Thread
-#define MONITORING_LED 13
-
-// STEPPER Thread
-#define STEPPER_DIRECTION 8
-#define STEPPER_STEP 9
-
 // OUTPUT Thread
-#define OUT_1 10
-#define OUT_2 5
-#define OUT_3 A6
-#define OUT_4 12
+#define OUT_1 11
+#define OUT_2 12
+#define OUT_3 A2
+#define OUT_4 A3
 
 // LCD Thread
-#define LCD_E 6
+#define LCD_E  6
 #define LCD_RS 4
 #define LCD_D4 8
 #define LCD_D5 9
@@ -79,6 +69,7 @@
 #define LCD_ON 13  // power on LCD
 #define LCD_NB_ROWS 2
 #define LCD_NB_COLUMNS 16
+
 #define PARAM_MENU 25  // current menu
 #define PARAM_NEXT_EXP 14  // next experiment, 0 blank and then for kinetic
 #define STATUS_ONE_SPECTRUM 1
@@ -110,6 +101,15 @@
 
 // Adquire Thread
 #define TOTAL_NUMBER_PROBES 2
+#define TOTAL_PARAMETERS 5
+// Declared in lcd.cpp
+extern uint8_t nbProbes;              // number of active leds
+extern uint8_t nbParameters;        // number of parameters to record
+extern uint8_t dataRowSize;         // size of a data row (number of entries in data)
+extern uint8_t maxNbRows;           // calculate value depending the size of EEPROM dedicated to logs
+extern uint8_t ALL_PARAMETERS[TOTAL_PARAMETERS];  // all possible reading values
+extern uint8_t ACTIVE_PARAMETERS[TOTAL_PARAMETERS];
+
 
 // ERROR Thread
 #define OUT_ERROR A4
@@ -148,30 +148,28 @@
 #define EVENT_LOGGING 1
 #endif
 
+/******************************
+  PARAMETERS
+*******************************/
 #define PARAM_TEMP_EXT1 0  // A - temperature of the solution
 #define PARAM_TEMP_EXT2 1  // B - temperature of the solution
 
-#define PARAM_TEMP_PCB 2     // C - temperature of the heating plate
-#define PARAM_PID 3          // D - heating amount of energy
-#define PARAM_TEMP_TARGET 4  // E - target temperature of the liquid
+#define PARAM_PH        2  // C - pH in unit of bits
+#define PARAM_PH_H      3  // D - pH in unit of potential of hydrogen
+#define PARAM_PH_TARGET 4  // E - Desired pH
 
-#define PARAM_WEIGHT 5                   // F - in unit of the balance
-#define PARAM_WEIGHT_G 6                 // G - in unit of the balance (gr)
-#define PARAM_WEIGHT_SINCE_LAST_EVENT 7  // H - last weight
-#define PARAM_WEIGHT_MAX 8               // I - Maximum weight
-#define PARAM_PH 9                       // J - pH in unit of bits
-#define PARAM_PH_H  10                   // K - pH in unit of potential of hydrogen
+#define PARAM_EC    5     // F - Electrolytic Conductivity in unit of bits
+#define PARAM_EC_US 6     // G - Electrolytic Conductivity in unit of micro Siemens
 
-#define PARAM_STEPPER_SPEED 26  // AA - motor speed, in RPM
-#define PARAM_STEPPER_SECONDS \
-  27  // AB   number of seconds before changing direction
-#define PARAM_STEPPER_WAIT \
-  28  // AC   wait time in seconds between change of direction
-#define PARAM_WEIGHT_FACTOR \
-  29  // AD - Weight calibration: conversion factor digital -> gr
-      // (weight=FACTOR*dig_unit)
-#define PARAM_WEIGHT_EMPTY \
-  30  // AE - Weight calibration: digital offset value when bioreactor is empty
+#define PARAM_PH_FACTOR 26  // AD - PH calibration: conversion factor digital -> H (ph=FACTOR*dig_unit)
+#define PARAM_PH_NEUTRAL \
+  27  // AE - PH calibration: digital offset value when bioreactor is full of pure water
+
+#define PARAM_EC_FACTOR \
+  28  // AF - EC calibration: conversion factor digital -> uS
+      // (ec=FACTOR*dig_unit)
+#define PARAM_EC_NEUTRAL \
+  29  // AG - EC calibration: digital offset value when bioreactor is full of pure water
 
 #define PARAM_CURRENT_STEP 22
 #define PARAM_CURRENT_WAIT_TIME 23
@@ -185,42 +183,34 @@
  ******************/
 #define PARAM_ERROR 24  // Y - errors
 // extern const int PARAM_ERROR;
-#define FLAG_TEMP_PCB_PROBE_ERROR \
-  0  // pcb probe failed (one wire not answering)
 #define FLAG_TEMP_EXT1_PROBE_ERROR \
-  1  // external temperature 1 probe failed (one wire not answering)
+  0  // external temperature 1 probe failed (one wire not answering)
 #define FLAG_TEMP_EXT2_PROBE_ERROR \
-  2  // external temperature 2 probe failed (one wire not answering)
-#define FLAG_TEMP_PCB_RANGE_ERROR 3   // temperature of pcb is outside range
-#define FLAG_TEMP_EXT1_RANGE_ERROR 4  // temperature of liquid is outside range
-#define FLAG_TEMP_EXT2_RANGE_ERROR 5  // temperature of liquid is outside range
-#define FLAG_TEMP_TARGET_RANGE_ERROR 6  // target temperature is outside range
-#define MASK_TEMP_ERROR 0b01111111  // where are the bit for temperature error
+  1  // external temperature 2 probe failed (one wire not answering)
+#define FLAG_TEMP_EXT1_RANGE_ERROR 2  // temperature of liquid is outside range
+#define FLAG_TEMP_EXT2_RANGE_ERROR 3  // temperature of liquid is outside range
+#define MASK_TEMP_ERROR 0b00001111  // where are the bit for temperature error
 
-#define FLAG_WEIGHT_RANGE_ERROR 7     // the weight is outside range
-#define MASK_WEIGHT_ERROR 0b10000000  // where are the bit for weight error
+#define FLAG_PH_RANGE_ERROR 4     // the pH is outside range
+#define MASK_PH_ERROR 0b00010000  // where are the bit for weight error
+
+#define FLAG_EC_RANGE_ERROR 5     // the EC is outside range
+#define MASK_EC_ERROR 0b00100000  // where are the bit for EC error
 
 #define PARAM_ENABLED 25  // Z - enabled service (set by user)
 #define PARAM_STATUS 51   // AZ - currently active service
 
 // the following flags are defined for PARAM_STATUS and PARAM_ENABLED
-#define FLAG_PID_CONTROL 0      // 0 to stop PID
-#define FLAG_STEPPER_CONTROL 1  // 0 to stop engine
-#define FLAG_OUTPUT_1 2
-#define FLAG_OUTPUT_2 3
-#define FLAG_OUTPUT_3 4
-#define FLAG_OUTPUT_4 5
+#define FLAG_OUTPUT_1 0
+#define FLAG_OUTPUT_2 1
+#define FLAG_OUTPUT_3 2
+#define FLAG_OUTPUT_4 3
 
 // PARAM_STATUS
-#define FLAG_FOOD_CONTROL 2  // Not used
-#define FLAG_PH_CONTROL 6
-#define FLAG_GAS_CONTROL 7
-#define FLAG_SEDIMENTATION 8
-#define FLAG_RELAY_FILLING 9
-#define FLAG_RELAY_EMPTYING 10
-#define FLAG_PH_CALIBRATE 11
-#define FLAG_RELAY_ACID 12
-#define FLAG_RELAY_BASE 13
+#define FLAG_PH_CONTROL   4 // Enable/disable pH control
+#define FLAG_PH_CALIBRATE 5 // Enable/disable pH calibration
+#define FLAG_RELAY_ACID   6 // Enable/disable acid addition
+#define FLAG_RELAY_BASE   7 // Enable/disable base addition
 
 // value that should not be taken into account
 // in case of error the parameter is set to this value

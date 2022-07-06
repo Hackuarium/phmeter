@@ -4,19 +4,7 @@
 #include "Funcs.h"
 #include "HackEEPROM.h"
 
-// Old variables from spectro - 20220701
-// Used in acquire.h->setActiveProbes()
-extern uint8_t nbProbes;              // number of active leds
-extern uint8_t nbParameters;        // number of parameters to record
-extern uint8_t dataRowSize;         // size of a data row (number of entries in data)
-extern uint8_t maxNbRows;           // calculate value depending the size of EEPROM dedicated to logs
-
-// Duplicated from lcd.h - 20220706
 int PROBES[TOTAL_NUMBER_PROBES];
-uint8_t ALL_PARAMETERS_ACQ[] = {PH_DOUT, EC, TEMP_1, TEMP_2, BATTERY_LEVEL};  // all possible reading values
-uint8_t ACTIVE_PARAMETERS_ACQ[sizeof(ALL_PARAMETERS_ACQ)];
-
-
 
 long acquireOne(uint8_t probe) {
     volatile int rawMeasurement;
@@ -44,9 +32,9 @@ void acquire(bool testMode) {
   setDataLong(target, millis());
   for (byte i = 0; i < nbParameters; i++) {
     long newValue = 0;
-    if (ALL_PARAMETERS_ACQ[ACTIVE_PARAMETERS_ACQ[i]] < 128) {
+    if (ALL_PARAMETERS[ACTIVE_PARAMETERS[i]] < 128) {
       for (byte j = 0; j <  getParameter(PARAM_NUMBER_ACQ); j++) {
-        long currentCount = acquireOne(ACTIVE_PARAMETERS_ACQ[i]);
+        long currentCount = acquireOne(ACTIVE_PARAMETERS[i]);
         newValue += currentCount;
         if (currentCount > 50000) {
           // there is an error, the frequency was too high for the detector
@@ -68,7 +56,7 @@ void acquire(bool testMode) {
         if (getParameter(PARAM_NEXT_EXP) < 0) return;
       }
     } else {
-      switch (ALL_PARAMETERS_ACQ[ACTIVE_PARAMETERS_ACQ[i]]) {
+      switch (ALL_PARAMETERS[ACTIVE_PARAMETERS[i]]) {
         case BATTERY_LEVEL:
           newValue = getParameter(PARAM_BATTERY);
           break;
@@ -154,10 +142,10 @@ void setActiveProbes() {
   int active = getParameter(PARAM_ACTIVE_PROBES);
   nbProbes = 0;
   nbParameters = 0;
-  for (byte i = 0; i < sizeof(ALL_PARAMETERS_ACQ); i++) {
+  for (byte i = 0; i < sizeof(ALL_PARAMETERS); i++) {
     if (active & (1 << i)) {
-      ACTIVE_PARAMETERS_ACQ[nbParameters] = i;
-      if (ALL_PARAMETERS_ACQ[i] < 128) {
+      ACTIVE_PARAMETERS[nbParameters] = i;
+      if (ALL_PARAMETERS[i] < 128) {
         (nbProbes)++;
       }
       (nbParameters)++;
@@ -320,7 +308,7 @@ void printColorOne(Print* output, uint8_t parameter) {
 void printData(Print* output) {
   output->print("E ");
   for (byte i = 0; i < nbParameters; i++) {
-    printColorOne(output, ACTIVE_PARAMETERS_ACQ[i]);
+    printColorOne(output, ACTIVE_PARAMETERS[i]);
     output->print(" ");
   }
   output->println("");
