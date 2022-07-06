@@ -26,7 +26,7 @@ THD_FUNCTION(ThreadSteps, arg) {
   // couple of seconds
   byte previousMinute = getMinute();
   uint16_t setStatus = 0b0000000000000000;
-  int targetWeight = 0;
+  int targetPH = 0;
 
   while (true) {
     // allows to change the step from the terminal, we reload each time the step
@@ -38,8 +38,10 @@ THD_FUNCTION(ThreadSteps, arg) {
     byte parameter = (stepValue & 0b0111100000000000) >> 11;
     byte currentMinute = getMinute();
     int value = stepValue & 0b0000011111111111;
-    int fullEmptyWeightDifference =
-        getParameter(PARAM_WEIGHT_MAX) - getParameter(PARAM_WEIGHT_EMPTY);
+    // Check for pH - 20220706
+    int fullEmptyPHDifference = 0;
+    // int fullEmptyWeightDifference =
+    //     getParameter(PARAM_WEIGHT_MAX) - getParameter(PARAM_WEIGHT_EMPTY);
     /*
     if (DEBUG_STEPS) {
       Serial.print("======> ");
@@ -55,15 +57,16 @@ THD_FUNCTION(ThreadSteps, arg) {
     }
     */
     if (stepValue >> 15) {  // we set a parameter
+      // Check for pH - 20220706
       switch (parameter) {
         case 0:
-          setParameter(PARAM_TEMP_TARGET, value * 100);
+          setParameter(PARAM_PH_TARGET, value * 100);
           break;
       }
       index++;
     } else {  // it is an action
       int waitingTime = getParameter(PARAM_CURRENT_WAIT_TIME);
-      int currentWeight = getParameter(PARAM_WEIGHT);
+      int currentPH = getParameter(PARAM_PH);
       switch (parameter) {
         case 0:  // Do nothing
           index++;
@@ -92,37 +95,32 @@ THD_FUNCTION(ThreadSteps, arg) {
           }
           break;
         case 3:  // Wait for weight reduction in percentage
-          targetWeight = ((float)(fullEmptyWeightDifference) * (value / 100.0) +
-                          (float)getParameter(PARAM_WEIGHT_EMPTY));
-          Serial.println(targetWeight);
-          if ((fullEmptyWeightDifference < 0 &&
-               currentWeight >= targetWeight) ||
-              (fullEmptyWeightDifference > 0 &&
-               currentWeight <= targetWeight)) {
+          targetPH = ((float)(fullEmptyPHDifference) * (value / 100.0) +
+                          (float)getParameter(PARAM_PH_NEUTRAL));
+          Serial.println(targetPH);
+          if ((fullEmptyPHDifference < 0 &&
+               currentPH >= targetPH) ||
+              (fullEmptyPHDifference > 0 &&
+               currentPH <= targetPH)) {
             ++index;
           }
           break;
         case 4:  // Wait for weight increase in percentage
           // targetWeight = ((float)(fullEmptyWeightDifferencue) * (value /
           // 100.0) + (float)getParameter(PARAM_WEIGHT_EMPTY));
-          targetWeight = ((float)(fullEmptyWeightDifference) * (value / 100.0) +
-                          (float)getParameter(PARAM_WEIGHT_EMPTY));
-          Serial.println(targetWeight);
+          targetPH = ((float)(fullEmptyPHDifference) * (value / 100.0) +
+                          (float)getParameter(PARAM_PH_NEUTRAL));
+          Serial.println(targetPH);
 
-          if ((fullEmptyWeightDifference < 0 &&
-               currentWeight <= targetWeight) ||
-              (fullEmptyWeightDifference > 0 &&
-               currentWeight >= targetWeight)) {
+          if ((fullEmptyPHDifference < 0 &&
+               currentPH <= targetPH) ||
+              (fullEmptyPHDifference > 0 &&
+               currentPH >= targetPH)) {
             ++index;
           }
           break;
         case 5:  // Wait for temperature change (continue if < 0.5°C)
-          if (abs((getParameter(PARAM_TEMP_EXT1) +
-                   getParameter(PARAM_TEMP_EXT2)) /
-                      2.0 -
-                  getParameter(PARAM_TEMP_TARGET)) < value) {
-            index++;
-          }
+          index++;
           break;
         // Empty
         case 8:

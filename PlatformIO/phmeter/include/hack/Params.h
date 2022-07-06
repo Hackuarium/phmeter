@@ -13,6 +13,7 @@
  *********************************************/
 #include <Arduino.h>
 #include <ChNil.h>
+#include <limits.h>
 
 #define SOFTWARE_VERSION "v1.0.0-b"
 
@@ -115,9 +116,8 @@ extern uint8_t ACTIVE_PARAMETERS[TOTAL_PARAMETERS];
 #define OUT_ERROR A4
 
 // ONE WIRE Thread
-#define TEMP_EXT1 7
-#define TEMP_EXT2 A5
-#define TEMP_PCB A2
+#define TEMP_EXT1 PIN_SPI_SS
+#define TEMP_EXT2 30
 
 // EEPROM || SST Thread
 #define EVENT_LOGGING 1
@@ -214,15 +214,15 @@ extern uint8_t ACTIVE_PARAMETERS[TOTAL_PARAMETERS];
 
 // value that should not be taken into account
 // in case of error the parameter is set to this value
-#define ERROR_VALUE -32768
+#define ERROR_VALUE SHRT_MIN
 
 /*******************************************************************************
       Funcs.h
 *******************************************************************************/
 
-#define INT_MAX_VALUE 32767
-#define INT_MIN_VALUE -32768
-#define LONG_MAX_VALUE 2147483647
+#define INT_MAX_VALUE SHRT_MAX
+#define INT_MIN_VALUE SHRT_MIN
+#define LONG_MAX_VALUE LONG_MAX
 
 #define EE_START_PARAM 0  // We save the parameter from byte 0 of EEPROM
 #define EE_LAST_PARAM \

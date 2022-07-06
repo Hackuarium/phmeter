@@ -103,7 +103,7 @@ byte previousMenu = 0;
 /* Declaring a function pointer called reboot that points to address 0. */
 // void(* reboot) (void) = 0;
 
-uint8_t ALL_PARAMETERS[TOTAL_PARAMETERS] = {PH_DOUT, EC, TEMP_1, TEMP_2, BATTERY_LEVEL};  // all possible reading values
+uint8_t ALL_PARAMETERS[TOTAL_PARAMETERS] = {PH_DOUT, EC, TEMP_EXT1, TEMP_EXT2, BATTERY_LEVEL};  // all possible reading values
 uint8_t ACTIVE_PARAMETERS[TOTAL_PARAMETERS];
 // Old variables from spectro - 20220701
 // Used in acquire.h->setActiveProbes()

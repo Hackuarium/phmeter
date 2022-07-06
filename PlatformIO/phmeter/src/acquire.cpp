@@ -60,10 +60,10 @@ void acquire(bool testMode) {
         case BATTERY_LEVEL:
           newValue = getParameter(PARAM_BATTERY);
           break;
-        case TEMP_1:
+        case TEMP_EXT1:
           newValue = getParameter(PARAM_TEMP_EXT1);
           break;
-        case TEMP_2:
+        case TEMP_EXT2:
           newValue = getParameter(PARAM_TEMP_EXT2);
           break;
       }

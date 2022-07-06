@@ -59,7 +59,7 @@
 #include <Arduino.h>
 #include <ChNil.h>
 
-#include "Params.h"
+#include "Funcs.h"
 
 #ifndef SOFTWARE_VERSION
 #define SOFTWARE_VERSION "v1.0.0-beta"
@@ -72,6 +72,7 @@ void setup() {
   delay(1000);
   Serial.begin(9600);
   delay(1000);
+  setupParameters();
   // Start Nil RTOS.
   chBegin();
 }
