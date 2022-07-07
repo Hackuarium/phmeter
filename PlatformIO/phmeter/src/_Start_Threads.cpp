@@ -42,16 +42,18 @@ THD_TABLE_BEGIN
 
 // logger should have priority to prevent any corruption of flash memory
 
+#ifdef THR_PH
+      THD_TABLE_ENTRY(waThreadPh, NULL, ThreadPh, NULL)
+#endif
+
 #ifdef THR_ONEWIRE
 THD_TABLE_ENTRY(waThreadOneWire, NULL, ThreadOneWire, NULL)
 #endif
 
-#ifdef THR_PH
-      THD_TABLE_ENTRY(waThreadPh, NULL, ThreadPh, NULL)
-#endif
 #ifdef THR_LCD
       THD_TABLE_ENTRY(waThreadLCD, NULL, ThreadLCD, NULL)
 #endif
+
 #ifdef THR_SERIAL
       THD_TABLE_ENTRY(waThreadSerial, NULL, ThreadSerial, NULL)
 #endif

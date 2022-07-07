@@ -56,7 +56,6 @@
  * @copyright Copyright &copy; 2021
  */
 
-#include <Arduino.h>
 #include <ChNil.h>
 
 #include "Funcs.h"
@@ -65,9 +64,6 @@
 #define SOFTWARE_VERSION "v1.0.0-beta"
 #endif
 
-/**
- * The standard Arduino setup function used for setup and configuration tasks.
- */
 void setup() {
   delay(1000);
   Serial.begin(9600);
@@ -77,9 +73,6 @@ void setup() {
   chBegin();
 }
 
-/**
- * The standard Arduino loop function used for repeating tasks.
- */
 void loop() {
   // put your main code here, to run repeatedly:
 }

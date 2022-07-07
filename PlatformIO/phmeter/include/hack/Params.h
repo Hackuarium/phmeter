@@ -157,10 +157,10 @@ extern uint8_t ACTIVE_PARAMETERS[TOTAL_PARAMETERS];
 #define PARAM_EC    5     // F - Electrolytic Conductivity in unit of bits
 #define PARAM_EC_US 6     // G - Electrolytic Conductivity in unit of micro Siemens
 
-#define PARAM_BATTERY    18      // battery voltage (hundredths of volt)
-#define PARAM_NUMBER_ACQ 16  // number of acquisition of 100ms that will be taken
+#define PARAM_NUMBER_ACQ    16  // Number of acquisition of 100 ms that will be taken
+#define PARAM_ACTIVE_PROBES 17  // Number of values reading (pH, EC, temp*2, battery)
+#define PARAM_BATTERY       18      // Battery voltage (hundredths of volt)
 
-#define PARAM_ACTIVE_PROBES 21  // Number of values reading (pH, EC, temp*2, battery)
 
 #define PARAM_PH_FACTOR 26  // AD - PH calibration: conversion factor digital -> H (ph=FACTOR*dig_unit)
 #define PARAM_PH_NEUTRAL \
