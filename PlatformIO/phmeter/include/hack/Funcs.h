@@ -4,7 +4,7 @@
 
 #include "Params.h"
 
-extern int parameters[MAX_PARAM];
+extern volatile int parameters[MAX_PARAM];
 
 // uint16_t getQualifier();
 bool setParameterBit(uint8_t number, uint8_t bitToSet);

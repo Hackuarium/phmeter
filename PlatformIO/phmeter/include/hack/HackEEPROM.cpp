@@ -103,7 +103,6 @@ void writeLog(uint16_t event_number, int parameter_value) {
   ******************************/
   bool isLogValid = true;
   startAddress = getFirstAddress(nextEntryID);
-  // sst.flashReadInit(findAddressOfEntryN(nextEntryID));
   if (eeprom_read_word((const uint16_t *)startAddress) != nextEntryID) {
     isLogValid = false;
   }
@@ -120,7 +119,7 @@ void writeLog(uint16_t event_number, int parameter_value) {
   if (eeprom_read_word((const uint16_t *)startAddress) != event_number) {
     isLogValid = false;
   }
-  startAddress += 4;
+  startAddress += 2;
   if (eeprom_read_word((const uint16_t *)startAddress) != parameter_value) {
     isLogValid = false;
   }
@@ -134,7 +133,7 @@ void writeLog(uint16_t event_number, int parameter_value) {
     // if logger fails it is better to go back and erase the full sector
     // we can anyway not try to write if it was not erased !
     // and if we don't do this ... we will destroy the memory !
-    nextEntryID -= nextEntryID % NB_ENTRIES_PER_SECTOR;
+    // --nextEntryID;
   }
 
   /*****************************

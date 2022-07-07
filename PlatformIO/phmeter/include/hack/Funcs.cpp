@@ -17,7 +17,7 @@
 #include "EEPROMLogger.h"
 #endif
 
-int parameters[MAX_PARAM];
+volatile int parameters[MAX_PARAM];
 
 bool getParameterBit(uint8_t number, uint8_t bitToRead)
 {
@@ -74,11 +74,7 @@ void saveParameters()
     eeprom_write_word((uint16_t *)EE_START_PARAM + i, parameters[i]);
   }
 #ifdef EVENT_LOGGING
-#ifdef THR_EEPROM_LOGGER
-  writeLog();
-#else
   writeLog(EVENT_SAVE_ALL_PARAMETER, 0);
-#endif
 #endif
 }
 
@@ -90,9 +86,10 @@ void setAndSaveParameter(uint8_t number, int value)
 {
   parameters[number] = value;
   // The address of the parameter is given by : EE_START_PARAM+number*2
-  eeprom_write_word((uint16_t *)EE_START_PARAM + number, value);
 #ifdef EVENT_LOGGING
   writeLog(EVENT_PARAMETER_SET + number, value);
+#else
+  eeprom_write_word((uint16_t *)(EE_START_PARAM + number*2), value);
 #endif
 }
 

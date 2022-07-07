@@ -764,6 +764,8 @@ void lcdMenu() {
     noEventCounter = 500;
   }
 #endif
+  // Delete with BATTERY_CHARGING is set
+  noEventCounter = 500;
   
   // Enter to sleep
   if (noEventCounter > 1500 && getParameter(PARAM_STATUS) == 0) {

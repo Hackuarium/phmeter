@@ -26,6 +26,10 @@ THD_FUNCTION(ThreadLogger, arg) {
 
   chThdSleepSeconds((long)LOG_INTERVAL - (long)(millis() / 1000UL) + 5UL);
   
+  int delayBetweenLog = LOG_INTERVAL;
+  if (delayBetweenLog < 300)
+    delayBetweenLog = 300;
+
   while (true) {
     chThdSleep(1000);
     // avoids logging during the second x+1, ensure x+LOG_INTERVAL
@@ -33,11 +37,6 @@ THD_FUNCTION(ThreadLogger, arg) {
     // spaced
     // unsigned long waiting = (unsigned long)LOG_INTERVAL - (millis() % 1000UL);
     // chThdSleep((long)LOG_INTERVAL * 1000UL - millis() % 1000UL + 100UL);
-
-    int delayBetweenLog = LOG_INTERVAL;
-    if (delayBetweenLog < 300)
-      delayBetweenLog = 300;
-
     writeLog(0, 0);
     chThdSleepSeconds(delayBetweenLog);
   }
