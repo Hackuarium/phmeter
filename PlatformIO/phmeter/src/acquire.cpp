@@ -4,6 +4,8 @@
 #include "Funcs.h"
 #include "HackEEPROM.h"
 
+#include "pH.h"
+
 int PROBES[TOTAL_NUMBER_PROBES];
 
 long acquireOne(uint8_t probe) {
@@ -11,7 +13,7 @@ long acquireOne(uint8_t probe) {
     switch (probe)
     {
     case 0: // pH reading
-        // rawMeasurement = getPH();
+        rawMeasurement = getPH();
         // setPH(&rawMeasurement);
         break;
     case 1: // EC reading
@@ -120,14 +122,22 @@ void testProbe() {
     setParameter(PARAM_NEXT_EXP, 0);
     acquire(true);
 
-    for (byte i = 1; i < 5; i++) {
-      // Check with HackEEPROM.h -> 20220706
-      // Serial.print(getDataLong(i));
-      Serial.print(" ");
-    }
+    uint16_t pH = getPH();
+    setPH(&pH);
+
+    Serial.print(getParameter(PARAM_PH));
+    Serial.print(" ");
+    Serial.print(getParameter(PARAM_EC));
+    Serial.print(" ");
+    Serial.print(getParameter(PARAM_TEMP_EXT1));
+    Serial.print(" ");
+    Serial.print(getParameter(PARAM_TEMP_EXT2));
+    Serial.print(" ");
+    Serial.print(getParameter(PARAM_BATTERY));
+    Serial.print(" ");
     Serial.println("");
 
-    if (getParameter(PARAM_STATUS) != STATUS_TEST_LEDS) {
+    if (getParameter(PARAM_STATUS) != STATUS_TEST_PROBES) {
       return;
     }
   }

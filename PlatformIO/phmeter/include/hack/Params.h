@@ -21,17 +21,18 @@
   THREADS
 *******************************/
 
-#define THR_LCD
+#define THR_LCD             1
+#define THR_ACQUIRE         1
 // #define THR_PH
 // #define THR_EC
 // #define THR_WIRE_MASTER 1
 // #define THR_SST_LOGGER 1
-#define THR_EEPROM_LOGGER 1
-#define THR_SERIAL 1
-#define THR_ONEWIRE 1
-#define THR_ERROR 1
-#define THR_STEPS 1
-#define THR_OUTPUTS 1
+#define THR_EEPROM_LOGGER   1
+#define THR_SERIAL          1
+#define THR_ONEWIRE         1
+#define THR_ERROR           1
+#define THR_STEPS           1
+#define THR_OUTPUTS         1
 
 #define NB_PARAMETERS_LINEAR_LOGS 26
 
@@ -72,7 +73,7 @@
 #define LCD_NB_ROWS 2
 #define LCD_NB_COLUMNS 16
 
-#define PARAM_MENU 25  // current menu
+#define PARAM_MENU 20  // current menu
 #define PARAM_NEXT_EXP 14  // next experiment, 0 blank and then for kinetic
 #define STATUS_ONE_SPECTRUM 1
 #define STATUS_KINETIC 2
@@ -89,7 +90,7 @@
 #define BATTERY_LEVEL 128   // not available in version A
 #define TEMPERATURE   129   // not available in version A
 #define PARAM_WAIT 15      // current time to wait
-#define STATUS_TEST_LEDS 4
+#define STATUS_TEST_PROBES 256
 
 #define ROT_A 0
 #define ROT_B 1
@@ -208,10 +209,11 @@ extern uint8_t ACTIVE_PARAMETERS[TOTAL_PARAMETERS];
 #define FLAG_OUTPUT_4 3
 
 // PARAM_STATUS
-#define FLAG_PH_CONTROL   4 // Enable/disable pH control
-#define FLAG_PH_CALIBRATE 5 // Enable/disable pH calibration
-#define FLAG_RELAY_ACID   6 // Enable/disable acid addition
-#define FLAG_RELAY_BASE   7 // Enable/disable base addition
+#define FLAG_PH_CONTROL         4 // Enable/disable pH control
+#define FLAG_PH_CALIBRATE       5 // Enable/disable pH calibration
+#define FLAG_RELAY_ACID         6 // Enable/disable acid addition
+#define FLAG_RELAY_BASE         7 // Enable/disable base addition
+#define FLAG_STATUS_TEST_PROBES 8 // Enable/disable test probes
 
 // value that should not be taken into account
 // in case of error the parameter is set to this value

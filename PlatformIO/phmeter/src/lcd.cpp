@@ -32,7 +32,7 @@
 #define TEXT_STATUS "Status"
 #define TEXT_UTILITIES "Utilities"
 #define TEXT_SLEEP "Sleep"
-#define TEXT_TEST_LEDS "Test LED"
+#define TEXT_TEST_PROBES "Test Probes"
 #define TEXT_RESET "Reset"
 #define TEXT_REBOOT "Reboot"
 #define TEXT_MAIN_MENU "Main menu"
@@ -70,7 +70,7 @@
 #define TEXT_STATUS "Estado"
 #define TEXT_UTILITIES "Utilidades"
 #define TEXT_SLEEP "Dormir"
-#define TEXT_TEST_LEDS "prueba de LED"
+#define TEXT_TEST_PROBES "Prueba sondas"
 #define TEXT_RESET "Reiniciar"
 #define TEXT_REBOOT "Reiniciar"
 #define TEXT_MAIN_MENU "Menu"
@@ -593,10 +593,10 @@ void lcdAcquisition(int counter, boolean doAction) {
       lcd.print("Data 1L EEPROM");
       lcdPrintBlank(6);
       lcd.setCursor(8, 0);
-      lcd.print("G:");
+      lcd.print("T1:");
       // Check EEPROMLogger - 20220701
       // lcd.print(getDataLong(2));
-      lcd.print("Data 2L EEPROM");
+      lcd.print((float)getParameter(PARAM_TEMP_EXT1)/100.0);
       lcdPrintBlank(6);
       lcd.setCursor(0, 1);
       lcd.print("EC:");
@@ -605,10 +605,10 @@ void lcdAcquisition(int counter, boolean doAction) {
       lcd.print("Data 3L EEPROM");
       lcdPrintBlank(6);
       lcd.setCursor(8, 2);
-      lcd.print("[uS]");
+      lcd.print("T2:");
       // Check EEPROMLogger - 20220701
       // lcd.print(getDataLong(4));
-      lcd.print("Data 4L EEPROM");
+      lcd.print((float)getParameter(PARAM_TEMP_EXT2)/100.0);
       lcdPrintBlank(6);
   }
 }
@@ -633,16 +633,16 @@ void lcdUtilities(int counter, boolean doAction) {
         }
         break;
       case 1:
-        if (getParameter(PARAM_STATUS) == STATUS_TEST_LEDS) {
+        if (getParameter(PARAM_STATUS) == STATUS_TEST_PROBES) {
           lcd.print(F("Stop test"));
           setParameter(PARAM_MENU, 33);
           if (doAction) {
             setParameter(PARAM_STATUS, 0);
           }
         } else {
-          lcd.print(F(TEXT_TEST_LEDS));
+          lcd.print(F(TEXT_TEST_PROBES));
           if (doAction) {
-            setParameter(PARAM_STATUS, STATUS_TEST_LEDS);
+            setParameter(PARAM_STATUS, STATUS_TEST_PROBES);
           }
         }
 
@@ -765,7 +765,7 @@ void lcdMenu() {
   }
 #endif
   // Delete with BATTERY_CHARGING is set
-  noEventCounter = 500;
+  noEventCounter = 0;
   
   // Enter to sleep
   if (noEventCounter > 1500 && getParameter(PARAM_STATUS) == 0) {

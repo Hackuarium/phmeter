@@ -14,7 +14,7 @@ int16_t getPH() { // we can not avoid to have some errors measuring the pH
   // if there is an error it always end with 00000001
   // we will also need 4 consecutive values that differ less than 10%
   byte counter = 0;
-  long weight = 0;
+  long pH = 0;
 
   pHADC.begin(PH_DATA, PH_CLK, 32);
   pHADC.set_gain(32);
@@ -31,27 +31,27 @@ int16_t getPH() { // we can not avoid to have some errors measuring the pH
     chSemSignal(&lockADCReading);
 
     if ((currentWeight & 0b11111111) != 1) {
-      if (weight == 0) {
-        weight += currentWeight;
+      if (pH == 0) {
+        pH += currentWeight;
         counter++;
       } else {
-        int difference = abs(100 - (weight * 100 / counter) / currentWeight);
+        int difference = abs(100 - (pH * 100 / counter) / currentWeight);
         if (difference < 10) {
-          weight += currentWeight;
+          pH += currentWeight;
           counter++;
         } else {
-          weight = 0;
+          pH = 0;
           counter = 0;
         }
       }
       chThdSleepMilliseconds(10);
     }
   }
-  return weight / counter / 100;
+  return pH / counter / 100;
 }
 
 void setPH(uint16_t *pPHRaw) {
-    // setParameter(PARAM_PH, *pHRaw);
+    setParameter(PARAM_PH, *pPHRaw);
     // setParameter(PARAM_PH_H, convertPHToH(pHRaw));
 }
 

@@ -12,16 +12,19 @@
 #include "OneWireThread.h"
 #endif
 
+#ifdef THR_ACQUIRE
+#include "AcquireThread.h"
+#endif
+
 #ifdef THR_PH
 #include "phThread.h"
 #endif
 
 
 #ifdef THR_LCD
-
 #include "LCDThread.h"
-
 #endif
+
 //#include "hack/Serial.h"
 
 //#include <SerialSpecific.h>
@@ -41,6 +44,10 @@
 THD_TABLE_BEGIN
 
 // logger should have priority to prevent any corruption of flash memory
+
+#ifdef THR_ACQUIRE
+      THD_TABLE_ENTRY(waThreadAcquisition, NULL, ThreadAcquisition, NULL)
+#endif
 
 #ifdef THR_PH
       THD_TABLE_ENTRY(waThreadPh, NULL, ThreadPh, NULL)

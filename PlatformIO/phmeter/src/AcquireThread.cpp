@@ -23,7 +23,7 @@ THD_FUNCTION(ThreadAcquisition, arg) {
           break;
       }
     }
-    if (getParameter(PARAM_STATUS) == STATUS_TEST_LEDS) {
+    if (getParameter(PARAM_STATUS) == STATUS_TEST_PROBES) {
       testProbe();
     }
     chThdSleepMilliseconds(100);
