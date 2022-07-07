@@ -25,8 +25,8 @@
 // #define THR_PH
 // #define THR_EC
 // #define THR_WIRE_MASTER 1
-#define THR_SST_LOGGER 1
-// #define THR_EEPROM_LOGGER 1
+// #define THR_SST_LOGGER 1
+#define THR_EEPROM_LOGGER 1
 #define THR_SERIAL 1
 #define THR_ONEWIRE 1
 #define THR_ERROR 1
@@ -137,10 +137,10 @@ extern uint8_t ACTIVE_PARAMETERS[TOTAL_PARAMETERS];
 *******************************/
 
 #define MAX_PARAM 68
+#define LOG_INTERVAL 360  // Interval in (s) between logs logger
 
 #ifdef THR_SST_LOGGER
 #define FLASH_SELECT 1   // Flash SS_SPI
-#define LOG_INTERVAL 300  // Interval in (s) between logs logger
 #define EVENT_LOGGING 1
 #endif
 
@@ -259,7 +259,7 @@ extern uint8_t ACTIVE_PARAMETERS[TOTAL_PARAMETERS];
 *******************************************************************************/
 //#define LOG_INTERVAL      10  //Interval in (s) between logs logger
 
-#define LOG_ENTRY_LENGTH (NB_PARAMETERS_LINEAR_LOGS + 2) * 2
+#define LOG_ENTRY_LENGTH (NB_PARAMETERS_LINEAR_LOGS + 6) * 2
 #define NUMBER_LOGS 960 / LOG_ENTRY_LENGTH
 
 #define FIRST_ADDRESS 64

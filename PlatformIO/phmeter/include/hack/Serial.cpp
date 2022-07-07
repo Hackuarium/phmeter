@@ -10,6 +10,11 @@
 
 #ifdef THR_SERIAL
 
+#ifdef THR_EEPROM_LOGGER
+#include "HackEEPROM.h"
+#endif
+
+
 char serialBuffer[SERIAL_BUFFER_LENGTH];
 uint8_t serialBufferPosition = 0;
 

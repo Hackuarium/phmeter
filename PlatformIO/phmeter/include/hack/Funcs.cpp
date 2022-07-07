@@ -19,49 +19,59 @@
 
 int parameters[MAX_PARAM];
 
-bool getParameterBit(uint8_t number, uint8_t bitToRead) {
+bool getParameterBit(uint8_t number, uint8_t bitToRead)
+{
   return (parameters[number] >> bitToRead) & 1;
 }
 
-bool setParameterBit(uint8_t number, uint8_t bitToSet) {
+bool setParameterBit(uint8_t number, uint8_t bitToSet)
+{
   if (getParameterBit(number, bitToSet))
     return false;
   parameters[number] |= 1 << bitToSet;
   return true;
 }
 
-bool clearParameterBit(uint8_t number, uint8_t bitToClear) {
+bool clearParameterBit(uint8_t number, uint8_t bitToClear)
+{
   if (!getParameterBit(number, bitToClear))
     return false;
   parameters[number] &= ~(1 << bitToClear);
   return true;
 }
 
-void toggleParameterBit(uint8_t number, uint8_t bitToToggle) {
+void toggleParameterBit(uint8_t number, uint8_t bitToToggle)
+{
   parameters[number] ^= 1 << bitToToggle;
 }
 
-void setupParameters() {
+void setupParameters()
+{
   // We copy all the values in the parameters table
-  eeprom_read_block((void*)parameters, (const void*)EE_START_PARAM,
+  eeprom_read_block((void *)parameters, (const void *)EE_START_PARAM,
                     MAX_PARAM * 2);
 }
 
-int getParameter(uint8_t number) {
+int getParameter(uint8_t number)
+{
   return parameters[number];
 }
 
-void setParameter(uint8_t number, int value) {
+void setParameter(uint8_t number, int value)
+{
   parameters[number] = value;
 }
 
-void incrementParameter(uint8_t number) {
+void incrementParameter(uint8_t number)
+{
   parameters[number]++;
 }
 
-void saveParameters() {
-  for (uint8_t i = 0; i < MAX_PARAM; i++) {
-    eeprom_write_word((uint16_t*)EE_START_PARAM + i, parameters[i]);
+void saveParameters()
+{
+  for (uint8_t i = 0; i < MAX_PARAM; i++)
+  {
+    eeprom_write_word((uint16_t *)EE_START_PARAM + i, parameters[i]);
   }
 #ifdef EVENT_LOGGING
 #ifdef THR_EEPROM_LOGGER
@@ -76,10 +86,11 @@ void saveParameters() {
   This will take time, around 4 ms
   This will also use the EEPROM that is limited to 100000 writes
 */
-void setAndSaveParameter(uint8_t number, int value) {
+void setAndSaveParameter(uint8_t number, int value)
+{
   parameters[number] = value;
   // The address of the parameter is given by : EE_START_PARAM+number*2
-  eeprom_write_word((uint16_t*)EE_START_PARAM + number, value);
+  eeprom_write_word((uint16_t *)EE_START_PARAM + number, value);
 #ifdef EVENT_LOGGING
   writeLog(EVENT_PARAMETER_SET + number, value);
 #endif
@@ -87,16 +98,22 @@ void setAndSaveParameter(uint8_t number, int value) {
 
 // this method will check if there was a change in the error status and log it
 // in this case
-bool saveAndLogError(boolean isError, uint8_t errorFlag) {
-  if (isError) {
-    if (setParameterBit(PARAM_ERROR, errorFlag)) {  // the status has changed
+bool saveAndLogError(boolean isError, uint8_t errorFlag)
+{
+  if (isError)
+  {
+    if (setParameterBit(PARAM_ERROR, errorFlag))
+    { // the status has changed
 #ifdef EVENT_LOGGING
       writeLog(EVENT_ERROR_FAILED, errorFlag);
 #endif
       return true;
     }
-  } else {
-    if (clearParameterBit(PARAM_ERROR, errorFlag)) {  // the status has changed
+  }
+  else
+  {
+    if (clearParameterBit(PARAM_ERROR, errorFlag))
+    { // the status has changed
 #ifdef EVENT_LOGGING
       writeLog(EVENT_ERROR_RECOVER, errorFlag);
 #endif
@@ -106,12 +123,16 @@ bool saveAndLogError(boolean isError, uint8_t errorFlag) {
   return false;
 }
 
-void printParameter(Print* output, uint8_t number) {
+void printParameter(Print *output, uint8_t number)
+{
   output->print(number);
   output->print("-");
-  if (number > 25) {
+  if (number > 25)
+  {
     output->print((char)(floor(number / 26) + 64));
-  } else {
+  }
+  else
+  {
     output->print(" ");
   }
   output->print((char)(number - floor(number / 26) * 26 + 65));
@@ -119,21 +140,26 @@ void printParameter(Print* output, uint8_t number) {
   output->println(parameters[number]);
 }
 
-void printParameters(Print* output) {
-  for (int i = 0; i < MAX_PARAM; i++) {
+void printParameters(Print *output)
+{
+  for (int i = 0; i < MAX_PARAM; i++)
+  {
     printParameter(output, i);
   }
 }
 
-uint8_t printCompactParameters(Print* output, uint8_t number) {
-  if (number > MAX_PARAM) {
+uint8_t printCompactParameters(Print *output, uint8_t number)
+{
+  if (number > MAX_PARAM)
+  {
     number = MAX_PARAM;
   }
   uint8_t checkDigit = 0;
 
   // we first add epoch
   checkDigit ^= toHex(output, (long)now());
-  for (int i = 0; i < number; i++) {
+  for (int i = 0; i < number; i++)
+  {
     int value = getParameter(i);
     checkDigit ^= toHex(output, value);
   }
@@ -143,12 +169,15 @@ uint8_t printCompactParameters(Print* output, uint8_t number) {
   return 1;
 }
 
-uint8_t printCompactParameters(Print* output) {
+uint8_t printCompactParameters(Print *output)
+{
   return printCompactParameters(output, MAX_PARAM);
 }
 
-void resetParameters() {
-  for (uint8_t i = FIRST_STEP_PARAMETER; i <= LAST_STEP_PARAMETER; i++) {
+void resetParameters()
+{
+  for (uint8_t i = FIRST_STEP_PARAMETER; i <= LAST_STEP_PARAMETER; i++)
+  {
     setAndSaveParameter(i, 0);
   }
   setAndSaveParameter(PARAM_TEMP_EXT1, ERROR_VALUE);
@@ -163,7 +192,7 @@ void resetParameters() {
   setAndSaveParameter(PARAM_NUMBER_ACQ, 10);
   setAndSaveParameter(PARAM_ACTIVE_PROBES, 5);
 
-  //int active = 1 << FLAG_PID_CONTROL | 1 << FLAG_STEPPER_CONTROL | 1 << FLAG_FOOD_CONTROL | 1 << FLAG_PH_CONTROL | 1 << FLAG_GAS_CONTROL | 1 << FLAG_SEDIMENTATION | 1 << FLAG_RELAY_FILLING | 1 << FLAG_RELAY_EMPTYING | 1 << FLAG_PH_CALIBRATE | 1 << FLAG_RELAY_ACID | 1 << FLAG_RELAY_BASE;
+  // int active = 1 << FLAG_PID_CONTROL | 1 << FLAG_STEPPER_CONTROL | 1 << FLAG_FOOD_CONTROL | 1 << FLAG_PH_CONTROL | 1 << FLAG_GAS_CONTROL | 1 << FLAG_SEDIMENTATION | 1 << FLAG_RELAY_FILLING | 1 << FLAG_RELAY_EMPTYING | 1 << FLAG_PH_CALIBRATE | 1 << FLAG_RELAY_ACID | 1 << FLAG_RELAY_BASE;
 
   int active = 1 << FLAG_OUTPUT_1 | 1 << FLAG_OUTPUT_2 | 1 << FLAG_OUTPUT_3 | 1 << FLAG_OUTPUT_4 | 1 << FLAG_PH_CONTROL | 1 << FLAG_PH_CALIBRATE | 1 << FLAG_RELAY_ACID | 1 << FLAG_RELAY_BASE;
 
@@ -175,4 +204,3 @@ void resetParameters() {
 
   setQualifier(21569);
 }
-

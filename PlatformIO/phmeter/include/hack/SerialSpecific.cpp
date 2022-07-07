@@ -4,9 +4,11 @@
 #include "HackOneWire.h"
 #include "Params.h"
 #include "Funcs.h"
-#include "SSTLogger.h"
 #include "Weight.h"
 #include "libraries/time/TimeLib.h"
+
+#ifdef THR_SST_LOGGER
+#include "SSTLogger.h"
 
 #if FLASH_SELECT == 10  // Flash SS_SPI
 SST sst = SST('B', 6);  // D10 is PORT B - 6
@@ -16,6 +18,8 @@ SST sst2 = SST('D', 3);  // TX is PORT D - 3
 #endif
 #if FLASH_SELECT == A3  // Flash SS_SPI
 SST sst = SST('F', 4);  // A3 is PORT F - 4
+#endif
+
 #endif
 
 void printGeneralParameters(Print* output) {

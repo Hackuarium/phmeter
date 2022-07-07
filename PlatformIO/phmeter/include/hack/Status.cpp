@@ -1,7 +1,13 @@
 #include <Arduino.h>
 
 #include "Funcs.h"
+
+#ifdef THR_SST_LOGGER
 #include "SSTLogger.h"
+#endif
+#ifdef THR_EEPROM_LOGGER
+#include "HackEEPROM.h"
+#endif
 
 bool isError(int filter) {
   if ((getParameter(PARAM_ERROR) & filter) != 0)
