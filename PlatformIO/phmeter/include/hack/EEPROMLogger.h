@@ -1,7 +1,9 @@
+#include <ChNil.h>
+
+#include "Params.h"
+
 #ifdef THR_EEPROM_LOGGER
 
-#include <Arduino.h>
-#include <ChNil.h>
 // part of the EEPROM is for the log
 // we should be able to save and reload the log
 

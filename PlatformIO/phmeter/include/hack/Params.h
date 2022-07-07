@@ -26,6 +26,7 @@
 // #define THR_EC
 // #define THR_WIRE_MASTER 1
 #define THR_SST_LOGGER 1
+// #define THR_EEPROM_LOGGER 1
 #define THR_SERIAL 1
 #define THR_ONEWIRE 1
 #define THR_ERROR 1
@@ -81,7 +82,6 @@
 #define PARAM_INTER_DELAY 12
 #define PARAM_NUMPER_EXP 13
 #define PARAM_COLOR 23  // color used to display the results
-#define PARAM_ACTIVE_PROBES 21
 #define PH_DOUT  A0
 #define EC       A5
 #define TEMP_1   PIN_SPI_SS
@@ -131,10 +131,6 @@ extern uint8_t ACTIVE_PARAMETERS[TOTAL_PARAMETERS];
 #define TARGET_INTENSITY_PH 45000
 #define TARGET_INTENSITY_EC 45000
 #define DATA_SIZE 240
-#define PARAM_BATTERY 18      // battery voltage (hundredths of volt)
-#define PARAM_NUMBER_ACQ \
-  16  // number of acquisition of 100ms that will be taken
-
 
 /******************************
   SERIAL, LOGGER AND DEBUGGERS
@@ -160,6 +156,11 @@ extern uint8_t ACTIVE_PARAMETERS[TOTAL_PARAMETERS];
 
 #define PARAM_EC    5     // F - Electrolytic Conductivity in unit of bits
 #define PARAM_EC_US 6     // G - Electrolytic Conductivity in unit of micro Siemens
+
+#define PARAM_BATTERY    18      // battery voltage (hundredths of volt)
+#define PARAM_NUMBER_ACQ 16  // number of acquisition of 100ms that will be taken
+
+#define PARAM_ACTIVE_PROBES 21  // Number of values reading (pH, EC, temp*2, battery)
 
 #define PARAM_PH_FACTOR 26  // AD - PH calibration: conversion factor digital -> H (ph=FACTOR*dig_unit)
 #define PARAM_PH_NEUTRAL \

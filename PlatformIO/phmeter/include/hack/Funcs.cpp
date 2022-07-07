@@ -153,6 +153,12 @@ void resetParameters() {
   }
   setAndSaveParameter(PARAM_TEMP_EXT1, ERROR_VALUE);
   setAndSaveParameter(PARAM_TEMP_EXT2, ERROR_VALUE);
+  setAndSaveParameter(PARAM_PH, ERROR_VALUE);
+  setAndSaveParameter(PARAM_EC, ERROR_VALUE);
+
+  setAndSaveParameter(PARAM_PH_TARGET, 7);
+  setAndSaveParameter(PARAM_PH_FACTOR, 1);
+  setAndSaveParameter(PARAM_EC_FACTOR, 1);
 
   setAndSaveParameter(PARAM_NUMBER_ACQ, 10);
   setAndSaveParameter(PARAM_ACTIVE_PROBES, 5);

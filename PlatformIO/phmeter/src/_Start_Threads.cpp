@@ -1,11 +1,15 @@
 #include <Arduino.h>
 #include <ChNil.h>
 
-#include "params.h"
+#include "Params.h"
 
 //#include "monitoring.h"
 #ifdef THR_SERIAL
-#include "serialThread.h"
+#include "SerialThread.h"
+#endif
+
+#ifdef THR_ONEWIRE
+#include "OneWireThread.h"
 #endif
 
 #ifdef THR_PH
@@ -38,8 +42,8 @@ THD_TABLE_BEGIN
 
 // logger should have priority to prevent any corruption of flash memory
 
-#ifdef THR_SERIAL
-      THD_TABLE_ENTRY(waThreadSerial, NULL, ThreadSerial, NULL)
+#ifdef THR_ONEWIRE
+THD_TABLE_ENTRY(waThreadOneWire, NULL, ThreadOneWire, NULL)
 #endif
 
 #ifdef THR_PH
@@ -47,6 +51,9 @@ THD_TABLE_BEGIN
 #endif
 #ifdef THR_LCD
       THD_TABLE_ENTRY(waThreadLCD, NULL, ThreadLCD, NULL)
+#endif
+#ifdef THR_SERIAL
+      THD_TABLE_ENTRY(waThreadSerial, NULL, ThreadSerial, NULL)
 #endif
 //   THD_TABLE_ENTRY(waThread2, "thread2", Thread2, NULL)
 THD_TABLE_END
