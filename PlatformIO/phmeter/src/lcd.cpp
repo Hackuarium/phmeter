@@ -590,7 +590,7 @@ void lcdAcquisition(int counter, boolean doAction) {
       lcd.print("pH:");
       // Check EEPROMLogger - 20220701
       // lcd.print(getDataLong(1));
-      lcd.print("Data 1L EEPROM");
+      lcd.print((float)getParameter(PARAM_PH)/100.0);
       lcdPrintBlank(6);
       lcd.setCursor(8, 0);
       lcd.print("T1:");

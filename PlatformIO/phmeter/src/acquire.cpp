@@ -120,9 +120,9 @@ void testProbe() {
 #endif
   while (true) {
     setParameter(PARAM_NEXT_EXP, 0);
-    acquire(true);
+    // acquire(true);
 
-    uint16_t pH = getPH();
+    int16_t pH = getPH();
     setPH(&pH);
 
     Serial.print(getParameter(PARAM_PH));
@@ -140,6 +140,7 @@ void testProbe() {
     if (getParameter(PARAM_STATUS) != STATUS_TEST_PROBES) {
       return;
     }
+    chThdSleepSeconds(1);
   }
 }
 

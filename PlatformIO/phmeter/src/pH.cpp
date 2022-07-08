@@ -6,15 +6,13 @@
 
 HX711 pHADC;
 
-int pH;
-
 int16_t getPH() { // we can not avoid to have some errors measuring the pH
   // and currently we don't know where it is coming from
   // so we need to find out what are the correct values and what are the wrong one
   // if there is an error it always end with 00000001
   // we will also need 4 consecutive values that differ less than 10%
-  byte counter = 0;
-  long pH = 0;
+  uint8_t counter = 0;
+  int16_t pH = 0;
 
   pHADC.begin(PH_DATA, PH_CLK, 32);
   pHADC.set_gain(32);
@@ -27,17 +25,19 @@ int16_t getPH() { // we can not avoid to have some errors measuring the pH
     }
     // wait for slot
     chSemWait(&lockADCReading);
-    long currentWeight = pHADC.read();
+    long readingPH = pHADC.read();
     chSemSignal(&lockADCReading);
 
-    if ((currentWeight & 0b11111111) != 1) {
+    int16_t currentpH = (static_cast<long>(readingPH) >> 8) & 0x0000FFFF;
+
+    if ((currentpH & 0xFF) != 1) {
       if (pH == 0) {
-        pH += currentWeight;
+        pH += currentpH;
         counter++;
       } else {
-        int difference = abs(100 - (pH * 100 / counter) / currentWeight);
+        int difference = abs(100L - (pH * 100L / (long)counter) / currentpH);
         if (difference < 10) {
-          pH += currentWeight;
+          pH += currentpH;
           counter++;
         } else {
           pH = 0;
@@ -47,10 +47,12 @@ int16_t getPH() { // we can not avoid to have some errors measuring the pH
       chThdSleepMilliseconds(10);
     }
   }
-  return pH / counter / 100;
+  return (pH >> 2);
+  // return (pH / (long)counter) >> 6;
+  // return pH / (long)counter / 100;
 }
 
-void setPH(uint16_t *pPHRaw) {
+void setPH(int16_t *pPHRaw) {
     setParameter(PARAM_PH, *pPHRaw);
     // setParameter(PARAM_PH_H, convertPHToH(pHRaw));
 }
