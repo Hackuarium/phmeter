@@ -126,15 +126,15 @@ void testProbe() {
     setPH(&pH);
 
     Serial.print(getParameter(PARAM_PH));
-    Serial.print(" ");
-    Serial.print(getParameter(PARAM_EC));
-    Serial.print(" ");
+    Serial.print(",");
+    // Serial.print(getParameter(PARAM_EC));
+    // Serial.print(" ");
     Serial.print(getParameter(PARAM_TEMP_EXT1));
-    Serial.print(" ");
+    Serial.print(",");
     Serial.print(getParameter(PARAM_TEMP_EXT2));
-    Serial.print(" ");
-    Serial.print(getParameter(PARAM_BATTERY));
-    Serial.print(" ");
+    Serial.print(",");
+    // Serial.print(getParameter(PARAM_BATTERY));
+    // Serial.print(" ");
     Serial.println("");
 
     if (getParameter(PARAM_STATUS) != STATUS_TEST_PROBES) {

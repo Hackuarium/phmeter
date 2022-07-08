@@ -47,7 +47,7 @@ OneWire oneWire3(TEMP_PCB);
 
 uint8_t oneWireAddress[8];
 
-void getTemperature(OneWire& ow, int parameter, char errorFlag) {
+void getTemperature(OneWire &ow, int parameter, char errorFlag) {
   uint8_t present = 0;
   uint8_t type_s;
   uint8_t data[12];
@@ -96,18 +96,18 @@ void getTemperature(OneWire& ow, int parameter, char errorFlag) {
   ow.write(0x44, 1);  // start conversion, with parasite power on at the end
   chSemSignal(&lockOneWireReading);
 
-  chThdSleep(800);  // maybe 750ms is enough, maybe not
+  chThdSleepMilliseconds(800);  // maybe 750ms is enough, maybe not
   // we might do a ds.depower() here, but the reset will take care of it.
 
   chSemWait(&lockOneWireReading);
   present = ow.reset();
   ow.select(addr);
   ow.write(0xBE);  // Read Scratchpad
-  chSemSignal(&lockOneWireReading);
 
   for (byte i = 0; i < 9; i++) {  // we need 9 bytes
     data[i] = ow.read();
   }
+  chSemSignal(&lockOneWireReading);
 
   // Convert the data to actual temperature
   // because the result is a 16 bit signed integer, it should

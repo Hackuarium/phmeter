@@ -12,7 +12,9 @@ int16_t getPH() { // we can not avoid to have some errors measuring the pH
   // if there is an error it always end with 00000001
   // we will also need 4 consecutive values that differ less than 10%
   uint8_t counter = 0;
-  int16_t pH = 0;
+
+  uint8_t op = 100;
+  long pH = 0;
 
   pHADC.begin(PH_DATA, PH_CLK, 32);
   pHADC.set_gain(32);
@@ -27,27 +29,37 @@ int16_t getPH() { // we can not avoid to have some errors measuring the pH
     chSemWait(&lockADCReading);
     long readingPH = pHADC.read();
     chSemSignal(&lockADCReading);
+    
+    // int16_t currentpH = (static_cast<long>(readingPH) >> 8) & 0x0000FFFF;
 
-    int16_t currentpH = (static_cast<long>(readingPH) >> 8) & 0x0000FFFF;
-
-    if ((currentpH & 0xFF) != 1) {
+    // if ((readingPH & 0xFF) != 1) {
+    if (op > 0) {
       if (pH == 0) {
-        pH += currentpH;
+        pH += readingPH;
         counter++;
       } else {
-        int difference = abs(100L - (pH * 100L / (long)counter) / currentpH);
+        int difference = abs(100L - (pH * 100L / (long)counter) / readingPH);
         if (difference < 10) {
-          pH += currentpH;
+          pH += readingPH;
           counter++;
         } else {
           pH = 0;
           counter = 0;
+          --op;
+          chThdSleepSeconds(1);
         }
       }
       chThdSleepMilliseconds(10);
     }
+    else
+    {
+      saveAndLogError(true, FLAG_PH_RANGE_ERROR);
+      return 0;
+    }
+    
   }
-  return (pH >> 2);
+  return (pH >> 8) & 0x0000FFFF;
+  // return (pH >> 2);
   // return (pH / (long)counter) >> 6;
   // return pH / (long)counter / 100;
 }
