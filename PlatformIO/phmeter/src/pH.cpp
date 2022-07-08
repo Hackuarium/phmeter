@@ -1,6 +1,9 @@
 #include <ChNil.h>
 
 #include "Funcs.h"
+
+#ifdef THR_ACQUIRE
+
 #include "HX711.h"
 #include "Sem.h"
 
@@ -13,7 +16,7 @@ int16_t getPH() { // we can not avoid to have some errors measuring the pH
   // we will also need 4 consecutive values that differ less than 10%
   uint8_t counter = 0;
 
-  uint8_t op = 100;
+  uint8_t op = 10;
   long pH = 0;
 
   pHADC.begin(PH_DATA, PH_CLK, 32);
@@ -33,7 +36,8 @@ int16_t getPH() { // we can not avoid to have some errors measuring the pH
     // int16_t currentpH = (static_cast<long>(readingPH) >> 8) & 0x0000FFFF;
 
     // if ((readingPH & 0xFF) != 1) {
-    if (op > 0) {
+    if (((readingPH & 0xFF) != 1) && (op > 0)) {
+    // if (op > 0) {
       if (pH == 0) {
         pH += readingPH;
         counter++;
@@ -54,10 +58,10 @@ int16_t getPH() { // we can not avoid to have some errors measuring the pH
     else
     {
       saveAndLogError(true, FLAG_PH_RANGE_ERROR);
-      return 0;
+      return ERROR_VALUE;
     }
-    
   }
+  saveAndLogError(false, FLAG_PH_RANGE_ERROR);
   return (pH >> 8) & 0x0000FFFF;
   // return (pH >> 2);
   // return (pH / (long)counter) >> 6;
@@ -69,6 +73,4 @@ void setPH(int16_t *pPHRaw) {
     // setParameter(PARAM_PH_H, convertPHToH(pHRaw));
 }
 
-
-
-
+#endif
