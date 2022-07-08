@@ -5,6 +5,7 @@
 #include "HackEEPROM.h"
 
 #include "pH.h"
+#include "eC.h"
 
 int PROBES[TOTAL_NUMBER_PROBES];
 
@@ -125,10 +126,13 @@ void testProbe() {
     int16_t pH = getPH();
     setPH(&pH);
 
+    int16_t eC = getEC();
+    setEC(&eC);
+
     Serial.print(getParameter(PARAM_PH));
     Serial.print(",");
-    // Serial.print(getParameter(PARAM_EC));
-    // Serial.print(" ");
+    Serial.print(getParameter(PARAM_EC));
+    Serial.print(",");
     Serial.print(getParameter(PARAM_TEMP_EXT1));
     Serial.print(",");
     Serial.print(getParameter(PARAM_TEMP_EXT2));

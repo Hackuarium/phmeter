@@ -5,6 +5,8 @@
 
 #ifdef THR_ACQUIRE
 
+CH_NIL_ADC_IRQ
+
 int16_t getEC() { // we can not avoid to have some errors measuring the eC
   // and currently we don't know where it is coming from
   // so we need to find out what are the correct values and what are the wrong one
@@ -12,13 +14,13 @@ int16_t getEC() { // we can not avoid to have some errors measuring the eC
   // we will also need 4 consecutive values that differ less than 10%
   uint8_t counter = 0;
 
+  int16_t eC = 0;
   uint8_t op = 10;
-  long eC = 0;
 
   while (counter < 4) {
     // wait for slot
-    long readingEC = 0;
     chSemWait(&lockADCReading);
+    int16_t readingEC = chAnalogRead(5);
     // long readingEC = pHADC.read();
     chSemSignal(&lockADCReading);
     
@@ -26,12 +28,11 @@ int16_t getEC() { // we can not avoid to have some errors measuring the eC
 
     // if ((readingEC & 0xFF) != 1) {
     if (op > 0) {
-    // if (op > 0) {
       if (eC == 0) {
         eC += readingEC;
         counter++;
       } else {
-        int difference = abs(100L - (eC * 100L / (long)counter) / readingEC);
+        int difference = abs(100L - ((long)eC * 100L / (long)counter) / (long)readingEC);
         if (difference < 10) {
           eC += readingEC;
           counter++;
@@ -51,7 +52,7 @@ int16_t getEC() { // we can not avoid to have some errors measuring the eC
     }
   }
   saveAndLogError(false, FLAG_EC_RANGE_ERROR);
-  return eC;
+  return static_cast<int16_t>(eC >> 2);
   // return (eC >> 2);
   // return (eC / (long)counter) >> 6;
   // return eC / (long)counter / 100;
