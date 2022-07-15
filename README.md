@@ -6,10 +6,13 @@ Open source design of a battery powered pH meter
 - Rotary push button (3 pins).
 - RJ-12 connector to a master.
 - ATMEGA32U4.
-- 64 Mbit memory ISP.
-- 2 pumps.
+- 64 Mbit memory ISP (available version).
+- 2 pumps (only use in 12 V power supply mode).
 - 4 I/O 12 V.
 - Battery charger.
+- pH measurement.
+- Elecrtical conductivity measurement.
+- 2 probes temperature sensors.
 
 ## BOM
 
@@ -30,5 +33,5 @@ Last update: 04/08/2021
 ## To Do
 
 - Check I2C communication. (created branch _i2c_communication_ 04212022)
-- Temperature sensors.
-- Equation for pH.
+- Equation for pH. (in process)
+- Equation for EC. (in process)
