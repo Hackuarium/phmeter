@@ -115,6 +115,12 @@ void calibrate(bool probePH) {
   
 }
 
+/**
+ * It reads the pH, EC, and temperature sensors, and prints the results to the
+ * serial port
+ * 
+ * @return The pH, EC, and temperature of the probes.
+ */
 void testProbe() {
 #if VERSION>=5
   calibrate();
