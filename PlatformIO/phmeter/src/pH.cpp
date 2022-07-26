@@ -13,59 +13,54 @@ int16_t getPH() { // we can not avoid to have some errors measuring the pH
   // and currently we don't know where it is coming from
   // so we need to find out what are the correct values and what are the wrong one
   // if there is an error it always end with 00000001
-  // we will also need 4 consecutive values that differ less than 10%
-  uint8_t counter = 0;
 
-  uint8_t op = 10;
   long pH = 0;
+
+  static bool check = TRUE;
 
   pHADC.begin(PH_DATA, PH_CLK, 32);
   pHADC.set_gain(32);
-  pHADC.set_scale();
-  pHADC.tare(); //Reset the scale to 0
 
-  while (counter < 4) {
-    while (!pHADC.is_ready()) {
-      chThdSleepMilliseconds(10);
-    }
-    // wait for slot
-    chSemWait(&lockADCReading);
-    long readingPH = pHADC.read();
-    chSemSignal(&lockADCReading);
-    
-    // int16_t currentpH = (static_cast<long>(readingPH) >> 8) & 0x0000FFFF;
+  // Set scale and tare for first reading
+  if(check) {
+    pHADC.set_scale();
+    pHADC.tare(); //Reset the scale to 0
+    check = FALSE;
+  }
 
-    // if ((readingPH & 0xFF) != 1) {
-    if (((readingPH & 0xFF) != 1) && (op > 0)) {
-    // if (op > 0) {
-      if (pH == 0) {
-        pH += readingPH;
-        counter++;
-      } else {
-        int difference = abs(100L - (pH * 100L / (long)counter) / readingPH);
-        if (difference < 10) {
-          pH += readingPH;
-          counter++;
-        } else {
-          pH = 0;
-          counter = 0;
-          --op;
-          chThdSleepSeconds(1);
-        }
-      }
-      chThdSleepMilliseconds(10);
-    }
-    else
+  /**
+   * @brief Using oversampling to reduce noise and increase resolution:
+   * f_oversampling = 4^n * f_sampling; n: number of bits to increase resolution
+   * f_sampling >= 2 * f_signal; in this case:
+   * f_sampling = 2 * f_signal = f_nyquist. PH is similar to DC signal, so:
+   * f_sampling = f_ADC = 80 SPS (10 SPS).
+   * Choose 10 SPS we reduce signal noise directly from the ADC.
+   * After adquire samples, we need to right shift the register in n times.
+   */
+
+  long readingPH = 0;
+  // Define oversampling
+  uint8_t times_oversampling = 16;  // times_oversampling = 4^2
+  chSemWait(&lockADCReading);
+  do
+  {
+		readingPH = pHADC.read();
+    if ((readingPH & 0xFF) == 1)
     {
+      // There is a problem with the reading pH
       saveAndLogError(true, FLAG_PH_RANGE_ERROR);
       return ERROR_VALUE;
     }
-  }
+    pH += readingPH;
+    
+  } while (--times_oversampling);
+  chSemSignal(&lockADCReading);
+  // Right shift n times
+  pH >>= 2;
+
+  // Remove flag for pH error   
   saveAndLogError(false, FLAG_PH_RANGE_ERROR);
   return (pH >> 8) & 0x0000FFFF;
-  // return (pH >> 2);
-  // return (pH / (long)counter) >> 6;
-  // return pH / (long)counter / 100;
 }
 
 void setPH(int16_t *pPHRaw) {
