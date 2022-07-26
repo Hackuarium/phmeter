@@ -15,7 +15,8 @@
 #include <ChNil.h>
 #include <limits.h>
 
-#define SOFTWARE_VERSION "v1.0.0-b"
+#define SOFTWARE_VERSION "v1.0.1-b"
+#define SOFTWARE_VERSION_NUMBER 010001  // XX.XX.XX
 
 /******************************
   THREADS
@@ -141,7 +142,12 @@ extern uint8_t ACTIVE_PARAMETERS[TOTAL_PARAMETERS];
 #define LOG_INTERVAL 360  // Interval in (s) between logs logger
 
 #ifdef THR_SST_LOGGER
+// Set /HWB pin (PE2) for /CE flash
+#if SOFTWARE_VERSION_NUMBER >= 010001
+#define FLASH_SELECT 100   // Flash SS_SPI
+#else
 #define FLASH_SELECT 1   // Flash SS_SPI
+#endif
 #define EVENT_LOGGING 1
 #endif
 

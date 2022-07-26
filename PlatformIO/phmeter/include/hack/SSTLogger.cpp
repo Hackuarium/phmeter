@@ -73,6 +73,10 @@ SST sst = SST('D', 3);  // TX is PORT D - 3
 #if FLASH_SELECT == A3  // Flash SS_SPI
 SST sst = SST('F', 4);  // A3 is PORT F - 4
 #endif
+// pH software version 1.0.1-b
+#if FLASH_SELECT == 100  // Flash SS_SPI
+SST sst = SST('E', 2);  // HWB is PORT E - 2
+#endif
 
 uint32_t nextEntryID = 0;
 // Deactivate safeguard to store log into memory

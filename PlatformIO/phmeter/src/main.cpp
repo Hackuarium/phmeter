@@ -61,7 +61,7 @@
 #include "Funcs.h"
 
 #ifndef SOFTWARE_VERSION
-#define SOFTWARE_VERSION "v1.0.0-beta"
+#define SOFTWARE_VERSION "v1.0.1-b"
 #endif
 
 void setup() {

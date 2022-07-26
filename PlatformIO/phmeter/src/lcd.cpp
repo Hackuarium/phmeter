@@ -602,7 +602,8 @@ void lcdAcquisition(int counter, boolean doAction) {
       lcd.print("EC:");
       // Check EEPROMLogger - 20220701
       // lcd.print(getDataLong(3));
-      lcd.print("Data 3L EEPROM");
+      lcd.print((float)getParameter(PARAM_EC));
+      // lcd.print("Data 3L EEPROM");
       lcdPrintBlank(6);
       lcd.setCursor(8, 2);
       lcd.print("T2:");
