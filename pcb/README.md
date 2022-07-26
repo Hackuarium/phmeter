@@ -2,13 +2,6 @@
 
 PH Meter and Conductometer that can work independently
 
-- LCD screen (2 lines) (8 pins).
-- Rotary push button (3 pins).
-- RJ-12 connector to a master.
-- ATMEGA32U4.
-- 64 Mbit memory ISP.
-- 2 pumps.
-
 ## Tips
 
 ### Configure permission for USBTinyISP
@@ -55,7 +48,7 @@ $ ls -al /dev/bus/usb/001/007
 crw-rw-rw- 1 root root 189, 6 Okt 2 09:45 /dev/bus/usb/001/007
 ´´´
 
-## Pin Configuration - PHMeter V 0.1 (PCB version 0.2)
+## Pin Configuration - PHMeter V 1.1.2-b (PCB version 1.1.2-b)
 
 Based on: [ATMEGA32U4 - Arduino Lilypad USB/Leonardo](https://docs.arduino.cc/hacking/hardware/PinMapping32u4)
 
