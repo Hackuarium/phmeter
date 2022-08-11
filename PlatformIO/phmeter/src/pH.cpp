@@ -41,10 +41,11 @@ int16_t getPH() { // we can not avoid to have some errors measuring the pH
   long readingPH = 0;
   // Define oversampling
   uint8_t times_oversampling = 16;  // times_oversampling = 4^2
-  chSemWait(&lockADCReading);
   do
   {
+    chSemWait(&lockADCReading);
 		readingPH = pHADC.read();
+    chSemSignal(&lockADCReading);
     if ((readingPH & 0xFF) == 1)
     {
       // There is a problem with the reading pH
@@ -54,7 +55,6 @@ int16_t getPH() { // we can not avoid to have some errors measuring the pH
     pH += readingPH;
     
   } while (--times_oversampling);
-  chSemSignal(&lockADCReading);
   // Right shift n times
   pH >>= 2;
 
