@@ -19,10 +19,10 @@ int16_t getEC() { // we can not avoid to have some errors measuring the eC
 
   while (counter < 4) {
     // wait for slot
-    chSemWait(&lockADCReading);
+    // chSemWait(&lockADCReading);
     int16_t readingEC = chAnalogRead(5);
     // long readingEC = pHADC.read();
-    chSemSignal(&lockADCReading);
+    // chSemSignal(&lockADCReading);
     
     // int16_t currentpH = (static_cast<long>(readingEC) >> 8) & 0x0000FFFF;
 

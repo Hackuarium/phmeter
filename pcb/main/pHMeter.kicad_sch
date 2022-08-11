@@ -4760,6 +4760,10 @@
     (pin "3" (uuid 993fb5c8-773b-49bf-a903-7401e8aa299c))
     (pin "4" (uuid 12be1cbc-ecf1-4078-9b67-219bc61150eb))
     (pin "5" (uuid 36da77aa-944d-411f-8a1e-21d6c3dc6938))
+    (pin "M1" (uuid e34d78fc-c821-4e5c-ac82-ce6fcdcd9454))
+    (pin "M2" (uuid e1754158-40dc-4df5-848e-7e0c189ace53))
+    (pin "M3" (uuid d4e5a639-c802-4fd5-bd43-bd9483f1fee3))
+    (pin "M4" (uuid e0bbf399-c52b-4993-8f0b-a5400682c686))
   )
 
   (symbol (lib_id "Device:R") (at 135.89 153.67 270) (unit 1)
