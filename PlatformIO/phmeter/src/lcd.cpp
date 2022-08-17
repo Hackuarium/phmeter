@@ -1,12 +1,14 @@
 #include <Arduino.h>
 #include <ChNil.h>
+#include <LiquidCrystal.h>
 
 #include "Funcs.h"
 #include "sleep.h"
 #include "Utility.h"
-
 #include "acquire.h"
+#include "Rotary.h"
 
+// Define language for the display
 #define LANGUAGE 'es'
 
 // https://docs.google.com/spreadsheets/d/1oek6pKHUvD7NI2u9-_iEOfVL-NeUmnj1pZCFRRo7n_4/edit?usp=sharing
@@ -71,7 +73,7 @@
 #define TEXT_UTILITIES "Utilidades"
 #define TEXT_SLEEP "Dormir"
 #define TEXT_TEST_PROBES "Prueba sondas"
-#define TEXT_RESET "Reiniciar"
+#define TEXT_RESET "Rest. fabrica"
 #define TEXT_REBOOT "Reiniciar"
 #define TEXT_MAIN_MENU "Menu"
 #define TEXT_RED "Rojo"
@@ -86,19 +88,14 @@
 #define TEXT_PRESS_NEXT "Press for next"
 #endif
 
-#include <LiquidCrystal.h>
-
 LiquidCrystal lcd(LCD_RS, LCD_E, LCD_D4, LCD_D5, LCD_D6, LCD_D7);
-
-
-#include "Rotary.h"
 
 // Rotary encoder is wired with the common to ground and the two
 // outputs to pins 2 and 3.
 Rotary rotary = Rotary(ROT_A, ROT_B);
 
 int noEventCounter = 0;
-byte previousMenu = 0;
+uint8_t previousMenu = 0;
 
 /* Declaring a function pointer called reboot that points to address 0. */
 // void(* reboot) (void) = 0;
@@ -122,17 +119,20 @@ uint8_t accelerationMode = 0;
 int lastIncrement = 0;
 unsigned long lastRotaryEvent = millis();
 
+/*******************************************************************************
+  ROTARY CONFIG
+*******************************************************************************/
 /**
- * If the rotary encoder is turned, then increment the rotaryCounter variable by 1
- * or -1, depending on the direction of the turn
+ * If the rotary encoder is turned, then increment the rotaryCounter variable
+ * by 1 or -1, depending on the direction of the turn.
  * 
- * @return The rotary encoder is being read and the direction of rotation is being
- * determined.
+ * @return The rotary encoder is being read and the direction of rotation is 
+ * being determined.
  */
 void rotate() {
-  int increment = 0;
+  int16_t increment = 0;
 
-  byte direction = rotary.process();
+  uint8_t direction = rotary.process();
   if (direction == DIR_CW) {
     increment = -1;
   } else if (direction == DIR_CCW) {
@@ -170,6 +170,7 @@ void rotate() {
 }
 
 void eventRotaryPressed() {
+  // Disable interrupts
   cli();
   byte state = digitalRead(ROT_PUSH);
   long unsigned eventMillis = millis();
@@ -186,6 +187,7 @@ void eventRotaryPressed() {
       reboot();
     }
   }
+  // Enable interrupts
   sei();
 }
 
@@ -195,6 +197,10 @@ void setupRotary() {
   pinMode(ROT_PUSH, INPUT_PULLUP);
   attachInterrupt(digitalPinToInterrupt(ROT_PUSH), eventRotaryPressed, CHANGE);
 }
+
+/*******************************************************************************
+  LCD CONFIG
+*******************************************************************************/
 
 void updateCurrentMenu(int counter, uint8_t maxValue, uint8_t modulo) {
   byte currentMenu = getParameter(PARAM_MENU);
@@ -231,10 +237,10 @@ void lcdMenuHome(int counter, bool doAction) {
     return;
   lcd.clear();
   // Define number of options in the Menu
-  byte lastMenu = 6;
+  uint8_t lastMenu = 6;
   updateCurrentMenu(counter, lastMenu);
 
-  for (byte line = 0; line < LCD_NB_ROWS; line++) {
+  for (uint8_t line = 0; line < LCD_NB_ROWS; line++) {
     lcd.setCursor(0, line);
     if (getParameter(PARAM_MENU) % 10 + line <= lastMenu)
       lcdNumberLine(line);
@@ -242,10 +248,7 @@ void lcdMenuHome(int counter, bool doAction) {
     switch (getParameter(PARAM_MENU) % 10 + line) {
       // 1st option (default)
       case 0:
-        /* Checking if the next exposure is greater than or equal to 0. If it is,
-        it prints "STOP" on the LCD. If the doAction is true, it sets the next
-        exposure to -1, the status to 0, and the menu to 100. If the next
-        exposure is not greater than or equal to 0, it prints "ACQUIRE" on the
+        /* Checking if the next exposure is greater than or equal to 0. If it is, it prints "STOP" on the LCD. If the doAction is true, it sets the next exposure to -1, the status to 0, and the menu to 100. If the next  exposure is not greater than or equal to 0, it prints "ACQUIRE" on the
         LCD. If the doAction is true, it sets the status to STATUS_ONE_SPECTRUM
         and the next exposure to 0. */
         if (getParameter(PARAM_NEXT_EXP) >= 0) {
@@ -264,9 +267,7 @@ void lcdMenuHome(int counter, bool doAction) {
         }
         break;
       case 1:
-        if ((getParameter(PARAM_NEXT_EXP) >= 0) &&
-            (getParameter(PARAM_STATUS) ==
-             STATUS_SEQUENCE)) {  // continue acquisition
+        if ((getParameter(PARAM_NEXT_EXP) >= 0) && (getParameter(PARAM_STATUS) == STATUS_SEQUENCE)) {  // continue acquisition
           lcd.print(F(TEXT_CONT_SEQUENCE));
           if (doAction) {
             // Check for pH or EC - 20220701
@@ -652,7 +653,7 @@ void lcdUtilities(int counter, boolean doAction) {
         lcd.print(F(TEXT_RESET));
         if (doAction) {
           resetParameters();
-          setParameter(PARAM_MENU, 20);
+          setParameter(PARAM_MENU, 1);
         }
         break;
       case 3:
