@@ -176,7 +176,6 @@ void setActiveProbes() {
   maxNbRows = DATA_SIZE / dataRowSize;
 }
 
-
 void setAcquisitionMenu() {
   if (getParameter(PARAM_NEXT_EXP) == 0) {
     setParameter(PARAM_MENU, 30);

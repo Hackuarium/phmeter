@@ -19,14 +19,8 @@ int16_t getEC() { // we can not avoid to have some errors measuring the eC
 
   while (counter < 4) {
     // wait for slot
-    // chSemWait(&lockADCReading);
     int16_t readingEC = chAnalogRead(5);
-    // long readingEC = pHADC.read();
-    // chSemSignal(&lockADCReading);
-    
-    // int16_t currentpH = (static_cast<long>(readingEC) >> 8) & 0x0000FFFF;
 
-    // if ((readingEC & 0xFF) != 1) {
     if (op > 0) {
       if (eC == 0) {
         eC += readingEC;
@@ -54,8 +48,6 @@ int16_t getEC() { // we can not avoid to have some errors measuring the eC
   saveAndLogError(false, FLAG_EC_RANGE_ERROR);
   return static_cast<int16_t>(eC >> 2);
   // return (eC >> 2);
-  // return (eC / (long)counter) >> 6;
-  // return eC / (long)counter / 100;
 }
 
 void setEC(int16_t *pPHRaw) {
