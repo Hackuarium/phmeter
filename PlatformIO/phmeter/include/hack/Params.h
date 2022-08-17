@@ -15,7 +15,7 @@
 #include <ChNil.h>
 #include <limits.h>
 
-#define SOFTWARE_VERSION "v1.0.1-b"
+#define SOFTWARE_VERSION "v1.1.2-b"
 #define SOFTWARE_VERSION_NUMBER 010001  // XX.XX.XX
 
 /******************************
@@ -134,10 +134,9 @@ extern uint8_t ACTIVE_PARAMETERS[TOTAL_PARAMETERS];
 #define TARGET_INTENSITY_EC 45000
 #define DATA_SIZE 240
 
-/******************************
+/*******************************************************************************
   SERIAL, LOGGER AND DEBUGGERS
-*******************************/
-
+*******************************************************************************/
 #define MAX_PARAM 68
 #define LOG_INTERVAL 360  // Interval in (s) between logs logger
 
@@ -151,9 +150,9 @@ extern uint8_t ACTIVE_PARAMETERS[TOTAL_PARAMETERS];
 #define EVENT_LOGGING 1
 #endif
 
-/******************************
+/*******************************************************************************
   PARAMETERS
-*******************************/
+*******************************************************************************/
 #define PARAM_TEMP_EXT1 0  // A - temperature of the solution
 #define PARAM_TEMP_EXT2 1  // B - temperature of the solution
 
@@ -186,9 +185,9 @@ extern uint8_t ACTIVE_PARAMETERS[TOTAL_PARAMETERS];
 #define LAST_STEP_PARAMETER 67   // BP
 #define NB_STEP_PARAMETERS LAST_STEP_PARAMETER - FIRST_STEP_PARAMETER + 1
 
-/******************
-   FLAG DEFINITION
- ******************/
+/*******************************************************************************
+  FLAGS DEFINITION
+*******************************************************************************/
 #define PARAM_ERROR 24  // Y - errors
 // extern const int PARAM_ERROR;
 #define FLAG_TEMP_EXT1_PROBE_ERROR \
@@ -200,7 +199,7 @@ extern uint8_t ACTIVE_PARAMETERS[TOTAL_PARAMETERS];
 #define MASK_TEMP_ERROR 0b00001111  // where are the bit for temperature error
 
 #define FLAG_PH_RANGE_ERROR 4     // the pH is outside range
-#define MASK_PH_ERROR 0b00010000  // where are the bit for weight error
+#define MASK_PH_ERROR 0b00010000  // where are the bit for pH error
 
 #define FLAG_EC_RANGE_ERROR 5     // the EC is outside range
 #define MASK_EC_ERROR 0b00100000  // where are the bit for EC error
@@ -215,11 +214,12 @@ extern uint8_t ACTIVE_PARAMETERS[TOTAL_PARAMETERS];
 #define FLAG_OUTPUT_4 3
 
 // PARAM_STATUS
-#define FLAG_PH_CONTROL         4 // Enable/disable pH control
-#define FLAG_PH_CALIBRATE       5 // Enable/disable pH calibration
-#define FLAG_RELAY_ACID         6 // Enable/disable acid addition
-#define FLAG_RELAY_BASE         7 // Enable/disable base addition
-#define FLAG_STATUS_TEST_PROBES 8 // Enable/disable test probes
+#define FLAG_EC_READING         4 // Enable/disable EC reading
+#define FLAG_PH_CONTROL         5 // Enable/disable pH control
+#define FLAG_PH_CALIBRATE       6 // Enable/disable pH calibration
+#define FLAG_RELAY_ACID         7 // Enable/disable acid addition
+#define FLAG_RELAY_BASE         8 // Enable/disable base addition
+#define FLAG_STATUS_TEST_PROBES 9 // Enable/disable test probes
 
 // value that should not be taken into account
 // in case of error the parameter is set to this value
