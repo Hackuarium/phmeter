@@ -44,20 +44,15 @@ pcb(
     topHoles=[          // holes to put on the top of the box
          //[132.2326 - 50.0762 - 71.6/2, 87 - (54.2672 - 50) - 25.1/2, 71.6, 25.1],  // LCD 16x2
          [64.2326 - 50.0 + 72/2, 137.0204 - 82.2672 + 25.3/2, 72, 25.3],  // LCD 16x2
-         //[100 - 19.1, 9.12, 8], // rotary push button (v 0.2)
-         [100 - 19.1, 9.12, 9.5], // rotary push button
-         [100 - 7.29, 24.42, 14], // conductivity probe
-         [100 - 7.29, 41.19, 14],  // pH probe
+         [100 - 19.1, 9.22, 9.5], // rotary push button
+         [100 - 7.39, 24.42, 14], // conductivity probe (v1.1.2b)
+         [100 - 7.39, 41.19, 14],  // pH probe (v1.1.2b)
     ],
     frontHolesB=[
-        //[100 - (135.2806 - 50), 1.25, 11.6, 7.5],    // usb connector
-        [100 - (135.2806 - 50), 7.5/2 - thickness, 11.6, 7.5],    // usb connector
-        [100 - (120.5992 - 50), 16.5/2 - thickness, 14, 16.5],    // RJ12 I2C connector
-        //[100 - (38.165 + 6.2 + 8.032 + 3.1), 3.5, 8],    // one-wire 3.5mm plug (v 0.2)
-        [100 - 55.52, 10/2 - thickness, 10],    // one-wire 3.5mm plug (v1.1.2b)
-        //[100 - (38.165 + 3.1), 3.5, 8],    // one-wire 3.5mm plug (v 0.2)
-        [100 - 41.28, 10/2 - thickness, 10],    // one-wire 3.5mm plug
-        //[100 - 41.28, 1.45, 9.5],    // one-wire 3.5mm plug
+        [100 - (135.2806 - 50), 7.5/2, 11.6, 7.5],  // usb connector (v1.1.2)
+        [100 - (120.5992 - 50), 16.5/2, 14, 16.5],  // RJ12 I2C connector (v1.1.2)
+        [100 - 55.52, 10/2, 10],  // one-wire 3.5mm plug (v1.1.2b)
+        [100 - 41.28, 10/2, 10],  // one-wire 3.5mm plug (v1.1.2b)
     ],
     backHolesB=[
         [17, 1.6, 8.2],
