@@ -47,7 +47,7 @@ int16_t getEC() {
   // return (eC >> 2);
 }
 
-void setEC(int16_t *pPHRaw) {
+void setEC(volatile int16_t *pPHRaw) {
     setParameter(PARAM_EC, *pPHRaw);
     // setParameter(PARAM_PH_H, convertPHToH(pHRaw));
 }

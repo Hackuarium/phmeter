@@ -15,11 +15,11 @@ long acquireOne(uint8_t probe) {
     {
     case 0: // pH reading
         rawMeasurement = getPH();
-        // setPH(&rawMeasurement);
+        setPH(&rawMeasurement);
         break;
     case 1: // EC reading
-        // rawMeasurement = getEC();
-        // setEC(&rawMeasurement);
+        rawMeasurement = getEC();
+        setEC(&rawMeasurement);
         break; 
     default:
         break;

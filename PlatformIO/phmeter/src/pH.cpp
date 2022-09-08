@@ -64,7 +64,7 @@ int16_t getPH() { // we can not avoid to have some errors measuring the pH
   return (pH >> 8) & 0x0000FFFF;
 }
 
-void setPH(int16_t *pPHRaw) {
+void setPH(volatile int16_t *pPHRaw) {
     setParameter(PARAM_PH, *pPHRaw);
     // setParameter(PARAM_PH_H, convertPHToH(pHRaw));
 }

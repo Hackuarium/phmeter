@@ -74,29 +74,30 @@
 #define LCD_NB_ROWS 2
 #define LCD_NB_COLUMNS 16
 
-#define PARAM_MENU 20  // current menu
-#define PARAM_NEXT_EXP 14  // next experiment, 0 blank and then for kinetic
-#define STATUS_ONE_SPECTRUM 1
-#define STATUS_KINETIC 2
-#define STATUS_SEQUENCE 3
-#define PARAM_BEFORE_DELAY 10  // delay before taking blank
-#define PARAM_FIRST_DELAY 11
-#define PARAM_INTER_DELAY 12
-#define PARAM_NUMPER_EXP 13
-#define PARAM_COLOR 23  // color used to display the results
-#define PH_DOUT  A0
-#define EC       A5
-#define TEMP_1   PIN_SPI_SS
-#define TEMP_2   30
-#define BATTERY_LEVEL 128   // not available in version A
-#define TEMPERATURE   129   // not available in version A
-#define PARAM_WAIT 15      // current time to wait
-#define STATUS_TEST_PROBES 256
+#define STATUS_ONE_SPECTRUM   1
+#define STATUS_KINETIC        2
+#define STATUS_SEQUENCE       3
+#define PARAM_BEFORE_DELAY    10  // delay before taking blank
+#define PARAM_FIRST_DELAY     11
+#define PARAM_INTER_DELAY     12
+#define PARAM_NUMPER_EXP      13
+#define PARAM_NEXT_EXP        14  // next experiment, 0 blank and then for kinetic
+#define PARAM_WAIT            15  // current time to wait
+#define PARAM_MENU            20  // current menu
+#define PARAM_COLOR           23  // color used to display the results
+#define STATUS_TEST_PROBES    256 // Run test probes, display in LCD & serial
 
 #define ROT_A 0
 #define ROT_B 1
 #define ROT_PUSH 7
 
+// Probes
+#define PH_DOUT               A0
+#define EC                    A5
+#define TEMP_1                PIN_SPI_SS
+#define TEMP_2                30
+#define BATTERY_LEVEL         128   // not available in version A
+#define TEMPERATURE           129   // not available in version A
 
 #define PARAM_FLAGS 17
 #define PARAM_FLAG_INVERT_ROTARY 0  // invert rotary direction
@@ -106,10 +107,10 @@
 #define TOTAL_NUMBER_PROBES 2
 #define TOTAL_PARAMETERS 5
 // Declared in lcd.cpp
-extern uint8_t nbProbes;              // number of active leds
-extern uint8_t nbParameters;        // number of parameters to record
-extern uint8_t dataRowSize;         // size of a data row (number of entries in data)
-extern uint8_t maxNbRows;           // calculate value depending the size of EEPROM dedicated to logs
+extern uint8_t nbProbes;      // number of active leds
+extern uint8_t nbParameters;  // number of parameters to record
+extern uint8_t dataRowSize;   // size of a data row (number of entries in data)
+extern uint8_t maxNbRows;     // calculate value depending the size of EEPROM dedicated to logs
 extern uint8_t ALL_PARAMETERS[TOTAL_PARAMETERS];  // all possible reading values
 extern uint8_t ACTIVE_PARAMETERS[TOTAL_PARAMETERS];
 
