@@ -7,11 +7,8 @@
 
 CH_NIL_ADC_IRQ
 
-int16_t getEC() { // we can not avoid to have some errors measuring the eC
-  // and currently we don't know where it is coming from
-  // so we need to find out what are the correct values and what are the wrong one
-  // if there is an error it always end with 00000001
-  // we will also need 4 consecutive values that differ less than 10%
+int16_t getEC() {
+  // Define counter for oversampling
   uint8_t counter = 0;
 
   int16_t eC = 0;

@@ -60,6 +60,7 @@ int16_t getPH() { // we can not avoid to have some errors measuring the pH
 
   // Remove flag for pH error   
   saveAndLogError(false, FLAG_PH_RANGE_ERROR);
+  // Right shiffting to send int16_t value
   return (pH >> 8) & 0x0000FFFF;
 }
 
