@@ -10,7 +10,7 @@
 int PROBES[TOTAL_NUMBER_PROBES];
 
 long acquireOne(uint8_t probe) {
-    volatile int rawMeasurement;
+    volatile int16_t rawMeasurement;
     switch (probe)
     {
     case 0: // pH reading
@@ -21,6 +21,7 @@ long acquireOne(uint8_t probe) {
         rawMeasurement = getEC();
         setEC(&rawMeasurement);
         break; 
+    // temp_1, temp_2, battery are independent threads
     default:
         break;
     }
@@ -232,7 +233,7 @@ void runExperiment(uint8_t nbExperiments) {
 #if VERSION>=5
   calibrate();
 #endif
-  for (byte i = 0; i <= nbExperiments; i++) {
+  for (uint8_t i = 0; i <= nbExperiments; i++) {
     setParameter(PARAM_NEXT_EXP, i);
     setAcquisitionMenu();
     waitExperiment();

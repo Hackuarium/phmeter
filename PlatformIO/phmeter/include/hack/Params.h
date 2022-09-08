@@ -68,15 +68,18 @@
 #define LCD_D5 9
 #define LCD_D6 10
 #define LCD_D7 5
-#define LCD_BL 13    // back light
-#define LCD_VO 13    // contrast (on / off to spare energy)
-#define LCD_ON 13  // power on LCD
+#define LCD_BL 13   // back light
+#define LCD_VO 13   // contrast (on / off to spare energy)
+#define LCD_ON 13   // power on LCD
 #define LCD_NB_ROWS 2
 #define LCD_NB_COLUMNS 16
 
-#define STATUS_ONE_SPECTRUM   1
+// Adquisition options
+#define STATUS_ONE_ADQ        1
 #define STATUS_KINETIC        2
 #define STATUS_SEQUENCE       3
+
+// Set parameters to adquisiton
 #define PARAM_BEFORE_DELAY    10  // delay before taking blank
 #define PARAM_FIRST_DELAY     11
 #define PARAM_INTER_DELAY     12
@@ -87,9 +90,10 @@
 #define PARAM_COLOR           23  // color used to display the results
 #define STATUS_TEST_PROBES    256 // Run test probes, display in LCD & serial
 
-#define ROT_A 0
-#define ROT_B 1
-#define ROT_PUSH 7
+// Rotary push button pins
+#define ROT_A     0
+#define ROT_B     1
+#define ROT_PUSH  7
 
 // Probes
 #define PH_DOUT               A0

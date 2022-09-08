@@ -12,7 +12,7 @@ THD_FUNCTION(ThreadAcquisition, arg) {
       setActiveProbes();
       uint8_t numberExperiments = min(maxNbRows, getParameter(PARAM_NUMPER_EXP));
       switch (getParameter(PARAM_STATUS)) {
-        case STATUS_ONE_SPECTRUM:
+        case STATUS_ONE_ADQ:
           runExperiment();
           break;
         case STATUS_KINETIC:
