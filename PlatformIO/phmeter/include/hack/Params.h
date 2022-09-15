@@ -100,8 +100,12 @@
 #define EC                    A5
 #define TEMP_1                PIN_SPI_SS
 #define TEMP_2                30
+#define BAT                   A4
 #define BATTERY_LEVEL         128   // not available in version A
 #define TEMPERATURE           129   // not available in version A
+
+// ERROR Thread
+#define OUT_ERROR             13  // Same as blink
 
 #define PARAM_FLAGS 17
 #define PARAM_FLAG_INVERT_ROTARY 0  // invert rotary direction
@@ -111,16 +115,13 @@
 #define TOTAL_NUMBER_PROBES 2
 #define TOTAL_PARAMETERS 5
 // Declared in lcd.cpp
-extern uint8_t nbProbes;      // number of active leds
+extern uint8_t nbProbes;      // number of active probes
 extern uint8_t nbParameters;  // number of parameters to record
 extern uint8_t dataRowSize;   // size of a data row (number of entries in data)
 extern uint8_t maxNbRows;     // calculate value depending the size of EEPROM dedicated to logs
 extern uint8_t ALL_PARAMETERS[TOTAL_PARAMETERS];  // all possible reading values
 extern uint8_t ACTIVE_PARAMETERS[TOTAL_PARAMETERS];
 
-
-// ERROR Thread
-#define OUT_ERROR A4
 
 // ONE WIRE Thread
 #define TEMP_EXT1 PIN_SPI_SS

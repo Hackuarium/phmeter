@@ -380,7 +380,7 @@ void lcdMenuSettings(int counter, boolean doAction) {
       maxValue = 1;
       break;
     case 6:
-      lcd.print(F("Active leds"));
+      lcd.print(F("Active probes"));
       currentParameter = PARAM_ACTIVE_PROBES;
       minValue = 0;
       maxValue = pow(2, sizeof(ALL_PARAMETERS)) - 1;

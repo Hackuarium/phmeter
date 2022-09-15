@@ -164,10 +164,10 @@ void setActiveProbes() {
   int active = getParameter(PARAM_ACTIVE_PROBES);
   nbProbes = 0;
   nbParameters = 0;
-  for (byte i = 0; i < sizeof(ALL_PARAMETERS); i++) {
+  for (uint8_t i = 0; i < sizeof(ALL_PARAMETERS); i++) {
     if (active & (1 << i)) {
       ACTIVE_PARAMETERS[nbParameters] = i;
-      if (ALL_PARAMETERS[i] < 128) {
+      if (ALL_PARAMETERS[i] < 128) {  // Batt & Temp1 & Temp2 > 128
         (nbProbes)++;
       }
       (nbParameters)++;
