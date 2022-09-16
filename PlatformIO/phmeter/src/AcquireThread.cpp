@@ -12,11 +12,18 @@ THD_FUNCTION(ThreadAcquisition, arg) {
       setActiveProbes();
       uint8_t numberExperiments = min(maxNbRows, getParameter(PARAM_NUMPER_EXP));
       switch (getParameter(PARAM_STATUS)) {
-        case STATUS_ONE_ADQ:
-          runExperiment();
-          break;
-        case STATUS_KINETIC:
+        // Check this code, calibration pH & EC, reading pH & EC
+        case FLAG_EC_READING:
           runExperiment(numberExperiments);
+          break;
+        case FLAG_EC_CALIBRATION:
+          calibrate(0);
+          break;
+        case FLAG_PH_CONTROL:
+          runExperiment(numberExperiments);
+          break;
+        case FLAG_PH_CALIBRATE:
+          calibrate(1);
           break;
         case STATUS_SEQUENCE:
           runSequence(numberExperiments);

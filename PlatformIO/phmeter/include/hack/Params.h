@@ -116,12 +116,11 @@
 #define TOTAL_PARAMETERS 5
 // Declared in lcd.cpp
 extern uint8_t nbProbes;      // number of active probes
-extern uint8_t nbParameters;  // number of parameters to record
+extern uint8_t nbParameters;  // number of parameters to record (pH, EC, temp1, temp2, batt)
 extern uint8_t dataRowSize;   // size of a data row (number of entries in data)
 extern uint8_t maxNbRows;     // calculate value depending the size of EEPROM dedicated to logs
-extern uint8_t ALL_PARAMETERS[TOTAL_PARAMETERS];  // all possible reading values
-extern uint8_t ACTIVE_PARAMETERS[TOTAL_PARAMETERS];
-
+extern uint8_t ALL_PARAMETERS[TOTAL_PARAMETERS];  // all possible reading probes
+extern uint8_t ACTIVE_PARAMETERS[TOTAL_PARAMETERS]; // true/false active probes
 
 // ONE WIRE Thread
 #define TEMP_EXT1 PIN_SPI_SS
@@ -129,7 +128,6 @@ extern uint8_t ACTIVE_PARAMETERS[TOTAL_PARAMETERS];
 
 // EEPROM || SST Thread
 #define EVENT_LOGGING 1
-
 
 // PH Thread
 #define PH_DATA        A0
@@ -170,7 +168,7 @@ extern uint8_t ACTIVE_PARAMETERS[TOTAL_PARAMETERS];
 #define PARAM_EC_US 6     // G - Electrolytic Conductivity in unit of micro Siemens
 
 #define PARAM_NUMBER_ACQ    16  // Number of acquisition of 100 ms that will be taken
-#define PARAM_ACTIVE_PROBES 17  // Number of values reading (pH, EC, temp*2, battery)
+#define PARAM_ACTIVE_PROBES 17  // Bitmask for number of values reading (pH, EC, temp*2, battery) = 2**5 - 1
 #define PARAM_BATTERY       18      // Battery voltage (hundredths of volt)
 
 
@@ -220,12 +218,13 @@ extern uint8_t ACTIVE_PARAMETERS[TOTAL_PARAMETERS];
 #define FLAG_OUTPUT_4 3
 
 // PARAM_STATUS
-#define FLAG_EC_READING         4 // Enable/disable EC reading
-#define FLAG_PH_CONTROL         5 // Enable/disable pH control
-#define FLAG_PH_CALIBRATE       6 // Enable/disable pH calibration
-#define FLAG_RELAY_ACID         7 // Enable/disable acid addition
-#define FLAG_RELAY_BASE         8 // Enable/disable base addition
-#define FLAG_STATUS_TEST_PROBES 9 // Enable/disable test probes
+#define FLAG_EC_READING         4  // Enable/disable EC reading
+#define FLAG_EC_CALIBRATION     5  // Enable/disable EC calibration
+#define FLAG_PH_CONTROL         6  // Enable/disable pH control
+#define FLAG_PH_CALIBRATE       7  // Enable/disable pH calibration
+#define FLAG_RELAY_ACID         8  // Enable/disable acid addition
+#define FLAG_RELAY_BASE         9  // Enable/disable base addition
+#define FLAG_STATUS_TEST_PROBES 10 // Enable/disable test probes
 
 // value that should not be taken into account
 // in case of error the parameter is set to this value

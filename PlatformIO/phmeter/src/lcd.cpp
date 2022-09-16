@@ -249,7 +249,7 @@ void lcdMenuHome(int counter, bool doAction) {
       // 1st option (default)
       case 0:
         /* Checking if the next exposure is greater than or equal to 0. If it is, it prints "STOP" on the LCD. If the doAction is true, it sets the next exposure to -1, the status to 0, and the menu to 100. If the next  exposure is not greater than or equal to 0, it prints "ACQUIRE" on the
-        LCD. If the doAction is true, it sets the status to STATUS_ONE_ADQ
+        LCD. If the doAction is true, it sets the status to FLAG_PH_CONTROL
         and the next exposure to 0. */
         if (getParameter(PARAM_NEXT_EXP) >= 0) {
           lcd.print(F(TEXT_STOP));
@@ -261,7 +261,7 @@ void lcdMenuHome(int counter, bool doAction) {
         } else {
           lcd.print(F(TEXT_ACQUIRE));
           if (doAction) {
-            setParameter(PARAM_STATUS, STATUS_ONE_ADQ);
+            setParameter(PARAM_STATUS, FLAG_PH_CONTROL);
             setParameter(PARAM_NEXT_EXP, 0);
           }
         }

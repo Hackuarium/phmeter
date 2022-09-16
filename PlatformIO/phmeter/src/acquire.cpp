@@ -9,7 +9,9 @@
 
 int PROBES[TOTAL_NUMBER_PROBES];
 
-long acquireOne(uint8_t probe) {
+// sProbes_t *pProbes = (sProbes_t  *)calloc(1, sizeof(sProbes_t));
+
+uint16_t acquireOne(uint8_t probe) {
     volatile int16_t rawMeasurement;
     switch (probe)
     {
@@ -36,9 +38,11 @@ void acquire(bool testMode) {
   setDataLong(target, millis());
   for (byte i = 0; i < nbParameters; i++) {
     long newValue = 0;
-    if (ALL_PARAMETERS[ACTIVE_PARAMETERS[i]] < 128) {
+
+    // Check this 20220916!!!
+    if (ALL_PARAMETERS[i] < 3 && ACTIVE_PARAMETERS[i] == true) {
       for (byte j = 0; j <  getParameter(PARAM_NUMBER_ACQ); j++) {
-        long currentCount = acquireOne(ACTIVE_PARAMETERS[i]);
+        uint16_t currentCount = acquireOne(ACTIVE_PARAMETERS[i]);
         newValue += currentCount;
         if (currentCount > 50000) {
           // there is an error, the frequency was too high for the detector
@@ -86,14 +90,14 @@ void acquire(bool testMode) {
  */
 void calibrate(bool probePH) {
   int lowPHNeutral = 0;
-  int highPHNeutral = 4091;
+  int highPHNeutral = 65535;
   int lowECWater = 0;
-  int highECWater = 4091;
+  int highECWater = 65535;
   if (probePH)
   {
     while ((highPHNeutral - lowPHNeutral) >= 2) {
       PROBES[0] = (lowPHNeutral + highPHNeutral) / 2;
-      long one = acquireOne(0);
+      uint16_t one = acquireOne(0);
       if (one > TARGET_INTENSITY_PH) {
         highPHNeutral = PROBES[0];
       } else {
@@ -104,8 +108,8 @@ void calibrate(bool probePH) {
   else
   {
     while ((highECWater - lowECWater) >= 2) {
-      PROBES[0] = (lowECWater + highECWater) / 2;
-      long one = acquireOne(1);
+      PROBES[1] = (lowECWater + highECWater) / 2;
+      uint16_t one = acquireOne(1);
       if (one > TARGET_INTENSITY_EC) {
         highECWater = PROBES[1];
       } else {
@@ -157,8 +161,8 @@ void testProbe() {
 
 /**
  * It takes a bitmask of active probes and sets the number of active probes, the
- * number of active parameters, the number of LEDs, the size of a data row, and the
- * maximum number of rows in the data buffer
+ * number of active parameters, the number of LEDs, the size of a data row, and 
+ * the maximum number of rows in the data buffer
  */
 void setActiveProbes() {
   int active = getParameter(PARAM_ACTIVE_PROBES);
@@ -166,8 +170,8 @@ void setActiveProbes() {
   nbParameters = 0;
   for (uint8_t i = 0; i < sizeof(ALL_PARAMETERS); i++) {
     if (active & (1 << i)) {
-      ACTIVE_PARAMETERS[nbParameters] = i;
-      if (ALL_PARAMETERS[i] < 128) {  // Batt & Temp1 & Temp2 > 128
+      ACTIVE_PARAMETERS[nbParameters] = true;
+      if (ALL_PARAMETERS[i] < 3) {  // Batt & Temp1 & Temp2 > 3
         (nbProbes)++;
       }
       (nbParameters)++;
@@ -187,15 +191,21 @@ void setAcquisitionMenu() {
 
 void waitExperiment() {
   long wait = 0;
-  if (getParameter(PARAM_NEXT_EXP) == 0) {
+
+  switch (getParameter(PARAM_NEXT_EXP))
+  {
+  case 0:
     wait = getParameter(PARAM_BEFORE_DELAY);
-  } else if (getParameter(PARAM_NEXT_EXP) == 1) {
+    break;
+  case 1:
     wait = getParameter(PARAM_FIRST_DELAY);
-  } else if (getParameter(PARAM_NEXT_EXP) > 1) {
+    break;  
+  default:
     wait = getParameter(PARAM_INTER_DELAY);
+    break;
   }
 
-  long timeEnd = millis() + wait * 1000;
+  unsigned long timeEnd = millis() + wait * 1000;
   while (millis() < timeEnd && getParameter(PARAM_NEXT_EXP) >= 0) {
     setParameter(PARAM_WAIT, (timeEnd - millis()) / 1000);
     chThdSleepMilliseconds(1000);
@@ -237,9 +247,10 @@ void runExperiment(uint8_t nbExperiments) {
     setParameter(PARAM_NEXT_EXP, i);
     setAcquisitionMenu();
     waitExperiment();
-    if (i == 0) {
-      clearData();
-    }
+    // Not useful, this clear all EEPROM!
+    // if (i == 0) {
+    //   clearData();
+    // }
     if (getParameter(PARAM_NEXT_EXP) < 0) return;
     acquire(false);
     if (getParameter(PARAM_NEXT_EXP) < 0) return;
