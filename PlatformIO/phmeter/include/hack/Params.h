@@ -164,8 +164,10 @@ extern uint8_t ACTIVE_PARAMETERS[TOTAL_PARAMETERS]; // true/false active probes
 #define PARAM_PH_H      3  // D - pH in unit of potential of hydrogen
 #define PARAM_PH_TARGET 4  // E - Desired pH
 
-#define PARAM_EC    5     // F - Electrolytic Conductivity in unit of bits
-#define PARAM_EC_US 6     // G - Electrolytic Conductivity in unit of micro Siemens
+#define PARAM_PID    5     // F - pH Control
+
+#define PARAM_EC    6     // G - Electrolytic Conductivity in unit of bits
+#define PARAM_EC_US 7     // H - Electrolytic Conductivity in unit of micro Siemens
 
 #define PARAM_NUMBER_ACQ    16  // Number of acquisition of 100 ms that will be taken
 #define PARAM_ACTIVE_PROBES 17  // Bitmask for number of values reading (pH, EC, temp*2, battery) = 2**5 - 1
