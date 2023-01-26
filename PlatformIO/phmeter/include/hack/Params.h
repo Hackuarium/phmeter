@@ -15,7 +15,7 @@
 #include <ChNil.h>
 #include <limits.h>
 
-#define SOFTWARE_VERSION "v1.1.2-b"
+#define SOFTWARE_VERSION "v1.1.2-c"
 #define SOFTWARE_VERSION_NUMBER 010001  // XX.XX.XX
 
 /******************************
