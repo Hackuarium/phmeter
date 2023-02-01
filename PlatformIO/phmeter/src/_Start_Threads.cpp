@@ -16,10 +16,13 @@
 #include "AcquireThread.h"
 #endif
 
+#ifdef THR_OUTPUTS
+#include "OutputsThread.h"
+#endif
+
 #ifdef THR_PH
 #include "phThread.h"
 #endif
-
 
 #ifdef THR_LCD
 #include "LCDThread.h"
@@ -59,6 +62,10 @@ THD_TABLE_ENTRY(waThreadOneWire, NULL, ThreadOneWire, NULL)
 
 #ifdef THR_LCD
       THD_TABLE_ENTRY(waThreadLCD, NULL, ThreadLCD, NULL)
+#endif
+
+#ifdef THR_OUTPUTS
+      THD_TABLE_ENTRY(waThreadOutputs, NULL, ThreadOutputs, NULL)
 #endif
 
 #ifdef THR_SERIAL
